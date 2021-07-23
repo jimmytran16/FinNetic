@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { getHomeContent } from '../api/home'
+import { getHomeContent } from '../../api/home'
 
 export default function Home(props) {
     const [content,setContent] = useState(null);
