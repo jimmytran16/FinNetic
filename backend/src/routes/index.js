@@ -1,7 +1,4 @@
-const homeRouter = require('./homeRouter')
-const testRouter = require('./testRouter')
+const authRouter = require('./authRouter')
+const dashboardRouter = require('./dashboardRouter')
 
-module.exports = {
-    homeRouter:homeRouter,
-    testRouter:testRouter
-}
+module.exports = { dashboardRouter, authRouter }

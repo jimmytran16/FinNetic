@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from 'react';
+import { Container, Row, Col } from 'react-bootstrap';
+import { Bar, Pie } from 'react-chartjs-2';
 import SpinnerLoader from '../../components/SpinnerLoader'
-import { getGridData } from '../../api/getGridData'
-import { Bar } from 'react-chartjs-2';
-import { Form, Button, Container, Spinner } from 'react-bootstrap';
+import BillForm from '../../components/BillForm';
+import dashboardApi from '../../api/dashboard.api';
 
 function Dashboard(props) {
     const [data, setData] = useState({});
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
+        setIsLoading(true);
         setTimeout(() => {
-            getGridData()
-            .then(response => {
-                setData(response.data.data)
-                setIsLoading(false)
-            })
-            .catch(err => console.log(err))
+            dashboardApi.getDashboardGridContent()
+                .then(response => {
+                    setData(response.data.data)
+                    setIsLoading(false);
+                })
+                .catch(error => console.log(error))
         }, 500)
     }, [])
 
@@ -23,26 +25,24 @@ function Dashboard(props) {
         (!isLoading)
             ? <div>
                 <Container>
-                    <Form>
-                        <Form.Group className="mb-3" controlId="formBasicEmail">
-                            <Form.Label>Bill Name</Form.Label>
-                            <Form.Control type="text" placeholder="Type in company name" />
-                        </Form.Group>
+                    <BillForm />
+                    <h2 style={{ textAlign: 'center', padding: "20px 10px" }}> Balance Charts </h2>
+                    <Row>
+                        <Col xs={12} md={6}>
+                            <Container>
+                                <Bar data={data} />
+                            </Container>
+                        </Col>
+                        <Col xs={12} md={6}>
+                            <Container>
+                                <Pie data={data} />
+                            </Container>
+                        </Col>
+                    </Row>
 
-                        <Form.Group className="mb-3" controlId="formBasicPassword">
-                            <Form.Label>Billing Due</Form.Label>
-                            <Form.Control type="date" placeholder="Type in date bill is due" />
-                        </Form.Group>
-                        <Button variant="primary" type="submit">
-                            Add
-                        </Button>
-                    </Form>
-                    <h2> Table : </h2>
-                    <Bar data={data} />
                 </ Container>
             </div>
             : <SpinnerLoader />
-
     );
 }
 

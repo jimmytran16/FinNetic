@@ -4,35 +4,35 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
-  NavLink
 } from "react-router-dom";
-import { Navbar, Container, Nav } from 'react-bootstrap'
+import { Navbar, Nav, Container } from 'react-bootstrap'
 import HomeScreen from './screens/home/HomeScreen'
 import DashboardScreen from './screens/dashboard/DashboardScreen'
 import LoginScreen from "./screens/login/LoginScreen";
-
+import RegisterScreen from "./screens/register/RegisterScreen";
 
 function App() {
+
   return (
     <>
-      <Router>
-        <Navbar bg="light" variant="light">
-          <Container>
-            <Navbar.Brand href="/">Tracker</Navbar.Brand>
-            <Nav className="me-auto">
-              <Nav.Link href="/">Home</Nav.Link>
-              <Nav.Link href="/dashboard">Dashboard</Nav.Link>
-              <Nav.Link href="/login">Log in</Nav.Link>
-              <Nav.Link href="/login">Register</Nav.Link>
-            </Nav>
-          </Container>
-        </Navbar>
+      <Navbar bg="light" variant="light">
+        <Container>
+          <Navbar.Brand href="/">trkr</Navbar.Brand>
+          <Nav className="me-auto">
+            <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link href="/dashboard">Dashboard</Nav.Link>
+            <Nav.Link href="/login">Login </Nav.Link>
+            <Nav.Link href="/register">Register </Nav.Link>
+          </Nav>
+        </Container>
+      </Navbar>
 
+      <Router>
         <Switch>
           <Route exact path="/" component={HomeScreen}></Route>
           <Route path="/dashboard" component={DashboardScreen}></Route>
           <Route path="/login" component={LoginScreen}></Route>
+          <Route path="/register" component={RegisterScreen}></Route>
         </Switch>
       </Router >
     </>

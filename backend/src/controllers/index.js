@@ -1,8 +1,4 @@
-const testController = require('./testController')
-const homeController = require('./homeController')
+const authController = require('./authController')
+const dashboardController = require('./dashboardController')
 
-
-module.exports = {
-    testController:testController,
-    homeController:homeController
-}
+module.exports = { authController, dashboardController };
