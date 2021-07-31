@@ -1,48 +1,30 @@
-import React, { useEffect, useState } from 'react';
-import { Container, Row, Col } from 'react-bootstrap';
-import { Bar, Pie } from 'react-chartjs-2';
-import SpinnerLoader from '../../components/SpinnerLoader'
-import BillForm from '../../components/BillForm';
-import dashboardApi from '../../api/dashboard.api';
+import React, { useState } from 'react';
+import { Tabs, Tab } from 'react-bootstrap';
+import MetricsTabContent from './tabs/metrics/dashboard-tabs-metrics'
+import AccountsTabContent from './tabs/accounts/dashboard-tabs-accounts'
+import PaymentsTabContent from './tabs/payments/dashboard-tabs-payments'
 
 function Dashboard(props) {
-    const [data, setData] = useState({});
-    const [isLoading, setIsLoading] = useState(true);
 
-    useEffect(() => {
-        setIsLoading(true);
-        setTimeout(() => {
-            dashboardApi.getDashboardGridContent()
-                .then(response => {
-                    setData(response.data.data)
-                    setIsLoading(false);
-                })
-                .catch(error => console.log(error))
-        }, 500)
-    }, [])
+    const [key, setKey] = useState('home');
 
     return (
-        (!isLoading)
-            ? <div>
-                <Container>
-                    <BillForm />
-                    <h2 style={{ textAlign: 'center', padding: "20px 10px" }}> Balance Charts </h2>
-                    <Row>
-                        <Col xs={12} md={6}>
-                            <Container>
-                                <Bar data={data} />
-                            </Container>
-                        </Col>
-                        <Col xs={12} md={6}>
-                            <Container>
-                                <Pie data={data} />
-                            </Container>
-                        </Col>
-                    </Row>
-
-                </ Container>
-            </div>
-            : <SpinnerLoader />
+        <Tabs
+            id="controlled-tab-example"
+            activeKey={key}
+            onSelect={(k) => setKey(k)}
+            className="mb-3"
+        >
+            <Tab eventKey="home" title="Metrics">
+                <MetricsTabContent />
+            </Tab>
+            <Tab eventKey="profile" title="Accounts">
+                <AccountsTabContent />
+            </Tab>
+            <Tab eventKey="contact" title="Payments">
+                <PaymentsTabContent />
+            </Tab>
+        </Tabs>
     );
 }
 
