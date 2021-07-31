@@ -9,6 +9,7 @@
     "axios": "^0.21.1",
     "bootstrap": "^5.0.2",
     "chart.js": "^3.4.1",
+    "mongoose": "^5.13.5",
     "react": "^17.0.2",
     "react-bootstrap": "^1.6.1",
     "react-chartjs-2": "^3.0.4",

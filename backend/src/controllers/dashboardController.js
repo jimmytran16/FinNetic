@@ -1,3 +1,5 @@
+const AccountService = require('../services/accountService')
+
 const getDashboardContentController = (req, res, next) => {
     // get mock data for grid
     const data = require('./mockdata')
@@ -10,13 +12,13 @@ const getDashboardContentController = (req, res, next) => {
 }
 
 const postBillingDetailsController = (req, res, next) => {
-    console.log(req.body.name);
-    
-    return res.json({
-        message: 'postBillingDetailsController route',
-        success:true
-    })
+    var accountService = new AccountService()   
+    accountService.createAccount('test',12,'jimmy tran', (err, result) => {
+        return res.json({
+            success: err ? false : true,
+            message: result
+        })
+    });
 }
-
 
 module.exports = { getDashboardContentController,postBillingDetailsController };
