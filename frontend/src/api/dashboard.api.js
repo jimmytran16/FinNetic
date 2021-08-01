@@ -30,8 +30,8 @@ const getUserPayments = (id) => {
     });
 }
 
-const createBillingDetails = (name, due) => {
-    console.log(name,due)
+const createBillingDetails = (name, accountHolder, due) => {
+    console.log(name,accountHolder,due)
     return axios({
         method: 'POST',
         url: 'http://localhost:4000/dashboard/createBillingDetails',
@@ -40,9 +40,22 @@ const createBillingDetails = (name, due) => {
         },
         data: {
             "name": name,
-            "due": due
+            "balance": due,
+            "accountHolder":accountHolder
         }
     });
 }
 
-module.exports = { getDashboardGridContent, createBillingDetails, getUserAccounts, getUserPayments }
+const deleteBillingAccount = (id) => {
+    return axios({
+        method: 'DELETE',
+        url: 'http://localhost:4000/dashboard/deleteBillingDetails',
+        headers : {
+            "Authorization":"YAHHHH"
+        },
+        data: {
+            "id":id
+        }
+    });
+}
+module.exports = { getDashboardGridContent, createBillingDetails, getUserAccounts, getUserPayments, deleteBillingAccount }

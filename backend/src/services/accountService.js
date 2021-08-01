@@ -5,11 +5,21 @@ module.exports = class AccountService {
 
     constructor() { }
 
+    async getAllAccounts(username,cb) {
+        try {
+            let result = await Account.find({})
+            cb(null,result)
+        } catch (err) {
+            cb(err,null)
+        }
+    }
+
     async createAccount(name, balance, accountName, cb) {
         let account = new Account({
             name: name,
             balance: balance,
-            accountName: accountName
+            accountName: accountName,
+            lastPayment: null
         })
 
         try {

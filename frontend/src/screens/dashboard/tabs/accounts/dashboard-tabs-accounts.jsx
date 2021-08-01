@@ -1,53 +1,33 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Table } from 'react-bootstrap'
-import BillForm from '../../../../components/BillForm'
-import { FaTrashAlt } from 'react-icons/fa'
+import { Container } from 'react-bootstrap'
+import AccountFormModal from '../../../../components/AccountFormModal'
 import dashboardAPI from '../../../../api/dashboard.api'
+import SpinnerLoader from '../../../../components/SpinnerLoader'
+import AccountTable from '../../../../components/AccountTable'
 
 function AccountsTabContent(props) {
     const [data, setData] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
+    const [reload, setReload] = useState(false)
 
     useEffect(() => {
-        dashboardAPI.getUserAccounts()
-            .then(response => setData(response.data.data))
-            .catch(err => console.log(err))
-    }, [])
+        setIsLoading(true)
+        setTimeout(() => {
+            dashboardAPI.getUserAccounts()
+                .then(response => setData(response.data.data))
+                .catch(err => console.log(err))
+            setIsLoading(false)
+        }, 1000)
+    }, [reload])
 
     return (
         <Container>
-            <Table responsive>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Name</th>
-                        <th>Account holder</th>
-                        <th>Balance</th>
-                        <th>Last Payment</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        data.map((item, key) => {
-                            return (
-                                <tr key ={key}>
-                                    <td>{key}</td>
-                                    <td>{item.name}</td>
-                                    <td>{item.accountName}</td>
-                                    <td>${item.balance}</td>
-                                    <td>{item.lastPayment}</td>
-                                    <td>
-                                        <FaTrashAlt />
-                                    </td>
-                                </tr>
-                            )
-                        })
-                    }
-                </tbody>
-            </Table>
-            <div>
-                <BillForm />
-            </div>
+            {
+                (isLoading)
+                    ? <SpinnerLoader />
+                    : <AccountTable data={data} setReload={setReload} reload={reload} />
+            }
+            <AccountFormModal />
         </Container>
     );
 }

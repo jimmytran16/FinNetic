@@ -13,16 +13,23 @@ const getDashboardContentController = (req, res, next) => {
 
 const getUserAccountsController = (req, res, next) => {
     // mock data for tables
-    const data = [
-        { name: 'Jimmy Tran', accountName: 'Macy', balance: 12, lastPayment:'07/28/2021' },
-        { name: 'Johnny Tran', accountName: 'Discover', balance: 31, lastPayment:'07/08/2021' },
-        { name: 'Jacky Tran', accountName: 'Macy', balance: 122, lastPayment:'07/30/2021' },
-        { name: 'Jenny Tran', accountName: 'Macy', balance: 123, lastPayment:'07/31/2021' }
-    ]
+    // const data = [
+    //     { _id: '610575b04f95c70840c63a37', name: 'Jimmy Tran', accountName: 'Macy', balance: 12, lastPayment:'07/28/2021' },
+    //     { _id: '610575b04f95c70840c63a37', name: 'Johnny Tran', accountName: 'Discover', balance: 31, lastPayment:'07/08/2021' },
+    //     { _id: '610575b04f95c70840c63a37', name: 'Jacky Tran', accountName: 'Macy', balance: 122, lastPayment:'07/30/2021' },
+    //     { _id: '610575b04f95c70840c63a37', name: 'Jenny Tran', accountName: 'Macy', balance: 123, lastPayment:'07/31/2021' }
+    // ]
 
-    return res.json({
-        data: data,
-        success:true
+    // return res.json({
+    //     data: data,
+    //     success:true
+    // })
+
+    accountService.getAllAccounts('someUsername',(err,data) => {
+        return res.json({
+            data: err ? err : data,
+            success: err ? false : true
+        })
     })
 }
 
@@ -42,7 +49,8 @@ const getUserPaymentsController = (req, res, next) => {
 }
 
 const createAccountController = (req, res, next) => {
-    accountService.createAccount('test',12,'jimmy tran', (err, data) => {
+    console.log(req.body)
+    accountService.createAccount(req.body.name,req.body.balance,req.body.accountHolder, (err, data) => {
         return res.json({
             success: err ? false : true,
             data: data
@@ -53,7 +61,7 @@ const createAccountController = (req, res, next) => {
 const updateAccountController = (req, res, next) => {
     accountService.updateAccount(req.body.filter, req.body.update, (err, data) => {
         return res.json({
-            success: result ? true : false,
+            success: data ? true : false,
             data: data
         })
     });
@@ -62,7 +70,7 @@ const updateAccountController = (req, res, next) => {
 const deleteAccountController = (req, res, next) => {
     accountService.deleteAccount(req.body.id, (err, data) => {
         return res.json({
-            success: result ? true : false,
+            success: data ? true : false,
             data: data
         })
     });
