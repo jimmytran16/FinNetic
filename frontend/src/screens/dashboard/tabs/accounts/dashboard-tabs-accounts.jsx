@@ -5,7 +5,7 @@ import dashboardAPI from '../../../../api/dashboard.api'
 import SpinnerLoader from '../../../../components/SpinnerLoader'
 import AccountTable from '../../../../components/AccountTable'
 
-function AccountsTabContent(props) {
+function AccountsTabContent({  }) {
     const [data, setData] = useState([])
     const [isLoading, setIsLoading] = useState(false)
     const [reload, setReload] = useState(false)
@@ -27,7 +27,7 @@ function AccountsTabContent(props) {
                     ? <SpinnerLoader />
                     : <AccountTable data={data} setReload={setReload} reload={reload} />
             }
-            <AccountFormModal />
+            <AccountFormModal setReload={setReload} reload={reload} />
         </Container>
     );
 }

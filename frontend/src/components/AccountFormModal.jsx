@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { Container, Row, Col, Form, Button, Modal } from 'react-bootstrap'
-import SpinnerCircle from './SpinnerCircle'
+import { Form, Button, Modal } from 'react-bootstrap'
 import dashboardApi from '../api/dashboard.api';
 
 
-function AccountFormModal(props) {
+function AccountFormModal({ reload, setReload }) {
 
     const [accountName, setAccountName] = useState('');
     const [accountHolderName, setAccountHolderName] = useState(0);
@@ -21,7 +20,7 @@ function AccountFormModal(props) {
         setTimeout(() => {
             console.log(accountName, accountHolderName, balanceDue)
             dashboardApi.createBillingDetails(accountName, accountHolderName, balanceDue)
-                .then(response => console.log(response.data))
+                .then(response => setReload(!reload))
                 .catch(error => console.log(error));
             setIsLoading(false);
         }, 500)

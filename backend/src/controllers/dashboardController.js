@@ -1,30 +1,18 @@
+const { DashboardUtil } = require('../utils/index')
 const AccountService = require('../services/accountService')
 var accountService = new AccountService()   
 
 const getDashboardContentController = (req, res, next) => {
-    // get mock data for grid
-    const data = require('./mockdata')
-
-    return res.json({
-        data: data,
-        success:true
+    accountService.getAllAccounts("testing" , (err,data) => {
+        return res.json({
+            data: DashboardUtil.parseAccountDataIntoChartData(data),
+            success:true
+        })
     })
+
 }
 
 const getUserAccountsController = (req, res, next) => {
-    // mock data for tables
-    // const data = [
-    //     { _id: '610575b04f95c70840c63a37', name: 'Jimmy Tran', accountName: 'Macy', balance: 12, lastPayment:'07/28/2021' },
-    //     { _id: '610575b04f95c70840c63a37', name: 'Johnny Tran', accountName: 'Discover', balance: 31, lastPayment:'07/08/2021' },
-    //     { _id: '610575b04f95c70840c63a37', name: 'Jacky Tran', accountName: 'Macy', balance: 122, lastPayment:'07/30/2021' },
-    //     { _id: '610575b04f95c70840c63a37', name: 'Jenny Tran', accountName: 'Macy', balance: 123, lastPayment:'07/31/2021' }
-    // ]
-
-    // return res.json({
-    //     data: data,
-    //     success:true
-    // })
-
     accountService.getAllAccounts('someUsername',(err,data) => {
         return res.json({
             data: err ? err : data,
