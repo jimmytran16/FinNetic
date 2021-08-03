@@ -1,10 +1,10 @@
 import React from 'react';
 import { Spinner } from 'react-bootstrap'
 
-function SpinnerCircle(props) {
+function SpinnerCircle({ size }) {
     return (
         <div>
-            <Spinner animation="border" variant="light" />
+            <Spinner animation="border" variant="light" size={size} />
         </div>
     );
 }

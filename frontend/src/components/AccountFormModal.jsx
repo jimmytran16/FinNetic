@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Form, Button, Modal } from 'react-bootstrap'
-import dashboardApi from '../api/dashboard.api';
+import SpinnerCircle from './SpinnerCircle'
+import DashboardAPI from '../api/dashboard.api';
 
 
 function AccountFormModal({ reload, setReload }) {
 
     const [accountName, setAccountName] = useState('');
-    const [accountHolderName, setAccountHolderName] = useState(0);
+    const [accountHolderName, setAccountHolderName] = useState('');
     const [balanceDue, setBalanceDue] = useState(0);
     const [isLoading, setIsLoading] = useState(false);
 
@@ -18,9 +19,13 @@ function AccountFormModal({ reload, setReload }) {
     const handleBillDetailsSubmission = () => {
         setIsLoading(true);
         setTimeout(() => {
-            console.log(accountName, accountHolderName, balanceDue)
-            dashboardApi.createBillingDetails(accountName, accountHolderName, balanceDue)
-                .then(response => setReload(!reload))
+            DashboardAPI.createBillingDetails(accountName, accountHolderName, balanceDue)
+                .then(response => {
+                    setReload(!reload)
+                    setAccountHolderName('')
+                    setAccountName('')
+                    setBalanceDue(0)
+                })
                 .catch(error => console.log(error));
             setIsLoading(false);
         }, 500)
@@ -39,17 +44,17 @@ function AccountFormModal({ reload, setReload }) {
                     <Form>
                         <Form.Group className="mb-3" controlId="formGridName">
                             <Form.Label>Name</Form.Label>
-                            <Form.Control onChange={(e) => setAccountName(e.target.value)} placeholder="Name" />
+                            <Form.Control value={accountName} onChange={(e) => setAccountName(e.target.value)} placeholder="Name" />
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formGridHolderName">
                             <Form.Label>Account holder name</Form.Label>
-                            <Form.Control onChange={(e) => setAccountHolderName(e.target.value)} placeholder="Account holder name" />
+                            <Form.Control value={accountHolderName} onChange={(e) => setAccountHolderName(e.target.value)} placeholder="Account holder name" />
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formGridAccountBalance">
                             <Form.Label>Account balance</Form.Label>
-                            <Form.Control onChange={(e) => setBalanceDue(e.target.value)} placeholder="Account balance" />
+                            <Form.Control value={balanceDue} onChange={(e) => setBalanceDue(e.target.value)} type="number" placeholder="Account balance" />
                         </Form.Group>
                     </Form>
                 </Modal.Body>
@@ -58,7 +63,7 @@ function AccountFormModal({ reload, setReload }) {
                         Cancel
                     </Button>
                     <Button variant="primary" onClick={handleBillDetailsSubmission}>
-                        Add
+                        { isLoading ? <SpinnerCircle size='sm' /> : 'Add' }
                     </Button>
                 </Modal.Footer>
             </Modal>

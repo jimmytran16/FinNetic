@@ -2,22 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap'
 import { Pie, Bar } from 'react-chartjs-2'
 import SpinnerLoader from '../../../../components/SpinnerLoader'
-import dashboardApi from '../../../../api/dashboard.api'
+import DashboardAPI from '../../../../api/dashboard.api'
 
 
-function MetricsTabContent(props) {
-    const [data, setData] = useState({});
-    const [isLoading, setIsLoading] = useState(true);
+function MetricsTabContent({ }) {
+    const [isLoading, setIsLoading] = useState(false);
+    const [data, setData] = useState([])
 
     useEffect(() => {
         setIsLoading(true);
         setTimeout(() => {
-            dashboardApi.getDashboardGridContent()
-                .then(response => {
-                    setData(response.data.data)
-                    setIsLoading(false);
-                })
-                .catch(error => console.log(error))
+            DashboardAPI.getDashboardGridContent()
+                .then(response => setData(response.data.data))
+                .catch(err => console.log(err))
+            setIsLoading(false);
         }, 500)
     }, [])
 

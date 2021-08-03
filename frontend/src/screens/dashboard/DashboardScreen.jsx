@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Tabs, Tab } from 'react-bootstrap';
 import MetricsTabContent from './tabs/metrics/dashboard-tabs-metrics'
 import AccountsTabContent from './tabs/accounts/dashboard-tabs-accounts'
@@ -16,13 +16,19 @@ function Dashboard(props) {
             className="mb-3"
         >
             <Tab eventKey="home" title="Metrics">
-                <MetricsTabContent />
+                {
+                    (key === 'home') ? <MetricsTabContent /> : <></>
+                }
             </Tab>
             <Tab eventKey="profile" title="Accounts">
-                <AccountsTabContent />
+                {
+                    (key === 'profile') ? <AccountsTabContent /> : <></>
+                }
             </Tab>
             <Tab eventKey="contact" title="Payments">
-                <PaymentsTabContent />
+                {
+                    (key === 'contact') ? <PaymentsTabContent /> : <></>
+                }
             </Tab>
         </Tabs>
     );
