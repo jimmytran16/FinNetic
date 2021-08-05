@@ -1,7 +1,12 @@
+const AuthService = require('../services/authService')
+const authService = new AuthService();
+
 const registerController = (req, res, next) => {
-    return res.json({
-        message: 'register route',
-        success:true
+    authService.registerUser(req.body , (err, result) => {
+        return res.json({
+            message: err ? err : result,
+            success: err ? false : true
+        })
     })
 }
 
