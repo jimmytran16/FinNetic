@@ -5,7 +5,7 @@ import AccountFormModal from '../../../../components/AccountFormModal'
 import DashboardAPI from '../../../../api/dashboard.api'
 import SpinnerLoader from '../../../../components/SpinnerLoader'
 
-function AccountsTabContent({}) {
+function AccountsTabContent(props) {
     const [isLoading, setIsLoading] = useState(false)
     const [reload, setReload] = useState(false)
     const [data, setData] = useState([])

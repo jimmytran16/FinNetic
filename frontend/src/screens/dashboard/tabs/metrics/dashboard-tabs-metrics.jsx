@@ -5,7 +5,7 @@ import SpinnerLoader from '../../../../components/SpinnerLoader'
 import DashboardAPI from '../../../../api/dashboard.api'
 
 
-function MetricsTabContent({ }) {
+function MetricsTabContent(props) {
     const [isLoading, setIsLoading] = useState(false);
     const [data, setData] = useState([])
 
