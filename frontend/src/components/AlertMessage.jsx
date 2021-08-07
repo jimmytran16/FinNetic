@@ -1,13 +1,15 @@
 import { Alert } from 'react-bootstrap'
 
-function AlertMessage({ heading, variant, message, setShow }) {
+function AlertMessage({ heading, variant, message, show, setShow }) {
     return (
-        <Alert variant={ variant } onClose={() => setShow(false)} dismissible>
-            <Alert.Heading>{ heading }</Alert.Heading>
-            <p>
-                { message }
-            </p>
-        </Alert>
+        (show)
+            ? (<Alert variant={variant} onClose={() => setShow(false)} dismissible>
+                <Alert.Heading>{heading}</Alert.Heading>
+                <p>
+                    {message}
+                </p>
+            </Alert>)
+            : <></>
     );
 }
 

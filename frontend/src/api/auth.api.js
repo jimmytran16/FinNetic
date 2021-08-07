@@ -24,4 +24,4 @@ const loginUser = (username, password, name) => {
     });
 }
 
-module.exports = { registerUser };
+module.exports = { registerUser, loginUser };
