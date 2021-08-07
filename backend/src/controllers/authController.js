@@ -4,29 +4,31 @@ const authService = new AuthService();
 const registerController = (req, res, next) => {
     authService.registerUser(req.body , (err, result) => {
         return res.json({
-            message: err ? err : result,
+            data: err ? err : result,
             success: err ? false : true
         })
     })
 }
 
 const logInController = (req, res, next) => {
-    return res.json({
-        message: 'logIn route',
-        success:true
+    authService.loginUser(req.body.username, req.body.password, (err,result) => {
+        return res.json({
+            data: err ? err : result,
+            success: err ? false: true
+        })
     })
 }
 
 const logOutController = (req, res, next) => {
     return res.json({
-        message: 'logOut route',
+        data: 'logOut route',
         success:true
     })
 }
 
 const changePasswordController = (req, res, next) => {
     return res.json({
-        message: 'changePassword route',
+        data: 'changePassword route',
         success:true
     })
 }

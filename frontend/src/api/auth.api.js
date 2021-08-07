@@ -12,4 +12,16 @@ const registerUser = (username, password, name) => {
     });
 }
 
+const loginUser = (username, password, name) => {
+    return axios({
+        
+        method: 'POST',
+        url: 'http://localhost:4000/auth/login',
+        data: {
+            "username": username,
+            "password":password
+        }
+    });
+}
+
 module.exports = { registerUser };

@@ -35,7 +35,7 @@ const RegisterScreen = (props) => {
             <Container>
                 {
                     (show) 
-                    ? <AlertMessage heading="Email Already Registered!" message="Please use a different user email." setShow={setShow} />
+                    ? <AlertMessage heading="Email Already Registered!" variant="danger" message="Please use a different user email." setShow={setShow} />
                     : <></>
                 }
                 <Form>

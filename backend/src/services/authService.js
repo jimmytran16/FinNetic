@@ -1,15 +1,42 @@
 const User = require('../models/users')
 const bcrypt = require('bcrypt')
+const jwt = require('jsonwebtoken')
+require('dotenv').config()
+
+class JWTService {
+    constructor() {}
+
+    verifyAccessToken(token) {
+        return jwt.verify(token)
+    }
+    
+    generateAccessToken(payload) {
+        return jwt.sign(payload, process.env.JWTSIGNATURE, { expiresIn :'15m' })
+    }
+}
 
 module.exports = class AuthService {
-    constructor() { }
+    constructor() {}
+
+    async loginUser(username,password, cb) {
+        try {
+            var payload = { username: username }
+            var valid = await this._isUserValid(username,password);
+
+            return (valid)
+                ? cb(null, { accessToken: new JWTService().generateAccessToken(payload), user: username })
+                : cb('Invalid Login', null);
+        }catch(err){
+            cb(err,null);
+        }
+    }
 
     async registerUser(payload, cb) {
         try {
-            var alreadyRegistered = await this.isUserRegistered(payload.username)
+            var alreadyRegistered = await this._isUserRegistered(payload.username)
             if (alreadyRegistered) return cb('User Already Registered', null);
             
-            var { salt, hashedPassword } = await this.hashPassword(payload.password, 10)
+            var { salt, hashedPassword } = await this._hashPassword(payload.password, 10)
             payload.password = hashedPassword;
             payload.salt = salt;
 
@@ -22,7 +49,7 @@ module.exports = class AuthService {
         }
     }
 
-    async isUserRegistered(username) {
+    async _isUserRegistered(username) {
         var result = await User.findOne({ username: username })
         
         if (result == null || Object.keys(result).length === 0) {
@@ -31,7 +58,7 @@ module.exports = class AuthService {
         return true;
     }
 
-    async hashPassword(password, saltRounds) {
+    async _hashPassword(password, saltRounds) {
         try {
             var salt = await bcrypt.genSalt(saltRounds);
             var hashedPassword = await bcrypt.hash(password, salt);
@@ -41,6 +68,24 @@ module.exports = class AuthService {
             }
         }catch(err) {
             return null;
+        }
+    }
+
+    async _isUserValid(username,attemptedPassword) {
+        try {
+            var user = await User.findOne({ username: username })
+            if (user !== null) {
+                // validate the password
+                let matched = await bcrypt.compare(attemptedPassword, user.password)                
+                
+                if(matched) 
+                    return true;
+                else
+                    return false;
+            }
+        }catch(err) {
+            console.log(err)
+            return false;
         }
     }
 }
