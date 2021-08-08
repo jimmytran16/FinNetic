@@ -9,9 +9,11 @@ const LoginScreen = (props) => {
     const [password, setPassword] = useState('')
     const [isLoading, setIsLoading] = useState(false)
     const [show, setShow] = useState(false)
-
-    // temporary for TESTING
-    const [data, setData] = useState('')
+    const [alertProps, setAlertProps] = useState({
+        variant: '',
+        heading: '',
+        message: ''
+    })
 
     const handleLogin = (e) => {
         e.preventDefault();
@@ -19,12 +21,22 @@ const LoginScreen = (props) => {
         setTimeout(() => {
             AuthAPI.loginUser(username, password)
                 .then(response => {
-                    console.log(response.data.success)
                     if (response.data.success) {
                         // NEED TO STORE THE TOKEN AND DATA WHEN IT IS SUCCESSFUL
-                        console.log(response.data.success)
-                        setData(JSON.stringify(response.data.data))
                         setShow(true)
+                        setAlertProps({
+                            variant: 'success',
+                            heading: 'Sucessful log in (testing)',
+                            message: JSON.stringify(response.data.data)
+                        })
+                    }
+                    else {
+                        setShow(true)
+                        setAlertProps({
+                            variant: 'danger',
+                            heading: response.data.data,
+                            message: "Please check your credentials"
+                        })
                     }
                 })
                 .catch(err => console.log(err));
@@ -35,7 +47,7 @@ const LoginScreen = (props) => {
     return (
         <>
             <Container>
-                <AlertMessage variant="success" heading='Sucessfully Logged In (test)' message={data} show={show} setShow={setShow}  />
+                <AlertMessage variant={alertProps.variant} heading={alertProps.heading} message={alertProps.message} show={show} setShow={setShow} />
                 <Form>
                     <Form.Group className="mb-3" controlId="formBasicEmail">
                         <Form.Label>Email address</Form.Label>
