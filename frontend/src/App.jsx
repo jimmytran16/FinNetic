@@ -4,15 +4,18 @@ import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Link,
+  Redirect
 } from "react-router-dom";
 import { Navbar, Nav, Container } from 'react-bootstrap'
+import AuthService from './services/authService'
+import ProtectedRoute from './components/ProtectedRoute'
 import HomeScreen from './screens/home/HomeScreen'
 import DashboardScreen from './screens/dashboard/DashboardScreen'
 import LoginScreen from "./screens/login/LoginScreen";
 import RegisterScreen from "./screens/register/RegisterScreen";
 
-function App() {
+function App(props) {
 
   return (
     <>
@@ -31,9 +34,13 @@ function App() {
 
         <Switch>
           <Route exact path="/" component={HomeScreen}></Route>
-          <Route path="/dashboard" component={DashboardScreen}></Route>
           <Route path="/login" component={LoginScreen}></Route>
           <Route path="/register" component={RegisterScreen}></Route>
+          <Route path="/logout" render={() => {
+            AuthService.logout()
+            return <Redirect to={{ pathname: "/login" }} />
+          }} />
+          <ProtectedRoute path="/dashboard" component={DashboardScreen}></ProtectedRoute>
         </Switch>
       </Router >
     </>

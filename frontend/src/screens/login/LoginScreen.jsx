@@ -3,8 +3,11 @@ import { Container, Form, Button } from 'react-bootstrap'
 import SpinnerCircle from '../../components/SpinnerCircle'
 import AlertMessage from '../../components/AlertMessage'
 import AuthAPI from '../../api/auth.api'
+import AuthService from '../../services/authService'
+import { useHistory } from 'react-router-dom'
 
 const LoginScreen = (props) => {
+    const history = useHistory()
     const [username, setUsername] = useState('')
     const [password, setPassword] = useState('')
     const [isLoading, setIsLoading] = useState(false)
@@ -22,13 +25,8 @@ const LoginScreen = (props) => {
             AuthAPI.loginUser(username, password)
                 .then(response => {
                     if (response.data.success) {
-                        // NEED TO STORE THE TOKEN AND DATA WHEN IT IS SUCCESSFUL
-                        setShow(true)
-                        setAlertProps({
-                            variant: 'success',
-                            heading: 'Sucessful log in (testing)',
-                            message: JSON.stringify(response.data.data)
-                        })
+                        AuthService.authenticateUser(response.data.data);
+                        history.push('/dashboard')
                     }
                     else {
                         setShow(true)

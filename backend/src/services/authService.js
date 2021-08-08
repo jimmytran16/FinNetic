@@ -24,7 +24,7 @@ module.exports = class AuthService {
             var valid = await this._isUserValid(username,password);
 
             return (valid)
-                ? cb(null, { accessToken: new JWTService().generateAccessToken(payload), user: username })
+                ? cb(null, { accessToken: new JWTService().generateAccessToken(payload), user: username, isAuth: true })
                 : cb('Invalid Login', null);
         }catch(err){
             cb(err,null);
