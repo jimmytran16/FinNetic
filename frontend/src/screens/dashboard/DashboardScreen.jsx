@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Tabs, Tab } from 'react-bootstrap';
-import AuthService from '../../services/authService'
+import { Tabs, Tab } from 'react-bootstrap';
 import MetricsTabContent from './tabs/metrics/dashboard-tabs-metrics'
 import AccountsTabContent from './tabs/accounts/dashboard-tabs-accounts'
 import PaymentsTabContent from './tabs/payments/dashboard-tabs-payments'

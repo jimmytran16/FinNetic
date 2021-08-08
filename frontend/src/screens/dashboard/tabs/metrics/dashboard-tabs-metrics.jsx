@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap'
 import { Pie, Bar } from 'react-chartjs-2'
+import AuthService from '../../../../services/authService'
 import SpinnerLoader from '../../../../components/SpinnerLoader'
 import DashboardAPI from '../../../../api/dashboard.api'
 
@@ -14,7 +15,9 @@ function MetricsTabContent(props) {
         setTimeout(() => {
             DashboardAPI.getDashboardGridContent()
                 .then(response => setData(response.data.data))
-                .catch(err => console.log(err))
+                .catch(err => {
+                    AuthService.logout()
+                })
             setIsLoading(false);
         }, 500)
     }, [])

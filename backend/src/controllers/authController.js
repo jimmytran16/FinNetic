@@ -33,4 +33,9 @@ const changePasswordController = (req, res, next) => {
     })
 }
 
-module.exports = { registerController, logInController, logOutController, changePasswordController };
+module.exports = { 
+    registerController, 
+    logInController, 
+    logOutController, 
+    changePasswordController 
+};

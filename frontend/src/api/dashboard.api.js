@@ -1,11 +1,14 @@
 const axios = require("axios")
+const AuthService = require("../services/authService");
 
 const getDashboardGridContent = () => {
+    console.log(typeof(AuthService.default.getTokenFromStore()))
     return axios({
         method: 'GET',
         url: 'http://localhost:4000/dashboard/getDashboardContent',
         headers : {
-            "Authorization":"YAHHHH"
+            "Authorization":`Bearer ${AuthService.default.getTokenFromStore()}`,
+            "Content-Type": "application/json"
         },
     });
 }
@@ -15,7 +18,7 @@ const getUserAccounts = (id) => {
         method: 'GET',
         url: `http://localhost:4000/dashboard/getUserAccounts?id=${id}`,
         headers : {
-            "Authorization":"YAHHHH"
+            "Authorization":`Bearer ${AuthService.default.getTokenFromStore()}`
         },
     });
 }
@@ -25,7 +28,7 @@ const getUserPayments = (id) => {
         method: 'GET',
         url: `http://localhost:4000/dashboard/getUserPayments?id=${id}`,
         headers : {
-            "Authorization":"YAHHHH"
+            "Authorization":`Bearer ${AuthService.default.getTokenFromStore()}`
         },
     });
 }
@@ -36,7 +39,7 @@ const createBillingDetails = (name, accountHolder, due) => {
         method: 'POST',
         url: 'http://localhost:4000/dashboard/createBillingDetails',
         headers : {
-            "Authorization":"YAHHHH"
+            "Authorization":`Bearer ${AuthService.default.getTokenFromStore()}`
         },
         data: {
             "name": name,
@@ -51,11 +54,17 @@ const deleteBillingAccount = (id) => {
         method: 'DELETE',
         url: 'http://localhost:4000/dashboard/deleteBillingDetails',
         headers : {
-            "Authorization":"YAHHHH"
+            "Authorization":`Bearer ${AuthService.default.getTokenFromStore()}`
         },
         data: {
             "id":id
         }
     });
 }
-module.exports = { getDashboardGridContent, createBillingDetails, getUserAccounts, getUserPayments, deleteBillingAccount }
+module.exports = { 
+    getDashboardGridContent, 
+    createBillingDetails, 
+    getUserAccounts, 
+    getUserPayments, 
+    deleteBillingAccount 
+};

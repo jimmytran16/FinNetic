@@ -5,17 +5,18 @@ module.exports = class AccountService {
 
     constructor() { }
 
-    async getAllAccounts(username,cb) {
+    async getAllAccounts(userId,cb) {
         try {
-            let result = await Account.find({})
+            let result = await Account.find({ userId: mongoose.Types.ObjectId(userId) })
             cb(null,result)
         } catch (err) {
             cb(err,null)
         }
     }
 
-    async createAccount(name, balance, accountName, cb) {
+    async createAccount(name, balance, accountName, userId, cb) {
         let account = new Account({
+            userId: userId,
             name: name,
             balance: balance,
             accountName: accountName,

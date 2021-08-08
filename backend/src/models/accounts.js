@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 
 const accountSchema = new mongoose.Schema({
+  userId: { type: mongoose.Types.ObjectId, required: true },
   name: { type: String, required: true },
   balance: { type: Number, required: true },
   accountName: { type: String, required: true },

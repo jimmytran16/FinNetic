@@ -3,7 +3,7 @@ const AccountService = require('../services/accountService')
 var accountService = new AccountService()   
 
 const getDashboardContentController = (req, res, next) => {
-    accountService.getAllAccounts("testing" , (err,data) => {
+    accountService.getAllAccounts(req.user.userId , (err,data) => {
         return res.json({
             data: DashboardUtil.parseAccountDataIntoChartData(data),
             success:true
@@ -13,7 +13,7 @@ const getDashboardContentController = (req, res, next) => {
 }
 
 const getUserAccountsController = (req, res, next) => {
-    accountService.getAllAccounts('someUsername',(err,data) => {
+    accountService.getAllAccounts(req.user.userId, (err,data) => {
         return res.json({
             data: err ? err : data,
             success: err ? false : true
@@ -37,8 +37,7 @@ const getUserPaymentsController = (req, res, next) => {
 }
 
 const createAccountController = (req, res, next) => {
-    console.log(req.body)
-    accountService.createAccount(req.body.name,req.body.balance,req.body.accountHolder, (err, data) => {
+    accountService.createAccount(req.body.name, req.body.balance, req.body.accountHolder, req.user.userId, (err, data) => {
         return res.json({
             success: err ? false : true,
             data: data

@@ -1,13 +1,12 @@
 // Class used to authenticate and keep track of if the user is authenticated or not
 class AuthService {
-    constructor() {}
 
     authenticateUser(user) {
         localStorage.setItem('user', JSON.stringify(user))
     }
 
     getTokenFromStore() {
-        return JSON.parse(localStorage.getItem('user')).accessToken;
+        return JSON.parse(localStorage.getItem('user'))?.accessToken || null;
     }
 
     isAuthenticated() {

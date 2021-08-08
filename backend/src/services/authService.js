@@ -20,8 +20,8 @@ module.exports = class AuthService {
 
     async loginUser(username,password, cb) {
         try {
-            var payload = { username: username }
-            var valid = await this._isUserValid(username,password);
+            const { userId , valid } = await this._isUserValid(username,password);
+            var payload = { username: username, userId: userId }
 
             return (valid)
                 ? cb(null, { accessToken: new JWTService().generateAccessToken(payload), user: username, isAuth: true })
@@ -78,14 +78,15 @@ module.exports = class AuthService {
                 // validate the password
                 let matched = await bcrypt.compare(attemptedPassword, user.password)                
                 
-                if(matched) 
-                    return true;
-                else
-                    return false;
+                // return the the userid and the matched var  
+                return { userId : user._id, valid: matched };
+                
             }
+            return { userId: null, valid: false };
+
         }catch(err) {
             console.log(err)
-            return false;
+            return { userId: null, valid:false };
         }
     }
 }
