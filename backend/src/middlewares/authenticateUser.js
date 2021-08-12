@@ -14,7 +14,7 @@ function authenticateUser(req, res, next) {
     verify(token, process.env.JWTSIGNATURE, (err, user) => {
         console.log(err)
         console.log(user)
-        if (err) return res.sendStatus(403)
+        if (err) return res.status(403).json({ error:err })
 
         // if the token is successfully verified then assign the user to the req.user
         req.user = user

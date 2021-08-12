@@ -1,0 +1,14 @@
+.action__icons__wrapper {
+    display: flex;
+}
+.action__icons {
+    margin-left: 5px;
+}
+.delete__icon:hover {
+    cursor: pointer;
+    color: red;
+}
+.payment__icon:hover{
+    cursor: pointer;
+    color:green;
+}

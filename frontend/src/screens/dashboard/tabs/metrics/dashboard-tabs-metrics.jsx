@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import './dashboard-tabs-metrics.css'
 import { Container, Row, Col } from 'react-bootstrap'
 import { Pie, Bar } from 'react-chartjs-2'
 import AuthService from '../../../../services/authService'
@@ -28,12 +29,12 @@ function MetricsTabContent(props) {
                 <Container>
                     <h2 style={{ textAlign: 'center', padding: "20px 10px" }}> Balance Charts </h2>
                     <Row>
-                        <Col xs={12} md={6}>
+                        <Col className="metric__column" xs={12} md={6}>
                             <Container>
                                 <Bar data={data} />
                             </Container>
                         </Col>
-                        <Col xs={12} md={6}>
+                        <Col className="metric__column" xs={12} md={6}>
                             <Container>
                                 <Pie data={data} />
                             </Container>

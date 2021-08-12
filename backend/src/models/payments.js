@@ -8,6 +8,6 @@ const paymentSchema = new mongoose.Schema({
   paymentDate: { type: Date, required: false }
 });
 
-const Payment = mongoose.model('accounts', paymentSchema);
+const Payment = mongoose.model('payment', paymentSchema);
 
 module.exports = Payment;

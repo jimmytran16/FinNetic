@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { FaTrashAlt } from 'react-icons/fa'
+import './dashboard-tabs-accounts.css';
+import { FaTrashAlt, FaMoneyCheck } from 'react-icons/fa'
 import { Container, Table } from 'react-bootstrap'
 import AccountFormModal from '../../../../components/AccountFormModal'
 import DashboardAPI from '../../../../api/dashboard.api'
@@ -13,7 +14,7 @@ function AccountsTabContent(props) {
     useEffect(() => {
         setIsLoading(true);
         setTimeout(() => {
-            DashboardAPI.getUserAccounts('fakeid')
+            DashboardAPI.getUserAccounts()
                 .then(response => setData(response.data.data))
                 .catch(err => console.log(err))
             setIsLoading(false);
@@ -79,8 +80,13 @@ const AccountRow = ({ item, reload, setReload }) => {
             <td>{item.accountName}</td>
             <td>${item.balance}</td>
             <td>{item.lastPayment}</td>
-            <td>
-                <FaTrashAlt onClick={handleAccountDeletion} />
+            <td className="action__icons__wrapper">
+                <div className="action__icons">
+                    <FaTrashAlt className="delete__icon" onClick={handleAccountDeletion} />
+                </div>
+                <div className="action__icons">
+                    <FaMoneyCheck className="payment__icon" />
+                </div>
             </td>
         </tr>
     );

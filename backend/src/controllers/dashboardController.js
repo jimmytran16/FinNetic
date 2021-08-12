@@ -1,7 +1,10 @@
 const { DashboardUtil } = require('../utils/index')
 const AccountService = require('../services/accountService')
+const PaymentService = require('../services/paymentService')
 var accountService = new AccountService()   
+var paymentService = new PaymentService()
 
+// Metric controllers
 const getDashboardContentController = (req, res, next) => {
     accountService.getAllAccounts(req.user.userId , (err,data) => {
         return res.json({
@@ -12,6 +15,7 @@ const getDashboardContentController = (req, res, next) => {
 
 }
 
+// Accounts controllers
 const getUserAccountsController = (req, res, next) => {
     accountService.getAllAccounts(req.user.userId, (err,data) => {
         return res.json({
@@ -63,11 +67,44 @@ const deleteAccountController = (req, res, next) => {
     });
 }
 
+
+// Payment controllers
+const getPaymentsController = (req, res, next) => {
+    paymentService.getAllPayments(req.user.userId, (err, data) => {
+        return res.json({
+            success: err ? false : true,
+            data: err ? err : data
+        })
+    });
+}
+
+const createPaymentController = (req, res, next) => {
+    paymentService.createPayment(req.user.userId, req.body.name, req.body.accountName, req.body.amountPaid, req.body.paymentDate, (err, data) => {
+        return res.json({
+            success: err ? false : true,
+            data: err ? err : data
+        })
+    });
+}
+
+const deletePaymentController = (req, res, next) => {
+    paymentService.deletePayment(req.body.id, (err, data) => {
+        return res.json({
+            success: err ? false : true,
+            data: err ? err : data
+        })
+    });
+}
+
+
 module.exports = { 
     getDashboardContentController, 
     createAccountController, 
     deleteAccountController,
     updateAccountController,
     getUserAccountsController,
-    getUserPaymentsController
+    getUserPaymentsController,
+    createPaymentController,
+    deletePaymentController,
+    getPaymentsController
 };
