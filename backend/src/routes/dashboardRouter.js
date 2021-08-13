@@ -10,8 +10,8 @@ router.post('/createBillingDetails', middlewares.authenticateUser, dashboardCont
 router.delete('/deleteBillingDetails', middlewares.authenticateUser, dashboardController.deleteAccountController)
 router.put('/updateBillingDetails', middlewares.authenticateUser, dashboardController.updateAccountController)
 
-router.get('/getPayments', middlewares.authenticateUser, dashboardController.getPaymentsController)
-router.post('/createPayment', middlewares.authenticateUser, dashboardController.createPaymentController)
+router.get('/getUserPayments', middlewares.authenticateUser, dashboardController.getUserPaymentsController)
+router.post('/createUserPayment', middlewares.authenticateUser, dashboardController.createPaymentController)
 router.delete('/deletePayment', middlewares.authenticateUser, dashboardController.deletePaymentController)
 
 module.exports = router;

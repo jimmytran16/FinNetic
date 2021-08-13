@@ -6,7 +6,7 @@ function PaymentsTabContent(props) {
     const [data, setData] = useState([])
 
     useEffect(() => {
-        DashboardAPI.getUserPayments('123')
+        DashboardAPI.getUserPayments()
             .then(response => setData(response.data.data))
             .catch(err => console.log(err))
     }, [])
@@ -31,7 +31,7 @@ function PaymentsTabContent(props) {
                                     <td>1</td>
                                     <td >{item.name}</td>
                                     <td >{item.accountName}</td>
-                                    <td >{item.amountPaid}</td>
+                                    <td >${item.amountPaid}</td>
                                     <td >{item.paymentDate}</td>
                                 </tr>
                             )

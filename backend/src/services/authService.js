@@ -20,11 +20,11 @@ module.exports = class AuthService {
 
     async loginUser(username,password, cb) {
         try {
-            const { userId , valid } = await this._isUserValid(username,password);
-            var payload = { username: username, userId: userId }
+            const { user , valid } = await this._isUserValid(username,password);
+            var payload = { username: username, userId: user._id }
 
             return (valid)
-                ? cb(null, { accessToken: new JWTService().generateAccessToken(payload), user: username, isAuth: true })
+                ? cb(null, { accessToken: new JWTService().generateAccessToken(payload), user: username, name: user.name, isAuth: true })
                 : cb('Invalid Login', null);
         }catch(err){
             cb(err,null);
@@ -79,14 +79,14 @@ module.exports = class AuthService {
                 let matched = await bcrypt.compare(attemptedPassword, user.password)                
                 
                 // return the the userid and the matched var  
-                return { userId : user._id, valid: matched };
+                return { user : user, valid: matched };
                 
             }
-            return { userId: null, valid: false };
+            return { user: null, valid: false };
 
         }catch(err) {
             console.log(err)
-            return { userId: null, valid:false };
+            return { user: null, valid:false };
         }
     }
 }

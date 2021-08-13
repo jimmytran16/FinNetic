@@ -17,17 +17,8 @@ const getUserAccounts = (id) => {
         method: 'GET',
         url: `http://localhost:4000/dashboard/getUserAccounts`,
         headers: {
-            "Authorization": `Bearer ${AuthService.default.getTokenFromStore()}`
-        },
-    });
-}
-
-const getUserPayments = (id) => {
-    return axios({
-        method: 'GET',
-        url: `http://localhost:4000/dashboard/getUserPayments?id=${id}`,
-        headers: {
-            "Authorization": `Bearer ${AuthService.default.getTokenFromStore()}`
+            "Authorization": `Bearer ${AuthService.default.getTokenFromStore()}`,
+            "Content-Type": "application/json"
         },
     });
 }
@@ -37,7 +28,8 @@ const createBillingDetails = (name, accountHolder, due) => {
         method: 'POST',
         url: 'http://localhost:4000/dashboard/createBillingDetails',
         headers: {
-            "Authorization": `Bearer ${AuthService.default.getTokenFromStore()}`
+            "Authorization": `Bearer ${AuthService.default.getTokenFromStore()}`,
+            "Content-Type": "application/json"
         },
         data: {
             "name": name,
@@ -52,10 +44,39 @@ const deleteBillingAccount = (id) => {
         method: 'DELETE',
         url: 'http://localhost:4000/dashboard/deleteBillingDetails',
         headers: {
-            "Authorization": `Bearer ${AuthService.default.getTokenFromStore()}`
+            "Authorization": `Bearer ${AuthService.default.getTokenFromStore()}`,
+            "Content-Type": "application/json"
         },
         data: {
             "id": id
+        }
+    });
+}
+
+const getUserPayments = () => {
+    return axios({
+        method: 'GET',
+        url: `http://localhost:4000/dashboard/getUserPayments`,
+        headers: {
+            "Authorization": `Bearer ${AuthService.default.getTokenFromStore()}`,
+            "Content-Type": "application/json"
+        },
+    });
+}
+
+const createUserPayment = (accountName,payment, date) => {
+    return axios({
+        method: 'POST',
+        url: `http://localhost:4000/dashboard/createUserPayment`,
+        headers: {
+            "Authorization": `Bearer ${AuthService.default.getTokenFromStore()}`,
+            "Content-Type": "application/json"
+        },
+        data: {
+            "name": accountName,
+            "accountName": AuthService.default.getUserNameFromStore(),
+            "amountPaid": payment,
+            "paymentDate": date          
         }
     });
 }
@@ -65,5 +86,6 @@ module.exports = {
     createBillingDetails,
     getUserAccounts,
     getUserPayments,
-    deleteBillingAccount
+    deleteBillingAccount,
+    createUserPayment
 };

@@ -9,6 +9,14 @@ class AuthService {
         return JSON.parse(localStorage.getItem('user'))?.accessToken || null;
     }
 
+    getUserEmailFromStore() {
+        return JSON.parse(localStorage.getItem('user'))?.user || null
+    }
+
+    getUserNameFromStore() {
+        return JSON.parse(localStorage.getItem('user'))?.name || null
+    }
+
     isAuthenticated() {
         return JSON.parse(localStorage.getItem('user'))?.isAuth || false
     }

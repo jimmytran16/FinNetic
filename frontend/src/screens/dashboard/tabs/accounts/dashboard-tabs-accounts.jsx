@@ -3,6 +3,7 @@ import './dashboard-tabs-accounts.css';
 import { FaTrashAlt, FaMoneyCheck } from 'react-icons/fa'
 import { Container, Table } from 'react-bootstrap'
 import AccountFormModal from '../../../../components/AccountFormModal'
+import PaymentFormModal from '../../../../components/PaymentFormModal'
 import DashboardAPI from '../../../../api/dashboard.api'
 import SpinnerLoader from '../../../../components/SpinnerLoader'
 
@@ -62,6 +63,7 @@ const AccountTable = ({ data, reload, setReload }) => {
 
 
 const AccountRow = ({ item, reload, setReload }) => {
+    const [show, setShow] = useState(false)
     // Stores the id related to the account 
     const id = item._id;
 
@@ -85,9 +87,10 @@ const AccountRow = ({ item, reload, setReload }) => {
                     <FaTrashAlt className="delete__icon" onClick={handleAccountDeletion} />
                 </div>
                 <div className="action__icons">
-                    <FaMoneyCheck className="payment__icon" />
+                    <FaMoneyCheck className="payment__icon" onClick={() => setShow(!show)} />
                 </div>
             </td>
+            <PaymentFormModal show={show} accountName={item.name} setShow={setShow} />
         </tr>
     );
 }
