@@ -14,9 +14,10 @@ module.exports = class PaymentService {
         }
     }
 
-    async createPayment(userId, name, accountName, amountPaid, paymentDate, cb) {
+    async createPayment(userId, name, accountId, accountName, amountPaid, paymentDate, cb) {
         let payment = new Payment({
             userId: mongoose.Types.ObjectId(userId),
+            accountId: mongoose.Types.ObjectId(accountId),
             name: name,
             accountName: accountName,
             amountPaid: amountPaid,

@@ -1,7 +1,7 @@
 const { DashboardUtil } = require('../utils/index')
 const AccountService = require('../services/accountService')
 const PaymentService = require('../services/paymentService')
-var accountService = new AccountService()   
+var accountService = new AccountService()
 var paymentService = new PaymentService()
 
 // Metric controllers
@@ -64,7 +64,7 @@ const getUserPaymentsController = (req, res, next) => {
 }
 
 const createPaymentController = (req, res, next) => {
-    paymentService.createPayment(req.user.userId, req.body.name, req.body.accountName, req.body.amountPaid, req.body.paymentDate, (err, data) => {
+    paymentService.createPayment(req.user.userId, req.body.name, req.body.accountId, req.body.accountName, req.body.amountPaid, req.body.paymentDate, (err, data) => {
         return res.json({
             success: err ? false : true,
             data: err ? err : data
@@ -82,9 +82,9 @@ const deletePaymentController = (req, res, next) => {
 }
 
 
-module.exports = { 
-    getDashboardContentController, 
-    createAccountController, 
+module.exports = {
+    getDashboardContentController,
+    createAccountController,
     deleteAccountController,
     updateAccountController,
     getUserAccountsController,

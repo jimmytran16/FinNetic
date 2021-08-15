@@ -64,7 +64,7 @@ const getUserPayments = () => {
     });
 }
 
-const createUserPayment = (accountName,payment, date) => {
+const createUserPayment = (accountId, accountName, payment, date) => {
     return axios({
         method: 'POST',
         url: `http://localhost:4000/dashboard/createUserPayment`,
@@ -74,9 +74,10 @@ const createUserPayment = (accountName,payment, date) => {
         },
         data: {
             "name": accountName,
+            "accountId": accountId,
             "accountName": AuthService.default.getUserNameFromStore(),
             "amountPaid": payment,
-            "paymentDate": date          
+            "paymentDate": date
         }
     });
 }

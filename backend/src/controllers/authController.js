@@ -12,8 +12,9 @@ const registerController = (req, res, next) => {
 
 const logInController = (req, res, next) => {
     authService.loginUser(req.body.username, req.body.password, (err,result) => {
+      console.log(err)
         return res.json({
-            data: err ? err : result,
+            data: err ? err.toString() : result,
             success: err ? false: true
         })
     })
@@ -33,9 +34,9 @@ const changePasswordController = (req, res, next) => {
     })
 }
 
-module.exports = { 
-    registerController, 
-    logInController, 
-    logOutController, 
-    changePasswordController 
+module.exports = {
+    registerController,
+    logInController,
+    logOutController,
+    changePasswordController
 };

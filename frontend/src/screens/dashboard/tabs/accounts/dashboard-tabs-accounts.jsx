@@ -48,7 +48,7 @@ const AccountTable = ({ data, reload, setReload }) => {
                     <th>Actions</th>
                 </tr>
             </thead>
-            <tbody> 
+            <tbody>
                 {
                     data.map((item, key) => {
                         return (
@@ -64,7 +64,7 @@ const AccountTable = ({ data, reload, setReload }) => {
 
 const AccountRow = ({ item, reload, setReload }) => {
     const [show, setShow] = useState(false)
-    // Stores the id related to the account 
+    // Stores the id related to the account
     const id = item._id;
 
     const handleAccountDeletion = () => {
@@ -90,7 +90,7 @@ const AccountRow = ({ item, reload, setReload }) => {
                     <FaMoneyCheck className="payment__icon" onClick={() => setShow(!show)} />
                 </div>
             </td>
-            <PaymentFormModal show={show} accountName={item.name} setShow={setShow} />
+            <PaymentFormModal show={show} accountId={item._id} accountName={item.name} setShow={setShow} />
         </tr>
     );
 }

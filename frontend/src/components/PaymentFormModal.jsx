@@ -4,7 +4,7 @@ import SpinnerCircle from './SpinnerCircle'
 import DashboardAPI from '../api/dashboard.api';
 
 
-function PaymentFormModal({ accountName, show, setShow }) {
+function PaymentFormModal({ accountId, accountName, show, setShow }) {
 
     const [paymentAmount, setPaymentAmount] = useState('');
     const [paymentDate, setPaymentDate] = useState('');
@@ -16,7 +16,7 @@ function PaymentFormModal({ accountName, show, setShow }) {
     const handlePaymentSubmission = () => {
         setIsLoading(true)
         setTimeout(() => {
-            DashboardAPI.createUserPayment(accountName, paymentAmount, paymentDate)
+            DashboardAPI.createUserPayment(accountId, accountName, paymentAmount, paymentDate)
             .then(response => {
                 setPaymentAmount('')
                 setPaymentDate('')
@@ -25,7 +25,7 @@ function PaymentFormModal({ accountName, show, setShow }) {
             .catch(err => console.log(err))
             setIsLoading(false)
         },500)
- 
+
     }
 
     return (
