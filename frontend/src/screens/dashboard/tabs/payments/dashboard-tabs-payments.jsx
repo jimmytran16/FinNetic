@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Table } from 'react-bootstrap'
 import DashboardAPI from '../../../../api/dashboard.api'
+import BoxContainer  from '../../../../components/BoxContainer'
 
 function PaymentsTabContent(props) {
     const [data, setData] = useState([])
@@ -13,6 +14,7 @@ function PaymentsTabContent(props) {
 
     return (
         <Container>
+          <BoxContainer>
             <Table responsive>
                 <thead>
                     <tr>
@@ -39,6 +41,7 @@ function PaymentsTabContent(props) {
                     }
                 </tbody>
             </Table>
+          </BoxContainer>
         </Container>
     );
 }

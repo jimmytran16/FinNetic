@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import './DashboardScreen.css'
 import { Tabs, Tab } from 'react-bootstrap';
 import MetricsTabContent from './tabs/metrics/dashboard-tabs-metrics'
 import AccountsTabContent from './tabs/accounts/dashboard-tabs-accounts'
@@ -18,17 +19,17 @@ function Dashboard({ history }) {
             >
                 <Tab eventKey="home" title="Metrics">
                     {
-                        (key === 'home') ? <MetricsTabContent /> : <></>
+                        (key === 'home') && <MetricsTabContent />
                     }
                 </Tab>
                 <Tab eventKey="profile" title="Accounts">
                     {
-                        (key === 'profile') ? <AccountsTabContent /> : <></>
+                        (key === 'profile') && <AccountsTabContent />
                     }
                 </Tab>
                 <Tab eventKey="contact" title="Payments">
                     {
-                        (key === 'contact') ? <PaymentsTabContent /> : <></>
+                        (key === 'contact') && <PaymentsTabContent />
                     }
                 </Tab>
             </Tabs>

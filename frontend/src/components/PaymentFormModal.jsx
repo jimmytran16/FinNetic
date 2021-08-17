@@ -43,7 +43,7 @@ function PaymentFormModal({ accountId, accountName, show, setShow }) {
 
                         <Form.Group className="mb-3" controlId="formGridHolderName">
                             <Form.Label>Payment Date</Form.Label>
-                            <Form.Control type="date" value={paymentDate} onChange={(e) => setPaymentDate(e.target.value)} placeholder="Payment Date" />
+                            <Form.Control type="date" value={paymentDate} onChange={(e) => setPaymentDate(e.target.value)} placeholder="yyyy-mm-dd" />
                         </Form.Group>
                     </Form>
                 </Modal.Body>

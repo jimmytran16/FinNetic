@@ -6,6 +6,7 @@ import AccountFormModal from '../../../../components/AccountFormModal'
 import PaymentFormModal from '../../../../components/PaymentFormModal'
 import DashboardAPI from '../../../../api/dashboard.api'
 import SpinnerLoader from '../../../../components/SpinnerLoader'
+import BoxContainer from '../../../../components/BoxContainer'
 
 function AccountsTabContent(props) {
     const [isLoading, setIsLoading] = useState(false)
@@ -37,27 +38,29 @@ function AccountsTabContent(props) {
 
 const AccountTable = ({ data, reload, setReload }) => {
     return (
-        <Table responsive>
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Name</th>
-                    <th>Account holder</th>
-                    <th>Balance</th>
-                    <th>Last Payment</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                {
-                    data.map((item, key) => {
-                        return (
-                            <AccountRow key={key} item={item} setReload={setReload} reload={reload} />
-                        )
-                    })
-                }
-            </tbody>
-        </Table>
+        <BoxContainer>
+          <Table responsive>
+              <thead>
+                  <tr>
+                      <th>#</th>
+                      <th>Name</th>
+                      <th>Account holder</th>
+                      <th>Balance</th>
+                      <th>Last Payment</th>
+                      <th>Actions</th>
+                  </tr>
+              </thead>
+              <tbody>
+                  {
+                      data.map((item, key) => {
+                          return (
+                              <AccountRow key={key} item={item} setReload={setReload} reload={reload} />
+                          )
+                      })
+                  }
+              </tbody>
+          </Table>
+        </BoxContainer>
     )
 }
 

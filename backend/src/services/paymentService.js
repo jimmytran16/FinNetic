@@ -1,9 +1,12 @@
 const Payment = require('../models/payments')
+const AccountService = require('./accountService')
 const mongoose = require('mongoose')
 
 module.exports = class PaymentService {
 
-    constructor() { }
+    constructor() {
+        this.accountService = new AccountService();
+    }
 
     async getAllPayments(userId,cb) {
         try {
@@ -22,6 +25,11 @@ module.exports = class PaymentService {
             accountName: accountName,
             amountPaid: amountPaid,
             paymentDate: new Date(paymentDate)
+        })
+
+        // Update the last payment to the account
+        this.accountService.updateAccount({ _id: accountId }, { $set: { lastPayment: new Date(paymentDate) } }, (err, data) => {
+          if (err) return cb (err,null);
         })
 
         try {
