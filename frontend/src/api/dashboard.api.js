@@ -1,10 +1,11 @@
 const axios = require("axios")
 const AuthService = require("../services/authService");
+const url = '10.0.0.108:4000'
 
 const getDashboardGridContent = () => {
     return axios({
         method: 'GET',
-        url: 'http://localhost:4000/dashboard/getDashboardContent',
+        url: `http://${url}/dashboard/getDashboardContent`,
         headers: {
             "Authorization": `Bearer ${AuthService.default.getTokenFromStore()}`,
             "Content-Type": "application/json"
@@ -15,7 +16,7 @@ const getDashboardGridContent = () => {
 const getUserAccounts = (id) => {
     return axios({
         method: 'GET',
-        url: `http://localhost:4000/dashboard/getUserAccounts`,
+        url: `http://${url}/dashboard/getUserAccounts`,
         headers: {
             "Authorization": `Bearer ${AuthService.default.getTokenFromStore()}`,
             "Content-Type": "application/json"
@@ -26,7 +27,7 @@ const getUserAccounts = (id) => {
 const createBillingDetails = (name, accountHolder, due) => {
     return axios({
         method: 'POST',
-        url: 'http://localhost:4000/dashboard/createBillingDetails',
+        url: `http://${url}/dashboard/createBillingDetails`,
         headers: {
             "Authorization": `Bearer ${AuthService.default.getTokenFromStore()}`,
             "Content-Type": "application/json"
@@ -42,7 +43,7 @@ const createBillingDetails = (name, accountHolder, due) => {
 const deleteBillingAccount = (id) => {
     return axios({
         method: 'DELETE',
-        url: 'http://localhost:4000/dashboard/deleteBillingDetails',
+        url: `http://${url}/dashboard/deleteBillingDetails`,
         headers: {
             "Authorization": `Bearer ${AuthService.default.getTokenFromStore()}`,
             "Content-Type": "application/json"
@@ -56,7 +57,7 @@ const deleteBillingAccount = (id) => {
 const getUserPayments = () => {
     return axios({
         method: 'GET',
-        url: `http://localhost:4000/dashboard/getUserPayments`,
+        url: 'http://10.0.0.108:4000/dashboard/getUserPayments',
         headers: {
             "Authorization": `Bearer ${AuthService.default.getTokenFromStore()}`,
             "Content-Type": "application/json"
@@ -67,7 +68,7 @@ const getUserPayments = () => {
 const createUserPayment = (accountId, accountName, payment, date) => {
     return axios({
         method: 'POST',
-        url: `http://localhost:4000/dashboard/createUserPayment`,
+        url: `http://${url}/dashboard/createUserPayment`,
         headers: {
             "Authorization": `Bearer ${AuthService.default.getTokenFromStore()}`,
             "Content-Type": "application/json"

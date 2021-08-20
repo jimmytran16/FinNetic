@@ -1,9 +1,10 @@
 const axios = require('axios')
+const url = '10.0.0.108:4000'
 
 const registerUser = (username, password, name) => {
     return axios({
         method: 'POST',
-        url: 'http://localhost:4000/auth/register',
+        url: `http://${url}/auth/register`,
         data: {
             "name": name,
             "username": username,
@@ -16,7 +17,7 @@ const loginUser = (username, password, name) => {
     return axios({
         
         method: 'POST',
-        url: 'http://localhost:4000/auth/login',
+        url: `http://${url}/auth/login`,
         data: {
             "username": username,
             "password":password

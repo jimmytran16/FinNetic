@@ -11,6 +11,7 @@ app.use(require('morgan')('dev'))
 
 db.connect();
 
+app.get('/', (req,res,next) => { return res.json({ message:'Hello from Tracker API' }) } )
 app.use('/auth', routers.authRouter);
 app.use('/dashboard', routers.dashboardRouter);
 
