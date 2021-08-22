@@ -78,13 +78,19 @@ const AccountRow = ({ item, reload, setReload }) => {
             .catch(err => console.log(err))
     }
 
+    // helper function to parse off set date format to mm-dd-YYYY
+    const parseOffsetDateToMonthDayYear = (stringDate) => {
+        const date = new Date(stringDate);
+        return stringDate ? `${date.getMonth() + 1}/${date.getDate() + 1}/${date.getFullYear()}` : "No Payments" 
+    }
+
     return (
         <tr>
             <td>1</td>
             <td>{item.name}</td>
             <td>{item.accountName}</td>
             <td>${item.balance}</td>
-            <td>{item.lastPayment}</td>
+            <td>{parseOffsetDateToMonthDayYear(item.lastPayment)}</td>
             <td className="action__icons__wrapper">
                 <div className="action__icons">
                     <FaTrashAlt className="delete__icon" onClick={handleAccountDeletion} />

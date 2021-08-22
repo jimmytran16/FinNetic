@@ -22,8 +22,6 @@ module.exports = class AuthService {
         try {
             const { user , valid } = await this._isUserValid(username,password);
             var payload = { username: username, userId: user._id }
-            console.log(user)
-            console.log(valid)
             return (valid)
                 ? cb(null, { accessToken: new JWTService().generateAccessToken(payload), user: username, name: user.name, isAuth: true })
                 : cb('Invalid Login', null);

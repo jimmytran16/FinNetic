@@ -1,4 +1,4 @@
-import React from "react";
+import React , { useState } from "react";
 import './App.css';
 import {
   BrowserRouter as Router,
@@ -14,9 +14,10 @@ import HomeScreen from './screens/home/HomeScreen'
 import DashboardScreen from './screens/dashboard/DashboardScreen'
 import LoginScreen from "./screens/login/LoginScreen";
 import RegisterScreen from "./screens/register/RegisterScreen";
+import LogoutButton from './components/LogoutButton';
 
 function App(props) {
-
+  const [isAuth, setIsAuth] = useState(AuthService.isAuthenticated())
   return (
     <>
       <Router>
@@ -26,8 +27,14 @@ function App(props) {
             <Nav className="me-auto">
               <Nav.Link as={Link} to="/">Home</Nav.Link>
               <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>
-              <Nav.Link as={Link} to="/login">Login </Nav.Link>
-              <Nav.Link as={Link} to="/register">Register </Nav.Link>
+              {
+                isAuth
+                ? (<LogoutButton />)
+                :(<>
+                <Nav.Link as={Link} to="/login">Login </Nav.Link>
+                <Nav.Link as={Link} to="/register">Register </Nav.Link>
+                </>)
+              }
             </Nav>
           </Container>
         </Navbar>
