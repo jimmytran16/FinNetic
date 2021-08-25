@@ -47,6 +47,7 @@ const AccountTable = ({ data, reload, setReload }) => {
                       <th>Account holder</th>
                       <th>Balance</th>
                       <th>Last Payment</th>
+                      <th>Payment Due Date</th>
                       <th>Actions</th>
                   </tr>
               </thead>
@@ -84,6 +85,11 @@ const AccountRow = ({ item, reload, setReload }) => {
         return stringDate ? `${date.getMonth() + 1}/${date.getDate() + 1}/${date.getFullYear()}` : "No Payments" 
     }
 
+    const parseOffsetDateToMonthDayYearForDueDate = (stringDate) => {
+        const date = new Date(stringDate);
+        return stringDate ? `${date.getMonth() + 1}/${date.getDate() + 1}` : "No Due Date" 
+    }
+
     return (
         <tr>
             <td>1</td>
@@ -91,6 +97,7 @@ const AccountRow = ({ item, reload, setReload }) => {
             <td>{item.accountName}</td>
             <td>${item.balance}</td>
             <td>{parseOffsetDateToMonthDayYear(item.lastPayment)}</td>
+            <td>{parseOffsetDateToMonthDayYearForDueDate(item.accountDueDate)}</td>
             <td className="action__icons__wrapper">
                 <div className="action__icons">
                     <FaTrashAlt className="delete__icon" onClick={handleAccountDeletion} />

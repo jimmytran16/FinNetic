@@ -26,7 +26,7 @@ const getUserAccountsController = (req, res, next) => {
 }
 
 const createAccountController = (req, res, next) => {
-    accountService.createAccount(req.body.name, req.body.balance, req.body.accountHolder, req.user.userId, (err, data) => {
+    accountService.createAccount(req.body.name, req.body.balance, req.body.accountHolder, req.body.accountDueDate, req.user.userId, (err, data) => {
         return res.json({
             success: err ? false : true,
             data: data
@@ -51,7 +51,6 @@ const deleteAccountController = (req, res, next) => {
         })
     });
 }
-
 
 // Payment controllers
 const getUserPaymentsController = (req, res, next) => {

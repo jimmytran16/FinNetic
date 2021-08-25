@@ -7,8 +7,8 @@ import DashboardAPI from '../api/dashboard.api';
 function AccountFormModal({ reload, setReload }) {
 
     const [accountName, setAccountName] = useState('');
-    const [accountHolderName, setAccountHolderName] = useState('');
     const [balanceDue, setBalanceDue] = useState(0);
+    const [accountDueDate, setAccountDueDate] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
     const [show, setShow] = useState(false);
@@ -19,12 +19,12 @@ function AccountFormModal({ reload, setReload }) {
     const handleBillDetailsSubmission = () => {
         setIsLoading(true);
         setTimeout(() => {
-            DashboardAPI.createBillingDetails(accountName, accountHolderName, balanceDue)
+            DashboardAPI.createBillingDetails(accountName, balanceDue, accountDueDate)
                 .then(response => {
                     setReload(!reload)
-                    setAccountHolderName('')
                     setAccountName('')
                     setBalanceDue(0)
+                    setAccountDueDate('')
                 })
                 .catch(error => console.log(error));
             setIsLoading(false);
@@ -47,14 +47,14 @@ function AccountFormModal({ reload, setReload }) {
                             <Form.Control value={accountName} onChange={(e) => setAccountName(e.target.value)} placeholder="Name" />
                         </Form.Group>
 
-                        <Form.Group className="mb-3" controlId="formGridHolderName">
-                            <Form.Label>Account holder name</Form.Label>
-                            <Form.Control value={accountHolderName} onChange={(e) => setAccountHolderName(e.target.value)} placeholder="Account holder name" />
-                        </Form.Group>
-
                         <Form.Group className="mb-3" controlId="formGridAccountBalance">
                             <Form.Label>Account balance</Form.Label>
                             <Form.Control value={balanceDue} onChange={(e) => setBalanceDue(e.target.value)} type="number" placeholder="Account balance" />
+                        </Form.Group>
+
+                        <Form.Group className="mb-3" controlId="formGridAccountBalance">
+                            <Form.Label>Account Due Date</Form.Label>
+                            <Form.Control value={accountDueDate} onChange={(e) => setAccountDueDate(e.target.value)} type="date" placeholder="Account Due Date" />
                         </Form.Group>
                     </Form>
                 </Modal.Body>

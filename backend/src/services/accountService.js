@@ -14,12 +14,13 @@ module.exports = class AccountService {
         }
     }
 
-    async createAccount(name, balance, accountName, userId, cb) {
+    async createAccount(name, balance, accountName, accountDueDate, userId, cb) {
         let account = new Account({
             userId: userId,
             name: name,
             balance: balance,
             accountName: accountName,
+            accountDueDate, accountDueDate,
             lastPayment: null
         })
 
