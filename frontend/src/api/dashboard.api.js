@@ -1,6 +1,7 @@
 const axios = require("axios")
 const AuthService = require("../services/authService");
-const url = '10.0.0.108:4000'
+// const url = '10.0.0.108:4000'
+const url = 'localhost:4000'
 
 const getDashboardGridContent = () => {
     return axios({
@@ -58,7 +59,7 @@ const deleteBillingAccount = (id) => {
 const getUserPayments = () => {
     return axios({
         method: 'GET',
-        url: 'http://10.0.0.108:4000/dashboard/getUserPayments',
+        url: `http://${url}/dashboard/getUserPayments`,
         headers: {
             "Authorization": `Bearer ${AuthService.default.getTokenFromStore()}`,
             "Content-Type": "application/json"
