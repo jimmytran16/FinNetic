@@ -33,7 +33,7 @@ function AccountFormModal({ reload, setReload }) {
 
     return (
         <div>
-            <Button variant="primary" onClick={handleShow}>
+            <Button style={{ margin:5 }} variant="primary" onClick={handleShow}>
                 Add Account
             </Button>
             <Modal show={show} onHide={handleClose}>

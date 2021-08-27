@@ -1,40 +1,62 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './DashboardScreen.css'
-import { Tabs, Tab } from 'react-bootstrap';
-import MetricsTabContent from './tabs/metrics/dashboard-tabs-metrics'
-import AccountsTabContent from './tabs/accounts/dashboard-tabs-accounts'
-import PaymentsTabContent from './tabs/payments/dashboard-tabs-payments'
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+} from "react-router-dom";
+import OpenAccountsPage from './dashboard-open-accounts/dashboard-open-accounts'
 
 function Dashboard({ history }) {
-
-    const [key, setKey] = useState('home');
-
     return (
         <>
-            <Tabs
-                id="controlled-tab-example"
-                activeKey={key}
-                onSelect={(k) => setKey(k)}
-                className="mb-3"
-            >
-                <Tab eventKey="home" title="Metrics">
-                    {
-                        (key === 'home') && <MetricsTabContent />
-                    }
-                </Tab>
-                <Tab eventKey="profile" title="Accounts">
-                    {
-                        (key === 'profile') && <AccountsTabContent />
-                    }
-                </Tab>
-                <Tab eventKey="contact" title="Payments">
-                    {
-                        (key === 'contact') && <PaymentsTabContent />
-                    }
-                </Tab>
-            </Tabs>
+            <Router>
+                <div>
+                    <nav>
+                        <ul>
+                            <li>
+                                <Link to="/dashboard">Dash</Link>
+                            </li>
+                            <li>
+                                <Link to="/dashboard/openAccounts">Open Accounts</Link>
+                            </li>
+                            <li>
+                                <Link to="/dashboard/budgeting">Bugeting</Link>
+                            </li>
+                        </ul>
+                    </nav>
+
+                    <Switch>
+                        <Route path="/dashboard/budgeting">
+                            <BugetingContent />
+                        </Route>
+                        <Route path="/dashboard/openAccounts">
+                            <OpenAccountsPage />
+                        </Route>
+                        <Route path="/dashboard">
+                            <DashContent />
+                        </Route>
+                    </Switch>
+                </div>
+            </Router>
+            );
+
         </>
     );
 }
+
+const DashContent = () => {
+    return (
+        <h1>Hello from Dash</h1>
+    )
+}
+
+const BugetingContent = () => {
+    return (
+        <h1>Bugetting Component</h1>
+    )
+}
+
 
 export default Dashboard;

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Table } from 'react-bootstrap'
-import DashboardAPI from '../../../../api/dashboard.api'
-import BoxContainer  from '../../../../components/BoxContainer'
+import DashboardAPI from '../../../../../api/dashboard.api'
+import BoxContainer  from '../../../../../components/BoxContainer'
 
 function PaymentsTabContent(props) {
     const [data, setData] = useState([])

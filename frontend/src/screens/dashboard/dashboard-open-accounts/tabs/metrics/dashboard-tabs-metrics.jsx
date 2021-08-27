@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react';
 import './dashboard-tabs-metrics.css'
 import { Container, Row, Col } from 'react-bootstrap'
 import { Pie, Bar, Doughnut } from 'react-chartjs-2'
-import AuthService from '../../../../services/authService'
-import SpinnerLoader from '../../../../components/SpinnerLoader'
-import BoxContainer from '../../../../components/BoxContainer'
-import DashboardAPI from '../../../../api/dashboard.api'
+import AuthService from '../../../../../services/authService'
+import SpinnerLoader from '../../../../../components/SpinnerLoader'
+import BoxContainer from '../../../../../components/BoxContainer'
+import DashboardAPI from '../../../../../api/dashboard.api'
 
 
 function MetricsTabContent(props) {
