@@ -7,6 +7,7 @@ import {
     Link
 } from "react-router-dom";
 import OpenAccountsPage from './dashboard-open-accounts/dashboard-open-accounts'
+import { Container } from 'react-bootstrap';
 
 function Dashboard({ history }) {
     return (
@@ -27,21 +28,21 @@ function Dashboard({ history }) {
                         </ul>
                     </nav>
 
-                    <Switch>
-                        <Route path="/dashboard/budgeting">
-                            <BugetingContent />
-                        </Route>
-                        <Route path="/dashboard/openAccounts">
-                            <OpenAccountsPage />
-                        </Route>
-                        <Route path="/dashboard">
-                            <DashContent />
-                        </Route>
-                    </Switch>
+                    <Container>
+                        <Switch>
+                            <Route path="/dashboard/budgeting">
+                                <BugetingContent />
+                            </Route>
+                            <Route path="/dashboard/openAccounts">
+                                <OpenAccountsPage />
+                            </Route>
+                            <Route path="/dashboard">
+                                <DashContent />
+                            </Route>
+                        </Switch>
+                    </Container>
                 </div>
             </Router>
-            );
-
         </>
     );
 }

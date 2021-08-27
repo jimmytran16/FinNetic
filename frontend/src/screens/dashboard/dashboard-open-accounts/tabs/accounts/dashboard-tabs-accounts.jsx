@@ -40,7 +40,6 @@ function AccountsTabContent(props) {
 
 
 const AccountTable = ({ data, reload, setReload }) => {
-    const [show,setShow] = useState(true);
     return (
         <BoxContainer>
             <Table responsive>
@@ -86,12 +85,7 @@ const AccountRow = ({ item, reload, setReload }) => {
     // helper function to parse off set date format to mm-dd-YYYY
     const parseOffsetDateToMonthDayYear = (stringDate) => {
         const date = new Date(stringDate);
-        return stringDate ? `${date.getMonth() + 1}/${date.getDate() + 1}/${date.getFullYear()}` : "No Payments"
-    }
-
-    const parseOffsetDateToMonthDayYearForDueDate = (stringDate) => {
-        const date = new Date(stringDate);
-        return stringDate ? `${date.getMonth() + 1}/${date.getDate() + 1}` : "No Due Date"
+        return stringDate ? `${date.getUTCMonth() + 1}/${date.getUTCDate()}/${date.getFullYear()}` : "No Payments"
     }
 
     return (
@@ -102,7 +96,7 @@ const AccountRow = ({ item, reload, setReload }) => {
                 <td>{item.accountName}</td>
                 <td>${item.balance}</td>
                 <td>{parseOffsetDateToMonthDayYear(item.lastPayment)}</td>
-                <td>{parseOffsetDateToMonthDayYearForDueDate(item.accountDueDate)}</td>
+                <td>{parseOffsetDateToMonthDayYear(item.accountDueDate)}</td>
                 <td className="action__icons__wrapper">
                     <div className="action__icons">
                         <FaTrashAlt className="delete__icon" onClick={handleAccountDeletion} />
@@ -110,7 +104,6 @@ const AccountRow = ({ item, reload, setReload }) => {
                 </td>
             </tr>
         </>
-
     );
 }
 
