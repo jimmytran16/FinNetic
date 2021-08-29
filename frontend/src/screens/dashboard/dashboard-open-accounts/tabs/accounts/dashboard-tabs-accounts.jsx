@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './dashboard-tabs-accounts.css';
 import { FaTrashAlt, FaMoneyCheck } from 'react-icons/fa'
 import { Container, Table } from 'react-bootstrap'
+import PaymentUtil from '../../../../../utils/payment.utils'
 import AccountFormModal from '../../../../../components/AccountFormModal'
 import PaymentFormModal from '../../../../../components/PaymentFormModal'
 import DashboardAPI from '../../../../../api/dashboard.api'
@@ -82,12 +83,6 @@ const AccountRow = ({ item, reload, setReload }) => {
             .catch(err => console.log(err))
     }
 
-    // helper function to parse off set date format to mm-dd-YYYY
-    const parseOffsetDateToMonthDayYear = (stringDate) => {
-        const date = new Date(stringDate);
-        return stringDate ? `${date.getUTCMonth() + 1}/${date.getUTCDate()}/${date.getFullYear()}` : "No Payments"
-    }
-
     return (
         <>
             <tr>
@@ -95,8 +90,8 @@ const AccountRow = ({ item, reload, setReload }) => {
                 <td>{item.name}</td>
                 <td>{item.accountName}</td>
                 <td>${item.balance}</td>
-                <td>{parseOffsetDateToMonthDayYear(item.lastPayment)}</td>
-                <td>{parseOffsetDateToMonthDayYear(item.accountDueDate)}</td>
+                <td>{PaymentUtil.parseOffsetDateToMonthDayYear(item.lastPayment)}</td>
+                <td>{PaymentUtil.parseOffsetDateToMonthDayYear(item.accountDueDate)}</td>
                 <td className="action__icons__wrapper">
                     <div className="action__icons">
                         <FaTrashAlt className="delete__icon" onClick={handleAccountDeletion} />

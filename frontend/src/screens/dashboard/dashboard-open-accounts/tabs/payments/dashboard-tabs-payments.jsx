@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Table } from 'react-bootstrap'
+import { Accordion, Button, Card, Container, Table } from 'react-bootstrap'
 import DashboardAPI from '../../../../../api/dashboard.api'
-import BoxContainer  from '../../../../../components/BoxContainer'
+import PaymentUtil from '../../../../../utils/payment.utils'
 
 function PaymentsTabContent(props) {
     const [data, setData] = useState([])
@@ -14,34 +14,49 @@ function PaymentsTabContent(props) {
 
     return (
         <Container>
-          <BoxContainer>
-            <Table responsive>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Name</th>
-                        <th>Account Name</th>
-                        <th>Amount Paid</th>
-                        <th>Payment Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        data.map((item, key) => {
-                            return (
-                                <tr key={key}>
-                                    <td>1</td>
-                                    <td >{item.name}</td>
-                                    <td >{item.accountName}</td>
-                                    <td >${item.amountPaid}</td>
-                                    <td >{item.paymentDate}</td>
-                                </tr>
-                            )
-                        })
-                    }
-                </tbody>
-            </Table>
-          </BoxContainer>
+            <Accordion defaultActiveKey="1">
+                {
+                    data.map((item, key) => {
+                        return (
+                            <Card key={key}>
+                                <Card.Header>
+                                    <Accordion.Toggle as={Button} variant="link" eventKey={key + 1}>
+                                        {item.month}
+                                    </Accordion.Toggle>
+                                </Card.Header>
+                                <Accordion.Collapse eventKey={key + 1}>
+                                    <Table responsive>
+                                        <thead>
+                                            <tr>
+                                                <th>#</th>
+                                                <th>Name</th>
+                                                <th>Account Name</th>
+                                                <th>Amount Paid</th>
+                                                <th>Payment Date</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {
+                                                item.payments.map((item, key) => {
+                                                    return (
+                                                        <tr key={key}>
+                                                            <td>{++key}</td>
+                                                            <td >{item.name}</td>
+                                                            <td >{item.accountName}</td>
+                                                            <td >${item.amountPaid}</td>
+                                                            <td >{PaymentUtil.parseOffsetDateToMonthDayYear(item.paymentDate)}</td>
+                                                        </tr>
+                                                    )
+                                                })
+                                            }
+                                        </tbody>
+                                    </Table>
+                                </Accordion.Collapse>
+                            </Card>
+                        )
+                    })
+                }
+            </Accordion>
         </Container>
     );
 }
