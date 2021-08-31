@@ -49,12 +49,12 @@ function AccountFormModal({ reload, setReload }) {
 
                         <Form.Group className="mb-3" controlId="formGridAccountBalance">
                             <Form.Label>Account balance</Form.Label>
-                            <Form.Control value={balanceDue} onChange={(e) => setBalanceDue(e.target.value)} type="number" placeholder="Account balance" />
+                            <Form.Control value={balanceDue} onChange={(e) => setBalanceDue(e.target.value)} type="number" step="0.01" placeholder="Account balance" />
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formGridAccountBalance">
                             <Form.Label>Account Due Date</Form.Label>
-                            <Form.Control value={accountDueDate} onChange={(e) => setAccountDueDate(e.target.value)} type="date" placeholder="Account Due Date" />
+                            <Form.Control value={accountDueDate} onChange={(e) => setAccountDueDate(e.target.value)} type="date" placeholder="yyyy-mm-dd" />
                         </Form.Group>
                     </Form>
                 </Modal.Body>

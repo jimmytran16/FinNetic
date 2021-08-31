@@ -5,7 +5,7 @@ import DashboardAPI from '../api/dashboard.api';
 
 
 function PaymentFormModal({ data }) {
-
+    
     const [show, setShow] = useState(false)
     const [isLoading, setIsLoading] = useState(false);
     const [paymentAmount, setPaymentAmount] = useState('');
@@ -41,7 +41,7 @@ function PaymentFormModal({ data }) {
 
     return (
         <div>
-            <Button style={{ margin: 5 }} variant="success" onClick={handleShow}>
+            <Button disabled={(data.length === 0) ? true: false} style={{ margin: 5 }} variant="success" onClick={handleShow}>
                 Add Payment
             </Button>
             <Modal show={show} onHide={handleClose}>

@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import './dashboard-tabs-accounts.css';
-import { FaTrashAlt, FaMoneyCheck } from 'react-icons/fa'
+import { FaTrashAlt } from 'react-icons/fa'
 import { Container, Table } from 'react-bootstrap'
-import PaymentUtil from '../../../../../utils/payment.utils'
+import { PaymentUtil, FormatUtil } from '../../../../../utils/index'
 import AccountFormModal from '../../../../../components/AccountFormModal'
 import PaymentFormModal from '../../../../../components/PaymentFormModal'
 import DashboardAPI from '../../../../../api/dashboard.api'
@@ -71,7 +71,6 @@ const AccountTable = ({ data, reload, setReload }) => {
 
 
 const AccountRow = ({ item, reload, setReload }) => {
-    const [show, setShow] = useState(false)
     // Stores the id related to the account
     const id = item._id;
 
@@ -89,7 +88,7 @@ const AccountRow = ({ item, reload, setReload }) => {
                 <td>1</td>
                 <td>{item.name}</td>
                 <td>{item.accountName}</td>
-                <td>${item.balance}</td>
+                <td>{FormatUtil.currencyFormat(item.balance)}</td>
                 <td>{PaymentUtil.parseOffsetDateToMonthDayYear(item.lastPayment)}</td>
                 <td>{PaymentUtil.parseOffsetDateToMonthDayYear(item.accountDueDate)}</td>
                 <td className="action__icons__wrapper">

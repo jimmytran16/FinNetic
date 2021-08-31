@@ -9,7 +9,7 @@ module.exports = class AccountService {
 
     async getAllAccounts(userId,cb) {
         try {
-            let result = await Account.find({ userId: mongoose.Types.ObjectId(userId) })
+            let result = await Account.find({ userId: mongoose.Types.ObjectId(userId) }).select('-userId')
             result = this._getLatestDueDate(result);
             cb(null,result)
         } catch (err) {
@@ -59,7 +59,6 @@ module.exports = class AccountService {
     async updateAccount(filter, data, cb) {
         try {
             let result = await Account.findOneAndUpdate(filter,data)
-            console.log(result)
             cb(null,result)
         } catch (err) {
             cb(err,null)

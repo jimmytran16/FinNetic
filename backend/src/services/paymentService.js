@@ -14,6 +14,7 @@ module.exports = class PaymentService {
         try {
             let result = await Payment
                 .find({ userId: mongoose.Types.ObjectId(userId) })
+                .select('-userId')
                 .sort({ 'paymentDate': 'desc' });
             result = this._aggregatePaymentsByMonth(result);
             cb(null, result)
