@@ -31,9 +31,12 @@ function AccountFormModal({ reload, setReload }) {
         }, 500)
     }
 
+    const buttonStyles = { margin:5, backgroundColor:'#52ab98', borderColor:'#52ab98', fontWeight:500 };
+    const cancelButtonStyles = { backgroundColor:'#c8d8e4', borderColor: '#c8d8e4', fontWeight:500, color:'#676565' }
+
     return (
         <div>
-            <Button style={{ margin:5 }} variant="primary" onClick={handleShow}>
+            <Button style={buttonStyles}  onClick={handleShow}>
                 Add Account
             </Button>
             <Modal show={show} onHide={handleClose}>
@@ -59,10 +62,10 @@ function AccountFormModal({ reload, setReload }) {
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
+                    <Button style={cancelButtonStyles} onClick={handleClose}>
                         Cancel
                     </Button>
-                    <Button variant="primary" onClick={handleBillDetailsSubmission}>
+                    <Button style={buttonStyles} onClick={handleBillDetailsSubmission}>
                         { isLoading ? <SpinnerCircle size='sm' /> : 'Add' }
                     </Button>
                 </Modal.Footer>

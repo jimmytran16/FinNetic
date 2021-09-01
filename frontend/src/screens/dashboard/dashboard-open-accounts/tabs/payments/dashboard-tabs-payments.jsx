@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import './dashboard-tabs-payments.css'
 import { Accordion, Button, Card, Container, Table } from 'react-bootstrap'
 import { PaymentUtil, FormatUtil } from '../../../../../utils/index'
 import SpinnerLoader from '../../../../../components/SpinnerLoader';
@@ -27,8 +28,8 @@ function PaymentsTabContent(props) {
                         data.map((item, key) => {
                             return (
                                 <Card key={key}>
-                                    <Card.Header>
-                                        <Accordion.Toggle as={Button} variant="link" eventKey={key + 1}>
+                                    <Card.Header className="card__header">
+                                        <Accordion.Toggle as={Button} className="accordion__toggle__button" eventKey={key + 1}>
                                             {item.month}
                                         </Accordion.Toggle>
                                     </Card.Header>

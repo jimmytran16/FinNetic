@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import './LoginScreen.css'
 import { Container, Form, Button } from 'react-bootstrap'
 import SpinnerCircle from '../../components/SpinnerCircle'
 import AlertMessage from '../../components/AlertMessage'
@@ -62,7 +63,7 @@ const LoginScreen = (props) => {
                     <Form.Group className="mb-3" controlId="formBasicCheckbox">
                         <Form.Check type="checkbox" label="Check me out" />
                     </Form.Group>
-                    <Button variant="primary" type="submit" onClick={handleLogin}>
+                    <Button className="login__button" type="submit" onClick={handleLogin}>
                         {(isLoading) ? <SpinnerCircle size={'sm'} /> : 'Log in'}
                     </Button>
                 </Form>

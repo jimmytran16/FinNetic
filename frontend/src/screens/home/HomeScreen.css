@@ -1,0 +1,16 @@
+.home__register__button {
+    background-color:#52ab98!important;
+    border-color:#52ab98!important;
+    font-weight: 500!important;
+}
+.home__register__button:hover,
+.home__register__button:focus {
+  background-color: #52ab98!important;
+  border-color:#52ab98!important;
+  box-shadow: 0 0 11px rgba(33,33,33,.2)!important; 
+}
+
+.slogan__wrapper {
+  padding: 20px 0px;
+  color: white;
+}

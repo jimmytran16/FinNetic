@@ -24,7 +24,7 @@ function PaymentFormModal({ data }) {
         setAccountId(accountId);
     }
 
-    const handlePaymentSubmission = () => {
+    const handlePaymentSubmission = () => { 
         setIsLoading(true)
         setTimeout(() => {
             DashboardAPI.createUserPayment(accountId, accountName, paymentAmount, paymentDate)
@@ -38,10 +38,12 @@ function PaymentFormModal({ data }) {
         }, 500)
 
     }
-
+    
+    const buttonStyles = { margin:5, backgroundColor:'#2b6777', borderColor:'#2b6777', fontWeight:500 };
+    const cancelButtonStyles = { backgroundColor:'#c8d8e4', borderColor: '#c8d8e4', fontWeight:500, color:'#676565' }
     return (
         <div>
-            <Button disabled={(data.length === 0) ? true: false} style={{ margin: 5 }} variant="success" onClick={handleShow}>
+            <Button disabled={(data.length === 0) ? true: false} style={buttonStyles} onClick={handleShow}>
                 Add Payment
             </Button>
             <Modal show={show} onHide={handleClose}>
@@ -75,10 +77,10 @@ function PaymentFormModal({ data }) {
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
+                    <Button style={cancelButtonStyles} onClick={handleClose}>
                         Cancel
                     </Button>
-                    <Button variant="primary" onClick={handlePaymentSubmission}>
+                    <Button style={buttonStyles} onClick={handlePaymentSubmission}>
                         {isLoading ? <SpinnerCircle size='sm' /> : 'Add Payment'}
                     </Button>
                 </Modal.Footer>

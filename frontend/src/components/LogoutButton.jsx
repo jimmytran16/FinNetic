@@ -7,7 +7,7 @@ function LogoutButton(props) {
         history.push('/logout')
     }
     return (
-        <Button variant="primary" type="button" onClick={() => handleLogout()}>Logout</Button>
+        <Button style={{ backgroundColor:'#52ab98', borderColor:'#52ab98', margin:'0px 10px' }} type="button" onClick={() => handleLogout()}>Logout</Button>
     );
 }
 

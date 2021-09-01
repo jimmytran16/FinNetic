@@ -2,3 +2,11 @@
   background-color: #f8f9fa!important;
   padding:10px;
 }
+
+.dashboard__nav__wrapper {
+  background-color: #f8f9fa!important
+}
+
+a {
+  color:black!important;
+}

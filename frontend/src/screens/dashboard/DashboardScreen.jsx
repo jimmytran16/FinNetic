@@ -14,7 +14,7 @@ function Dashboard({ history }) {
     return (
         <>
             <Router>
-                <div>
+                <div className="dashboard__nav__wrapper">
                     <nav>
                         <ul>
                             <li>

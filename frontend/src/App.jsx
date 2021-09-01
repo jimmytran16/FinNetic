@@ -1,4 +1,4 @@
-import React , { useState } from "react";
+import React, { useState } from "react";
 import './App.css';
 import {
   BrowserRouter as Router,
@@ -7,7 +7,7 @@ import {
   Link,
   Redirect
 } from "react-router-dom";
-import { Navbar, Nav, Container } from 'react-bootstrap'
+import { Navbar, Nav, Button, Container } from 'react-bootstrap'
 import AuthService from './services/authService'
 import ProtectedRoute from './components/ProtectedRoute'
 import HomeScreen from './screens/home/HomeScreen'
@@ -25,15 +25,19 @@ function App(props) {
           <Container>
             <Navbar.Brand href="/">trkr</Navbar.Brand>
             <Nav className="me-auto">
-              <Nav.Link as={Link} to="/">Home</Nav.Link>
-              <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>
               {
                 isAuth
-                ? (<LogoutButton />)
-                :(<>
-                <Nav.Link as={Link} to="/login">Login </Nav.Link>
-                <Nav.Link as={Link} to="/register">Register </Nav.Link>
-                </>)
+                  ? (<>
+                    <Nav.Link className="nav__link" as={Link} to="/">Home</Nav.Link>
+                    <Nav.Link className="nav__link" as={Link} to="/dashboard">Dashboard</Nav.Link>
+                    <LogoutButton />
+                    </>)
+                  : (<>
+                    <Nav.Link className="nav__link login" as={Link} to="/login">Login </Nav.Link>
+                    <Nav.Link className="nav__link register" as={Link} to="/register">
+                      <Button>Register</Button>
+                    </Nav.Link>
+                  </>)
               }
             </Nav>
           </Container>

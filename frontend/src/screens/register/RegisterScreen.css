@@ -1,0 +1,12 @@
+.register__button {
+    background-color:#52ab98!important;
+    border-color:#52ab98!important;
+    font-weight: 500!important;
+}
+  
+.register__button:hover,
+.register__button:focus {
+    background-color: #52ab98;
+    border-color:#52ab98;
+    box-shadow: 0 0 11px rgba(33,33,33,.2)!important; 
+}
