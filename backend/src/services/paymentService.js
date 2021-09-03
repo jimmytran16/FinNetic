@@ -55,11 +55,45 @@ module.exports = class PaymentService {
         }
     }
 
+    // function that will send back the last six months of payments made by user for all open accounts
+    async getLastSixMonthsOfAccountPayments(userId, cb) {        
+        try {
+            const currentMonth = moment().utc().endOf('month').toISOString();
+            const sixMonthsBeforeCurrentMonth = moment().utc().subtract(5,'months').startOf('month').toISOString();
+
+            let result = await Payment
+                // .find({ userId: mongoose.Types.ObjectId(userId) })
+                .aggregate([
+                    {
+                        // match
+                        $match: {
+                            "userId": mongoose.Types.ObjectId(userId), // filter by user id
+                            "paymentDate": {
+                                $gte: new Date(sixMonthsBeforeCurrentMonth), $lte: new Date(currentMonth) // date range
+                            }
+                        }
+                    },
+                    {
+                        // group by
+                        $group: {
+                            "_id": "$name",
+                            "userId": { "$first": "$userId" }, // populate user id
+                            "paymentDates": { "$push": "$$ROOT" } // populate arrays of payment date objects based on the _id = name
+                        }
+                    }
+                ]).exec()
+            return cb(null, result)
+        } catch (err) {
+            console.log('errrrrrrrrrr', err)
+            return cb(err.toString(), null)
+        }
+    }
+
     // Will sort payment data to objects of array of payments that is mapped to respective month
     // [{ month: <month>, data: <paymentSet> }]
     _aggregatePaymentsByMonth(data) {
         let objectOfMonthsToPayments = {}
- 
+
         for (var i in data) {
             let currentData = new Object(data[i]);
             let currentPaymentMonth = moment.utc(currentData.paymentDate).format("MMM YYYY")
@@ -77,7 +111,7 @@ module.exports = class PaymentService {
         let arrayOfMonths = []
         for (var monthToPayments in objectOfMonthsToPayments) {
             let monthPayments = {
-                month:'',
+                month: '',
                 payments: []
             }
             monthPayments.month = monthToPayments;

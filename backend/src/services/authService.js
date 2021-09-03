@@ -4,14 +4,16 @@ const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
 class JWTService {
-    constructor() {}
+    constructor() {
+        this.expirationTime = process.env.TOKEN_EXPIRATION
+    }
 
     verifyAccessToken(token) {
         return jwt.verify(token)
     }
 
     generateAccessToken(payload) {
-        return jwt.sign(payload, process.env.JWTSIGNATURE, { expiresIn :'15m' })
+        return jwt.sign(payload, process.env.JWTSIGNATURE, { expiresIn : this.expirationTime })
     }
 }
 

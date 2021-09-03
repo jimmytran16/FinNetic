@@ -1,4 +1,12 @@
 .metric__column {
-    padding: 5px 15px;
     margin: 40px 0px;
+    padding-left: 5px!important;
+    padding-right: 5px!important;
+}
+
+@media screen and (max-width:767px) {
+    .metric__column {
+        padding-left: 0px!important;
+        padding-right: 0px!important;
+    }
 }

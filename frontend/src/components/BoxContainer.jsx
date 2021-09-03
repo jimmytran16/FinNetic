@@ -1,9 +1,8 @@
 import React from 'react'
 
-function BoxContainer({ children, title }) {
+function BoxContainer({ children, style }) {
   return (
-    <div style={{ backgroundColor:'#ffffff', borderRadius:25, padding:20 }}>
-      <h4 style={{ padding:'8px 5px' }}>{title}</h4>
+    <div style={{ backgroundColor:'#ffffff', borderRadius:25, padding:20, ...style }}>
       { children }
     </div>
   )
