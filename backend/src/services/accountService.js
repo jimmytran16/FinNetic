@@ -71,7 +71,8 @@ module.exports = class AccountService {
             let accountDueDate = new Date(data[i].accountDueDate)
             let accountDueDay = accountDueDate.getUTCDate()
             // if current date's day is past the accountDueDate's day, then change month to be one month ahead
-            if (todaysDate.getDate() > accountDueDay) {
+            if (todaysDate > accountDueDay) {
+                console.log(moment.utc(todaysDate).set("date",accountDueDay).add(1,"month"))
                 data[i].accountDueDate = moment.utc(todaysDate).set("date",accountDueDay).add(1,"month")
             }
         }

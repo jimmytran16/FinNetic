@@ -20,13 +20,6 @@ const logInController = (req, res, next) => {
     })
 }
 
-const logOutController = (req, res, next) => {
-    return res.json({
-        data: 'logOut route',
-        success:true
-    })
-}
-
 const changePasswordController = (req, res, next) => {
     return res.json({
         data: 'changePassword route',
@@ -37,6 +30,5 @@ const changePasswordController = (req, res, next) => {
 module.exports = {
     registerController,
     logInController,
-    logOutController,
     changePasswordController
 };
