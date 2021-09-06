@@ -1,12 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Bar } from 'react-chartjs-2';
 
-
-// TESTING .....
 const AverageChart = ({ data, options }) => {
-  useEffect(() => {
-    console.log(data)
-  },[])
   return (
     <>
       <div className='header'>

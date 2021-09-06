@@ -17,6 +17,15 @@ module.exports = class AccountService {
         }
     }
 
+    async getAccount(userId, accountId, cb) {
+        try {
+            let result = await Account.findOne({ _id: mongoose.Types.ObjectId(accountId), userId: mongoose.Types.ObjectId(userId) }).select('-userId');
+            cb(null, result)
+        }catch(err) {
+            cb(err,null)
+        }
+    }
+
     async createAccount(name, balance, accountName, accountDueDate, userId, cb) {
         let reminderService = new ReminderService();
         let account = new Account({
@@ -67,13 +76,16 @@ module.exports = class AccountService {
 
     _getLatestDueDate(data) {
         let todaysDate = new Date()
+        let todaysDateDay = todaysDate.getUTCDate();
         for(var i in data) {
             let accountDueDate = new Date(data[i].accountDueDate)
             let accountDueDay = accountDueDate.getUTCDate()
             // if current date's day is past the accountDueDate's day, then change month to be one month ahead
-            if (todaysDate > accountDueDay) {
-                console.log(moment.utc(todaysDate).set("date",accountDueDay).add(1,"month"))
+            if (todaysDateDay > accountDueDay) {
                 data[i].accountDueDate = moment.utc(todaysDate).set("date",accountDueDay).add(1,"month")
+            }
+            else {
+                data[i].accountDueDate = moment.utc(todaysDate).set("date",accountDueDay)
             }
         }
         return data;

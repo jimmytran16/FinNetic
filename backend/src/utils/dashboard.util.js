@@ -6,12 +6,12 @@ const colors = [
     '#52ab98',
     '#c8d8e4',
     '#f2f2f2',
-    '#2b6777',
     '#52ab98',
     '#c8d8e4',
-    '#f2f2f2',
     '#2b6777',
+    '#f2f2f2',
     '#52ab98',
+    '#2b6777',
     '#c8d8e4',
     '#f2f2f2'
 ]
@@ -74,7 +74,6 @@ const parsePaymentDataIntoChartData = (data) => {
             backgroundColor: colors[index++],
             data: [0, 0, 0, 0, 0, 0],
             borderColor: 'white',
-            borderWidth: 2,
         })
     }
     const template = {

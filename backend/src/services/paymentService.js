@@ -32,10 +32,15 @@ module.exports = class PaymentService {
             amountPaid: amountPaid,
             paymentDate: new Date(paymentDate)
         })
-
-        // Update the last payment to the account
-        this.accountService.updateAccount({ _id: accountId }, { $set: { lastPayment: new Date(paymentDate) } }, (err, data) => {
-            if (err) return cb(err, null);
+        // if the current 'lastPayment' is the latest then, we don't want to update the new payment date
+        this.accountService.getAccount(userId, accountId, (err, result) => {
+            if (err) return cb(err, null)
+            if (result.lastPayment < new Date(paymentDate)) {
+                // Update the last payment to the account
+                this.accountService.updateAccount({ _id: accountId }, { $set: { lastPayment: new Date(paymentDate) } }, (err, data) => {
+                    if (err) return cb(err, null);
+                })
+            }
         })
 
         try {
@@ -56,10 +61,10 @@ module.exports = class PaymentService {
     }
 
     // function that will send back the last six months of payments made by user for all open accounts
-    async getLastSixMonthsOfAccountPayments(userId, cb) {        
+    async getLastSixMonthsOfAccountPayments(userId, cb) {
         try {
             const currentMonth = moment().utc().endOf('month').toISOString();
-            const sixMonthsBeforeCurrentMonth = moment().utc().subtract(5,'months').startOf('month').toISOString();
+            const sixMonthsBeforeCurrentMonth = moment().utc().subtract(5, 'months').startOf('month').toISOString();
 
             let result = await Payment
                 // .find({ userId: mongoose.Types.ObjectId(userId) })
@@ -120,4 +125,5 @@ module.exports = class PaymentService {
         }
         return arrayOfMonths;
     }
+
 }
