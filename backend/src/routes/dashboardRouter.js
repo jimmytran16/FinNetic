@@ -8,7 +8,7 @@ router.get('/getUserAccounts', middlewares.authenticateUser, dashboardController
 router.get('/getUserPayments', middlewares.authenticateUser, dashboardController.getUserPaymentsController)
 router.post('/createBillingDetails', middlewares.authenticateUser, dashboardController.createAccountController)
 router.delete('/deleteBillingDetails', middlewares.authenticateUser, dashboardController.deleteAccountController)
-router.put('/updateBillingDetails', middlewares.authenticateUser, dashboardController.updateAccountController)
+router.put('/updateAccount', middlewares.authenticateUser, dashboardController.updateAccountController)
 
 router.get('/getUserPayments', middlewares.authenticateUser, dashboardController.getUserPaymentsController)
 router.post('/createUserPayment', middlewares.authenticateUser, dashboardController.createPaymentController)

@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import './dashboard-tabs-accounts.css';
 import { FaTrashAlt } from 'react-icons/fa'
-import { Container, Table } from 'react-bootstrap'
+import { Button, Container, Table } from 'react-bootstrap'
 import { PaymentUtil, FormatUtil } from '../../../../../utils/index'
 import AccountFormModal from '../../../../../components/AccountFormModal'
 import PaymentFormModal from '../../../../../components/PaymentFormModal'
 import DashboardAPI from '../../../../../api/dashboard.api'
 import SpinnerLoader from '../../../../../components/SpinnerLoader'
 import BoxContainer from '../../../../../components/BoxContainer'
+import AccountModifyModal from '../../../../../components/AccountModifyModal'
 
 function AccountsTabContent(props) {
     const [isLoading, setIsLoading] = useState(false)
@@ -29,9 +30,12 @@ function AccountsTabContent(props) {
             {
                 (isLoading)
                     ? <SpinnerLoader />
-                    : <AccountTable data={data} setReload={setReload} reload={reload} />
+                    : <>
+                        <h2 style={{ textAlign: 'center', padding: "20px 10px" }}> Accounts </h2>
+                        <AccountTable data={data} setReload={setReload} reload={reload} />
+                    </>
             }
-            <div style={{ display:'flex' }}>
+            <div style={{ display: 'flex' }}>
                 <AccountFormModal setReload={setReload} reload={reload} />
                 <PaymentFormModal data={data} />
             </div>
@@ -93,7 +97,10 @@ const AccountRow = ({ item, reload, setReload }) => {
                 <td>{PaymentUtil.parseOffsetDateToMonthDayYear(item.accountDueDate)}</td>
                 <td className="action__icons__wrapper">
                     <div className="action__icons">
-                        <FaTrashAlt className="delete__icon" onClick={handleAccountDeletion} />
+                            <Button className="delete__button" onClick={handleAccountDeletion}>
+                                <FaTrashAlt />
+                            </Button>
+                        <AccountModifyModal item={item} reload={reload} setReload={setReload} />
                     </div>
                 </td>
             </tr>

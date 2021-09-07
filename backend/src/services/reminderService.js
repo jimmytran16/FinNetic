@@ -1,5 +1,3 @@
-const Account = require('../models/accounts')
-const mongoose = require('mongoose')
 const axios = require('axios')
 
 module.exports = class ReminderService {

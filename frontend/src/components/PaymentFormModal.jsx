@@ -5,26 +5,26 @@ import DashboardAPI from '../api/dashboard.api';
 
 
 function PaymentFormModal({ data }) {
-    
-    const [show, setShow] = useState(false)
+
+    const [show, setShow] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [paymentAmount, setPaymentAmount] = useState('');
     const [paymentDate, setPaymentDate] = useState('');
-    const [accountId,setAccountId] = useState('');
-    const [accountName,setAccountName] = useState('');
+    const [accountId, setAccountId] = useState('');
+    const [accountName, setAccountName] = useState('');
 
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    
+
     const handleAccountPick = (event) => {
         var selectedIndex = event.target.options.selectedIndex;
-        var accountId= event.target.options[selectedIndex].getAttribute('data');
+        var accountId = event.target.options[selectedIndex].getAttribute('data');
         setAccountName(event.target.value)
         setAccountId(accountId);
     }
 
-    const handlePaymentSubmission = () => { 
+    const handlePaymentSubmission = () => {
         setIsLoading(true)
         setTimeout(() => {
             DashboardAPI.createUserPayment(accountId, accountName, paymentAmount, paymentDate)
@@ -36,14 +36,13 @@ function PaymentFormModal({ data }) {
                 .catch(err => console.log(err))
             setIsLoading(false)
         }, 500)
-
     }
-    
-    const buttonStyles = { margin:5, backgroundColor:'#2b6777', borderColor:'#2b6777', fontWeight:500 };
-    const cancelButtonStyles = { backgroundColor:'#c8d8e4', borderColor: '#c8d8e4', fontWeight:500, color:'#676565' }
+
+    const buttonStyles = { margin: 5, backgroundColor: '#2b6777', borderColor: '#2b6777', fontWeight: 500 };
+    const cancelButtonStyles = { backgroundColor: '#c8d8e4', borderColor: '#c8d8e4', fontWeight: 500, color: '#676565' }
     return (
         <div>
-            <Button disabled={(data.length === 0) ? true: false} style={buttonStyles} onClick={handleShow}>
+            <Button disabled={(data.length === 0) ? true : false} style={buttonStyles} onClick={handleShow}>
                 Add Payment
             </Button>
             <Modal show={show} onHide={handleClose}>
@@ -57,7 +56,7 @@ function PaymentFormModal({ data }) {
                             <Form.Control onChange={handleAccountPick} as="select" aria-label="Default select example">
                                 <option>Choose Account</option>
                                 {
-                                    data.map((item,key) => {
+                                    data.map((item, key) => {
                                         return (
                                             <option data={item._id} key={key}>{item.name}</option>
                                         )

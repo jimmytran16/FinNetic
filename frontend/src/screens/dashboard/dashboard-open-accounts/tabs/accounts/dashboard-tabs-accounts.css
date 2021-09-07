@@ -3,12 +3,21 @@
 }
 .action__icons {
     margin-left: 5px;
+    display: flex;
 }
+
+.delete__button {
+    background-color:#c8d8e4!important;
+    border-color:#c8d8e4!important;
+    margin:5px;
+    font-weight: 500!important;
+}
+
 .delete__icon:hover {
     cursor: pointer;
     color: red;
 }
-.payment__icon:hover{
+.modify__icon:hover{
     cursor: pointer;
     color:green;
 }

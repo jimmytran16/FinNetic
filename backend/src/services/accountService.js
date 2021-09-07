@@ -7,13 +7,13 @@ module.exports = class AccountService {
 
     constructor() { }
 
-    async getAllAccounts(userId,cb) {
+    async getAllAccounts(userId, cb) {
         try {
             let result = await Account.find({ userId: mongoose.Types.ObjectId(userId) }).select('-userId')
             result = this._getLatestDueDate(result);
-            cb(null,result)
+            cb(null, result)
         } catch (err) {
-            cb(err,null)
+            cb(err, null)
         }
     }
 
@@ -21,8 +21,8 @@ module.exports = class AccountService {
         try {
             let result = await Account.findOne({ _id: mongoose.Types.ObjectId(accountId), userId: mongoose.Types.ObjectId(userId) }).select('-userId');
             cb(null, result)
-        }catch(err) {
-            cb(err,null)
+        } catch (err) {
+            cb(err, null)
         }
     }
 
@@ -40,7 +40,7 @@ module.exports = class AccountService {
         try {
             let result = await account.save()
         } catch (err) {
-            cb(err,null)
+            cb(err, null)
         }
         // set the payload to be send to the Reminder API to be saved
         const payload = {
@@ -50,40 +50,40 @@ module.exports = class AccountService {
             "scheduledToSend": accountDueDay,
             "phone": "7812671202"
         }
-        reminderService.saveAccountToQueue(payload,(err,result) => {
-            return cb(err,result);
+        reminderService.saveAccountToQueue(payload, (err, result) => {
+            return cb(err, result);
         })
     }
 
     async deleteAccount(id, cb) {
         try {
             let result = await Account.findByIdAndDelete(new mongoose.Types.ObjectId(id))
-            cb(null,result)
+            cb(null, result)
         } catch (err) {
-            cb(err,null)
+            cb(err, null)
         }
     }
 
     async updateAccount(filter, data, cb) {
         try {
-            let result = await Account.findOneAndUpdate(filter,data)
-            cb(null,result)
+            let result = await Account.findOneAndUpdate(filter, { $set: data })
+            cb(null, result)
         } catch (err) {
-            cb(err,null)
+            cb(err, null)
         }
     }
 
     _getLatestDueDate(data) {
         let todaysDate = new Date()
         let todaysDateDay = todaysDate.getUTCDate();
-        for(var i in data) {
+        for (var i in data) {
             let accountDueDay = data[i].accountDueDay
             // if current date's day is past the accountDueDate's day, then change month to be one month ahead
             if (todaysDateDay > accountDueDay) {
-                data[i]['accountDueDate'] = moment.utc(todaysDate).set("date",accountDueDay).add(1,"month")
+                data[i]['accountDueDate'] = moment.utc(todaysDate).set("date", accountDueDay).add(1, "month")
             }
             else {
-                data[i]['accountDueDate'] = moment.utc(todaysDate).set("date",accountDueDay)
+                data[i]['accountDueDate'] = moment.utc(todaysDate).set("date", accountDueDay)
             }
         }
         return data;

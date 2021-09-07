@@ -50,7 +50,7 @@ const averageChartOptions = {
             label += ': ';
           }
           if (context.parsed.y !== null) {
-            label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.parsed.y);
+            label += (context.parsed.y === 0) ? 'No Payment' : new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.parsed.y);
           }
           return label;
         }

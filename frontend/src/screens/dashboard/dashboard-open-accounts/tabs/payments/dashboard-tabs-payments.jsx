@@ -23,6 +23,7 @@ function PaymentsTabContent(props) {
         (isLoading)
             ? <SpinnerLoader />
             : <Container>
+                <h2 style={{ textAlign: 'center', padding: "20px 10px" }}> Payments </h2>
                 <Accordion defaultActiveKey="1">
                     {
                         data.map((item, key) => {

@@ -56,6 +56,21 @@ const deleteBillingAccount = (id) => {
     });
 }
 
+const updateAccount = (filter, update) => {
+    return axios({
+        method: 'PUT',
+        url: `${url}/dashboard/updateAccount`,
+        headers: {
+            "Authorization": `Bearer ${AuthService.default.getTokenFromStore()}`,
+            "Content-Type": "application/json"
+        },
+        data: {
+            "update": update,
+            "filter": filter
+        }
+    });
+}
+
 const getUserPayments = () => {
     return axios({
         method: 'GET',
@@ -91,5 +106,6 @@ module.exports = {
     getUserAccounts,
     getUserPayments,
     deleteBillingAccount,
-    createUserPayment
+    createUserPayment,
+    updateAccount
 };
