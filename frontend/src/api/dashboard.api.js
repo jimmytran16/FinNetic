@@ -25,7 +25,7 @@ const getUserAccounts = (id) => {
     });
 }
 
-const createBillingDetails = (name, balance, accountDueDate) => {
+const createBillingDetails = (name, balance, accountDueDay) => {
     return axios({
         method: 'POST',
         url: `${url}/dashboard/createBillingDetails`,
@@ -37,7 +37,7 @@ const createBillingDetails = (name, balance, accountDueDate) => {
             "name": name,
             "balance": balance,
             "accountHolder": AuthService.default.getUserNameFromStore(),
-            "accountDueDate": accountDueDate
+            "accountDueDay": accountDueDay
         }
     });
 }

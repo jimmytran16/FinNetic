@@ -26,14 +26,14 @@ module.exports = class AccountService {
         }
     }
 
-    async createAccount(name, balance, accountName, accountDueDate, userId, cb) {
+    async createAccount(name, balance, accountName, accountDueDay, userId, cb) {
         let reminderService = new ReminderService();
         let account = new Account({
             userId: userId,
             name: name,
             balance: balance,
             accountName: accountName,
-            accountDueDate, accountDueDate,
+            accountDueDay: accountDueDay,
             lastPayment: null
         })
 
@@ -46,14 +46,13 @@ module.exports = class AccountService {
         const payload = {
             "accountName": name,
             "userId": userId,
-            "paymentDue": accountDueDate,
-            "scheduledToSend": accountDueDate,
+            "paymentDue": accountDueDay,
+            "scheduledToSend": accountDueDay,
             "phone": "7812671202"
         }
         reminderService.saveAccountToQueue(payload,(err,result) => {
             return cb(err,result);
         })
-
     }
 
     async deleteAccount(id, cb) {
@@ -78,14 +77,13 @@ module.exports = class AccountService {
         let todaysDate = new Date()
         let todaysDateDay = todaysDate.getUTCDate();
         for(var i in data) {
-            let accountDueDate = new Date(data[i].accountDueDate)
-            let accountDueDay = accountDueDate.getUTCDate()
+            let accountDueDay = data[i].accountDueDay
             // if current date's day is past the accountDueDate's day, then change month to be one month ahead
             if (todaysDateDay > accountDueDay) {
-                data[i].accountDueDate = moment.utc(todaysDate).set("date",accountDueDay).add(1,"month")
+                data[i]['accountDueDate'] = moment.utc(todaysDate).set("date",accountDueDay).add(1,"month")
             }
             else {
-                data[i].accountDueDate = moment.utc(todaysDate).set("date",accountDueDay)
+                data[i]['accountDueDate'] = moment.utc(todaysDate).set("date",accountDueDay)
             }
         }
         return data;

@@ -3,12 +3,13 @@ import { Form, Button, Modal } from 'react-bootstrap'
 import SpinnerCircle from './SpinnerCircle'
 import DashboardAPI from '../api/dashboard.api';
 
+const allPossibleDueDays = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31];
 
 function AccountFormModal({ reload, setReload }) {
 
     const [accountName, setAccountName] = useState('');
     const [balanceDue, setBalanceDue] = useState(0);
-    const [accountDueDate, setAccountDueDate] = useState('');
+    const [accountDueDay, setAccountDueDay] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
     const [show, setShow] = useState(false);
@@ -19,12 +20,12 @@ function AccountFormModal({ reload, setReload }) {
     const handleBillDetailsSubmission = () => {
         setIsLoading(true);
         setTimeout(() => {
-            DashboardAPI.createBillingDetails(accountName, balanceDue, accountDueDate)
+            DashboardAPI.createBillingDetails(accountName, balanceDue, accountDueDay)
                 .then(response => {
                     setReload(!reload)
                     setAccountName('')
                     setBalanceDue(0)
-                    setAccountDueDate('')
+                    setAccountDueDay('')
                 })
                 .catch(error => console.log(error));
             setIsLoading(false);
@@ -56,8 +57,17 @@ function AccountFormModal({ reload, setReload }) {
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formGridAccountBalance">
-                            <Form.Label>Account Due Date</Form.Label>
-                            <Form.Control value={accountDueDate} onChange={(e) => setAccountDueDate(e.target.value)} type="date" placeholder="yyyy-mm-dd" />
+                            <Form.Label>Account Due Day</Form.Label>
+                            <Form.Control onChange={(e) => setAccountDueDay(e.target.value)} as="select" aria-label="Default select example">
+                                <option>Choose Due Day</option>
+                                {
+                                    allPossibleDueDays.map((item,key) => {
+                                        return (
+                                            <option key={key}>{item}</option>
+                                        )
+                                    })
+                                }
+                            </Form.Control>
                         </Form.Group>
                     </Form>
                 </Modal.Body>

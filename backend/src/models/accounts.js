@@ -5,7 +5,8 @@ const accountSchema = new mongoose.Schema({
   name: { type: String, required: true },
   balance: { type: Number, required: true },
   accountName: { type: String, required: true },
-  accountDueDate: { type: Date, required: true },
+  accountDueDate: { type: Date, required: false },
+  accountDueDay: { type: Number, required: true },
   lastPayment: { type: Date, required: false }
 });
 

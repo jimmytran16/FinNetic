@@ -24,6 +24,7 @@ const getDashboardContentController = (req, res, next) => {
 // Accounts controllers
 const getUserAccountsController = (req, res, next) => {
   accountService.getAllAccounts(req.user.userId, (err, data) => {
+    console.log(data)
     return res.json({
       data: err ? err : data,
       success: err ? false : true
@@ -32,7 +33,7 @@ const getUserAccountsController = (req, res, next) => {
 }
 
 const createAccountController = (req, res, next) => {
-  accountService.createAccount(req.body.name, req.body.balance, req.body.accountHolder, req.body.accountDueDate, req.user.userId, (err, data) => {
+  accountService.createAccount(req.body.name, req.body.balance, req.body.accountHolder, req.body.accountDueDay, req.user.userId, (err, data) => {
     return res.json({
       success: err ? false : true,
       data: data
