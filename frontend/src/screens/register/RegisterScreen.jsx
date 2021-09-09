@@ -48,9 +48,6 @@ const RegisterScreen = (props) => {
                         <Form.Label>Name</Form.Label>
                         <Form.Control type="text" onChange={(e) => setName(e.target.value)} placeholder="Your name" />
                     </Form.Group>
-                    <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                        <Form.Check type="checkbox" label="Check me out" />
-                    </Form.Group>
                     <Button className="register__button" onClick={handleRegistration}>
                         {(isLoading) ? <SpinnerCircle size={'sm'} /> : 'Register'}
                     </Button>

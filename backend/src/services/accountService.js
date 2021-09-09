@@ -1,7 +1,9 @@
+'use strict'
 const Account = require('../models/accounts')
+const Payment = require('../models/payments')
 const mongoose = require('mongoose')
+const ReminderService = require('./reminderService')
 const moment = require('moment')
-const ReminderService = require('../services/reminderService')
 
 module.exports = class AccountService {
 
@@ -36,19 +38,20 @@ module.exports = class AccountService {
             accountDueDay: accountDueDay,
             lastPayment: null
         })
-
+        let result = []
         try {
-            let result = await account.save()
+            result = await account.save()
         } catch (err) {
             cb(err, null)
         }
         // set the payload to be send to the Reminder API to be saved
         const payload = {
-            "accountName": name,
-            "userId": userId,
-            "paymentDue": accountDueDay,
-            "scheduledToSend": accountDueDay,
-            "phone": "7812671202"
+            accountName: name,
+            accountId: result._id,
+            userId: userId,
+            scheduledToSend: accountDueDay,
+            sendReminder: true,
+            phone: "7812671202"
         }
         reminderService.saveAccountToQueue(payload, (err, result) => {
             return cb(err, result);
@@ -56,9 +59,10 @@ module.exports = class AccountService {
     }
 
     async deleteAccount(id, cb) {
-        try {
-            let result = await Account.findByIdAndDelete(new mongoose.Types.ObjectId(id))
-            cb(null, result)
+        try { // delete specific account, and all payments under that account
+            await Account.findByIdAndDelete(new mongoose.Types.ObjectId(id));
+            await Payment.deleteMany({ accountId: mongoose.Types.ObjectId(id) });
+            cb(null, `Sucessfully deleted account ${id}`)
         } catch (err) {
             cb(err, null)
         }

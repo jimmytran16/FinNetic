@@ -6,9 +6,7 @@ const mongoose = require('mongoose')
 
 module.exports = class PaymentService {
 
-    constructor() {
-        this.accountService = new AccountService();
-    }
+    constructor() {}
 
     async getAllPayments(userId, cb) {
         try {
@@ -24,6 +22,10 @@ module.exports = class PaymentService {
     }
 
     async createPayment(userId, name, accountId, accountName, amountPaid, paymentDate, cb) {
+        console.log('yoooo')
+        console.log(new AccountService())
+        var accountService = new AccountService();
+        
         let payment = new Payment({
             userId: mongoose.Types.ObjectId(userId),
             accountId: mongoose.Types.ObjectId(accountId),
@@ -33,11 +35,11 @@ module.exports = class PaymentService {
             paymentDate: new Date(paymentDate)
         })
         // if the current 'lastPayment' is the latest then, we don't want to update the new payment date
-        this.accountService.getAccount(userId, accountId, (err, result) => {
+        accountService.getAccount(userId, accountId, (err, result) => {
             if (err) return cb(err, null)
-            if (result.lastPayment < new Date(paymentDate)) {
+            if (result.lastPayment < new Date(paymentDate) || result.lastPayment === null) {
                 // Update the last payment to the account
-                this.accountService.updateAccount({ _id: accountId }, { $set: { lastPayment: new Date(paymentDate) } }, (err, data) => {
+                accountService.updateAccount({ _id: accountId }, { lastPayment: new Date(paymentDate) }, (err, data) => {
                     if (err) return cb(err, null);
                 })
             }
@@ -51,9 +53,18 @@ module.exports = class PaymentService {
         }
     }
 
-    async deletePayment(id, cb) {
+    async deletePaymentById(id, cb) {
         try {
             let result = await Payment.findByIdAndDelete(new mongoose.Types.ObjectId(id))
+            cb(null, result)
+        } catch (err) {
+            cb(err, null)
+        }
+    }
+
+    async deletePaymentByAccountId(accountId, cb) {
+        try {
+            let result = await Payment.deleteMany({ accountId: mongoose.Types.ObjectId(accountId) })
             cb(null, result)
         } catch (err) {
             cb(err, null)

@@ -79,7 +79,7 @@ const createPaymentController = (req, res, next) => {
 }
 
 const deletePaymentController = (req, res, next) => {
-  paymentService.deletePayment(req.body.id, (err, data) => {
+  paymentService.deletePaymentById(req.body.id, (err, data) => {
     return res.json({
       success: err ? false : true,
       data: err ? err : data

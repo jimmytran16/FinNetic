@@ -60,9 +60,6 @@ const LoginScreen = (props) => {
                         <Form.Label>Password</Form.Label>
                         <Form.Control type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" />
                     </Form.Group>
-                    <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                        <Form.Check type="checkbox" label="Check me out" />
-                    </Form.Group>
                     <Button className="login__button" type="submit" onClick={handleLogin}>
                         {(isLoading) ? <SpinnerCircle size={'sm'} /> : 'Log in'}
                     </Button>

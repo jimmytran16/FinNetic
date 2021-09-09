@@ -63,7 +63,7 @@ const AccountTable = ({ data, reload, setReload }) => {
                     {
                         data.map((item, key) => {
                             return (
-                                <AccountRow key={key} item={item} setReload={setReload} reload={reload} />
+                                <AccountRow key={key} item={item} setReload={setReload} reload={reload} rowCount={key + 1} />
                             )
                         })
                     }
@@ -74,7 +74,7 @@ const AccountTable = ({ data, reload, setReload }) => {
 }
 
 
-const AccountRow = ({ item, reload, setReload }) => {
+const AccountRow = ({ item, rowCount, reload, setReload }) => {
     // Stores the id related to the account
     const id = item._id;
 
@@ -89,7 +89,7 @@ const AccountRow = ({ item, reload, setReload }) => {
     return (
         <>
             <tr>
-                <td>1</td>
+                <td>{rowCount}</td>
                 <td>{item.name}</td>
                 <td>{item.accountName}</td>
                 <td>{FormatUtil.currencyFormat(item.balance)}</td>

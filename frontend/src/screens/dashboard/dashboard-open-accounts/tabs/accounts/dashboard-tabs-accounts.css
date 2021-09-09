@@ -21,3 +21,7 @@
     cursor: pointer;
     color:green;
 }
+
+.table td {
+    vertical-align: middle!important;
+}
