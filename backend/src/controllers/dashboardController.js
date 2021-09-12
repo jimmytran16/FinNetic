@@ -24,7 +24,6 @@ const getDashboardContentController = (req, res, next) => {
 // Accounts controllers
 const getUserAccountsController = (req, res, next) => {
   accountService.getAllAccounts(req.user.userId, (err, data) => {
-    console.log(data)
     return res.json({
       data: err ? err : data,
       success: err ? false : true
@@ -42,6 +41,10 @@ const createAccountController = (req, res, next) => {
 }
 
 const updateAccountController = (req, res, next) => {
+  const { filter, update } = req.body;
+  if (!filter || !update)
+    return res.json({ success: false, data: 'filter, update params required!' });
+
   accountService.updateAccount(req.body.filter, req.body.update, (err, data) => {
     return res.json({
       success: data ? true : false,
@@ -51,6 +54,9 @@ const updateAccountController = (req, res, next) => {
 }
 
 const deleteAccountController = (req, res, next) => {
+  const { id } = req.body;
+  if (!id) return res.json({ success: false, data: 'id params required!' });
+
   accountService.deleteAccount(req.body.id, (err, data) => {
     return res.json({
       success: data ? true : false,
@@ -70,6 +76,10 @@ const getUserPaymentsController = (req, res, next) => {
 }
 
 const createPaymentController = (req, res, next) => {
+  const { name, accountId, accountName, amountPaid, paymentDate } = req.body;
+  if ( !name || !accountId || !accountName || !amountPaid || !paymentDate)
+    return res.json({ success: false, data: 'userId, name, accoundId, accountName, amountPaid, paymentDate params required!' });
+
   paymentService.createPayment(req.user.userId, req.body.name, req.body.accountId, req.body.accountName, req.body.amountPaid, req.body.paymentDate, (err, data) => {
     return res.json({
       success: err ? false : true,

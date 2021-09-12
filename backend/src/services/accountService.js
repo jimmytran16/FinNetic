@@ -50,7 +50,7 @@ module.exports = class AccountService {
             accountId: result._id,
             userId: userId,
             scheduledToSend: accountDueDay,
-            sendReminder: true,
+            sendReminder: false,
             phone: "7812671202"
         }
         reminderService.saveAccountToQueue(payload, (err, result) => {

@@ -9,7 +9,7 @@ app.use(express.urlencoded())
 app.use(cors())
 app.use(require('morgan')('dev'))
 app.use((req,res,next) => {
-    console.log(req.body)
+    console.log('REQ BODY',req.body)
     next();
 })
 
@@ -18,5 +18,6 @@ db.connect();
 app.get('/', (req,res,next) => { return res.json({ message:'Hello from Tracker API' }) } )
 app.use('/auth', routers.authRouter);
 app.use('/dashboard', routers.dashboardRouter);
+app.use('/settings', routers.settingsRouter);
 
 app.listen(4000, () => console.log(`Connection to PORT ${ 4000 }`));

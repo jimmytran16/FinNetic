@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Form, Button, Modal } from 'react-bootstrap'
+import { Form, Button, Modal, Toast, ToastContainer } from 'react-bootstrap'
 import SpinnerCircle from './SpinnerCircle'
 import DashboardAPI from '../api/dashboard.api';
-
 
 function PaymentFormModal({ data }) {
 
@@ -12,7 +11,6 @@ function PaymentFormModal({ data }) {
     const [paymentDate, setPaymentDate] = useState('');
     const [accountId, setAccountId] = useState('');
     const [accountName, setAccountName] = useState('');
-
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -31,7 +29,6 @@ function PaymentFormModal({ data }) {
                 .then(response => {
                     setPaymentAmount('')
                     setPaymentDate('')
-                    setShow(false)
                 })
                 .catch(err => console.log(err))
             setIsLoading(false)

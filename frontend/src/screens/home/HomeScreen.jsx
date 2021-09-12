@@ -6,7 +6,7 @@ function HomeScreen({history}) {
     return (
         <>
             <header>
-                <Card style={{ height: '80vh', border: 0, borderRadius: 0, background: 'url("https://images3.alphacoders.com/210/210145.jpg")' }}>
+                <Card style={{ height: '80vh', border: 0, borderRadius: 0, background: 'url("/header.jpeg")' }}>
                     <Card.Body style={{ padding: 0 }}>
                         <div style={{ position: 'absolute', bottom: 0, margin: 20 }}>
                             <div className="slogan__wrapper">

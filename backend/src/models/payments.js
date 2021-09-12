@@ -6,7 +6,8 @@ const paymentSchema = new mongoose.Schema({
   name: { type: String, required: true },
   accountName: { type: String, required: true },
   amountPaid: { type: Number, required: true },
-  paymentDate: { type: Date, required: false }
+  paymentDate: { type: Date, required: false },
+  createdOn: { type: Date, default: new Date() }
 });
 
 const Payment = mongoose.model('payment', paymentSchema);

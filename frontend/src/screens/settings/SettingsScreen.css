@@ -1,0 +1,18 @@
+.nav-link.settings.active {
+    background-color:#c8d8e4!important;
+}
+
+.settings__button__container {
+    text-align: right;
+}
+
+.settings__button__container button, .settings__button__container button:hover  {
+    background-color: #52ab98;
+    border-color: #52ab98;
+}
+
+.settings__button__container button:focus {
+    background: #52ab98!important;
+    border-color: #52ab98!important;
+    box-shadow: 0 0 11px rgba(33,33,33,.2)!important; 
+}

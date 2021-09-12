@@ -21,6 +21,13 @@
   color:#52ab98!important;
 }
 
+.dropdown__container {
+  background-color: transparent!important;
+  border-color: transparent!important;
+  color:#52ab98!important;
+  margin: 0px 10px;
+}
+
 
 @keyframes App-logo-spin {
   from {
