@@ -22,8 +22,6 @@ module.exports = class PaymentService {
     }
 
     async createPayment(userId, name, accountId, accountName, amountPaid, paymentDate, cb) {
-        console.log('yoooo')
-        console.log(new AccountService())
         var accountService = new AccountService();
         
         let payment = new Payment({
@@ -78,7 +76,6 @@ module.exports = class PaymentService {
             const sixMonthsBeforeCurrentMonth = moment().utc().subtract(5, 'months').startOf('month').toISOString();
 
             let result = await Payment
-                // .find({ userId: mongoose.Types.ObjectId(userId) })
                 .aggregate([
                     {
                         // match

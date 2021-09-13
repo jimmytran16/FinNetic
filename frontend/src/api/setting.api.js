@@ -25,4 +25,19 @@ const getUserAccounts = () => {
     });
 }
 
-module.exports = { getUserInfo, getUserAccounts };
+const updateAccountSendReminder = (accountId, sendReminder) => {
+    return axios({
+        method: 'PUT',
+        url: `${url}/settings/updateSendReminder`,
+        data : {
+            accountId: accountId,
+            sendReminder: sendReminder
+        },
+        headers: {
+            "Authorization": `Bearer ${AuthService.default.getTokenFromStore()}`,
+            "Content-Type": "application/json"
+        }
+    });
+}
+
+module.exports = { getUserInfo, getUserAccounts, updateAccountSendReminder };

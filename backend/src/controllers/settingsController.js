@@ -21,7 +21,17 @@ const getAccountsController = (req, res, next) => {
     })
 }
 
+const updateSendReminderController = (req, res, next) => {
+    reminderService.updateSendReminder(req.user.userId, req.body.accountId, req.body.sendReminder, (err, result) => {
+        return res.json({
+            success: err ? false : true,
+            data: err ? err : result
+        })
+    })
+}
+
 module.exports = {
     getUserController,
-    getAccountsController
+    getAccountsController,
+    updateSendReminderController
 }

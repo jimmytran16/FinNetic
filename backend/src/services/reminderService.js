@@ -27,4 +27,19 @@ module.exports = class ReminderService {
             return cb(err,null);
         }
     }
+
+    async updateSendReminder(userId, accountId, sendReminder, cb) {
+        var data = {
+            userId: userId,
+            accountId: accountId,
+            sendReminder: sendReminder
+        }
+        var url = 'http://localhost:4001/api/scheduler/updateSendReminderOption'
+        try {
+            let response = await axios.put(url, data);
+            return cb(null,response.data.message);
+        }catch(err) {
+            return cb(err,null);
+        }
+    }
 }
