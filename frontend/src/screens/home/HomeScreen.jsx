@@ -1,6 +1,7 @@
 import React from 'react';
 import './HomeScreen.css'
-import { Button, Card, Image, Carousel } from 'react-bootstrap'
+import { Button, Card } from 'react-bootstrap'
+import AuthService from '../../services/authService'
 
 function HomeScreen({history}) {
     return (
@@ -17,7 +18,7 @@ function HomeScreen({history}) {
                                     Budget your money with Trkr
                                 </h6>
                             </div>
-                            <Button className="home__register__button" variant="primary" onClick={() => history.push('/register')}>Create an account</Button>
+                            <Button className="home__register__button" variant="primary" onClick={() => history.push(AuthService.isAuthenticated() ? '/dashboard' : '/register')}>Create an account</Button>
                         </div>
                     </Card.Body>
                 </Card>

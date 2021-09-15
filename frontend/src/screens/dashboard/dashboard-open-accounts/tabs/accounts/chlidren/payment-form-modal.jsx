@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Form, Button, Modal, Toast, ToastContainer } from 'react-bootstrap'
-import SpinnerCircle from './SpinnerCircle'
-import DashboardAPI from '../api/dashboard.api';
+import SpinnerCircle from '../../../../../../components/SpinnerCircle'
+import DashboardAPI from '../../../../../../api/dashboard.api';
 
 function PaymentFormModal({ data }) {
 

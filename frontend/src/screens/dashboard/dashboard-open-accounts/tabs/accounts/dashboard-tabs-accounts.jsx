@@ -3,12 +3,12 @@ import './dashboard-tabs-accounts.css';
 import { FaTrashAlt } from 'react-icons/fa'
 import { Button, Container, Table } from 'react-bootstrap'
 import { PaymentUtil, FormatUtil } from '../../../../../utils/index'
-import AccountFormModal from '../../../../../components/AccountFormModal'
-import PaymentFormModal from '../../../../../components/PaymentFormModal'
+import AccountFormModal from './chlidren/account-form-modal'
+import PaymentFormModal from './chlidren/payment-form-modal'
+import AccountModifyModal from './chlidren/account-modify-modal'
 import DashboardAPI from '../../../../../api/dashboard.api'
 import SpinnerLoader from '../../../../../components/SpinnerLoader'
 import BoxContainer from '../../../../../components/BoxContainer'
-import AccountModifyModal from '../../../../../components/AccountModifyModal'
 
 function AccountsTabContent(props) {
     const [isLoading, setIsLoading] = useState(false)
@@ -107,5 +107,6 @@ const AccountRow = ({ item, rowCount, reload, setReload }) => {
         </>
     );
 }
+
 
 export default AccountsTabContent;

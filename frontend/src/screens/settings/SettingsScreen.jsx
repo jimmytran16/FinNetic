@@ -10,7 +10,6 @@ const SettingsScreen = (props) => {
 
     return (
         <Container style={{ paddingTop: 20 }}>
-
             <h4> Settings </h4>
             <Tab.Container id="left-tabs-example" defaultActiveKey="first">
                 <Row>
@@ -25,7 +24,7 @@ const SettingsScreen = (props) => {
                         </Nav>
                     </Col>
                     <Col sm={9}>
-                        <Tab.Content>
+                        <Tab.Content className="settings__tab__content">
                             <Tab.Pane eventKey="first">
                                 <ProfileTabContent />
                             </Tab.Pane>
@@ -42,6 +41,9 @@ const SettingsScreen = (props) => {
 
 const ProfileTabContent = () => {
     const [data, setData] = useState([])
+    const [phoneNumber, setPhoneNumber] = useState(null)
+    const [refresh, setRefresh] = useState(false)
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
         SettingAPI.getUserInfo()
@@ -49,25 +51,41 @@ const ProfileTabContent = () => {
                 if (response.data.success) setData(response.data.data);
             })
             .catch(err => console.log(err));
-    }, [])
+    }, [refresh])
+
+    const handleUpdate = () => {
+        setIsLoading(true)
+        setTimeout(() => {
+            SettingAPI.updateUser(phoneNumber)
+                .then(response => {
+                    if (response.data.success) setRefresh(!refresh);
+                    setIsLoading(false)
+                })
+                .catch(err => console.log(err));
+        }, 500)
+    }
 
     return (
         <>
             <Form>
                 <Form.Group controlId="formGroupEmail">
                     <Form.Label>Full name</Form.Label>
-                    <Form.Control type="text" placeholder="name" value={data?.name} disabled />
+                    <Form.Control type="text" placeholder="name" defaultValue={data.name} disabled />
                 </Form.Group>
                 <Form.Group controlId="formGroupPassword">
                     <Form.Label>Email</Form.Label>
-                    <Form.Control type="email" placeholder="email" value={data?.username} disabled />
+                    <Form.Control type="email" placeholder="email" defaultValue={data.username} disabled />
                 </Form.Group>
                 <Form.Group controlId="formGroupPassword">
                     <Form.Label>Account creation</Form.Label>
-                    <Form.Control type="email" placeholder="email" value={data?.createdOn} disabled />
+                    <Form.Control type="text" placeholder="Account creation" defaultValue={data.createdOn} disabled />
+                </Form.Group>
+                <Form.Group controlId="formGroupPassword">
+                    <Form.Label>Phone number</Form.Label>
+                    <Form.Control type="phone" placeholder="Add phone number" defaultValue={data.phone ?? ''} onChange={(e) => setPhoneNumber(e.target.value)} />
                 </Form.Group>
                 <div className="settings__button__container">
-                    <Button>Update</Button>
+                    <Button onClick={handleUpdate}> {isLoading ? <SpinnerCircle size={'sm'} /> : 'Update'}</Button>
                 </div>
             </Form>
         </>

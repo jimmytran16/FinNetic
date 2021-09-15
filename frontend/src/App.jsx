@@ -1,11 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import './App.css';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link,
-  Redirect
+  Link
 } from "react-router-dom";
 import { Navbar, Nav, ButtonGroup, Button, Container, Dropdown } from 'react-bootstrap'
 import { FiSettings } from 'react-icons/fi'
@@ -17,8 +16,7 @@ import LoginScreen from "./screens/login/LoginScreen";
 import RegisterScreen from "./screens/register/RegisterScreen";
 import SettingsScreen from './screens/settings/SettingsScreen';
 
-function App(props) {
-  const [isAuth, setIsAuth] = useState(AuthService.isAuthenticated())
+function App() {
   return (
     <>
       <Router>
@@ -27,7 +25,7 @@ function App(props) {
             <Navbar.Brand href="/">trkr</Navbar.Brand>
             <Nav className="me-auto">
               {
-                isAuth
+                AuthService.isAuthenticated()
                   ? (<>
                     <Nav.Link className="nav__link" as={Link} to="/">Home</Nav.Link>
                     <Nav.Link className="nav__link" as={Link} to="/dashboard">Dashboard</Nav.Link>
@@ -37,7 +35,7 @@ function App(props) {
                       </Button>
                       <Dropdown.Toggle style={{ backgroundColor: 'transparent', borderColor: 'transparent', color: '#52ab98', padding: 0, margin: 0 }} split variant="success" id="dropdown-split-basic" />
 
-                      <Dropdown.Menu>
+                      <Dropdown.Menu alignRight={true}>
                         <Dropdown.Item href="/logout">Logout</Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
@@ -57,15 +55,12 @@ function App(props) {
           <Route exact path="/" component={HomeScreen}></Route>
           <Route path="/login" component={LoginScreen}></Route>
           <Route path="/register" component={RegisterScreen}></Route>
-          <Route path="/logout" render={() => {
-            AuthService.logout()
-            return <Redirect to={{ pathname: "/login" }} />
-          }} />
+          <Route path="/logout" render={() => { return AuthService.logout() }} />
           <ProtectedRoute path="/dashboard" component={DashboardScreen}></ProtectedRoute>
           <ProtectedRoute path="/settings" component={SettingsScreen}></ProtectedRoute>
           <Route component={My404Component} />
         </Switch>
-      </Router >
+      </Router>
     </>
   );
 }

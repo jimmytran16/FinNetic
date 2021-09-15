@@ -6,5 +6,6 @@ const { settingsController } = require('../controllers')
 router.get('/getUser', middlewares.authenticateUser, settingsController.getUserController);
 router.get('/getAccounts', middlewares.authenticateUser, settingsController.getAccountsController);
 router.put('/updateSendReminder', middlewares.authenticateUser, settingsController.updateSendReminderController);
+router.put('/updateUser', middlewares.authenticateUser, settingsController.updateAccountSettingsController);
 
 module.exports = router;

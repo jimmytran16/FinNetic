@@ -14,6 +14,22 @@ const getUserInfo = () => {
     });
 }
 
+const updateUser = (phone) => {
+    return axios({
+        method: 'PUT',
+        url: `${url}/settings/updateUser`,
+        data : {
+            update : {
+                phone: phone
+            }
+        },
+        headers: {
+            "Authorization": `Bearer ${AuthService.default.getTokenFromStore()}`,
+            "Content-Type": "application/json"
+        }
+    });
+}
+
 const getUserAccounts = () => {
     return axios({
         method: 'GET',
@@ -40,4 +56,5 @@ const updateAccountSendReminder = (accountId, sendReminder) => {
     });
 }
 
-module.exports = { getUserInfo, getUserAccounts, updateAccountSendReminder };
+
+module.exports = { getUserInfo, getUserAccounts, updateAccountSendReminder, updateUser };

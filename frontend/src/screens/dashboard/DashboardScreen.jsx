@@ -10,7 +10,7 @@ import OpenAccountsPage from './dashboard-open-accounts/dashboard-open-accounts'
 import DashboardBudgetPage from './dashboard-budgeting/dashboard-bugeting'
 import { Container } from 'react-bootstrap';
 
-function Dashboard({ history }) {
+function Dashboard() {
     return (
         <>
             <Router>
@@ -37,7 +37,7 @@ function Dashboard({ history }) {
                             <Route path="/dashboard/open-accounts">
                                 <OpenAccountsPage />
                             </Route>
-                            <Route path="/dashboard">
+                            <Route exact path="/dashboard">
                                 <DashContent />
                             </Route>
                         </Switch>
@@ -50,7 +50,7 @@ function Dashboard({ history }) {
 
 const DashContent = () => {
     return (
-        <h1>Hello from Dash</h1>
+        <h3>Hello from Dash - Not done</h3>
     )
 }
 

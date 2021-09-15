@@ -3,6 +3,7 @@ class AuthService {
 
     authenticateUser(user) {
         localStorage.setItem('user', JSON.stringify(user))
+        window.location.href = "/dashboard";
     }
 
     getTokenFromStore() {
@@ -23,6 +24,7 @@ class AuthService {
 
     logout() {
         delete localStorage['user']
+        window.location.href = "/login";
     }
 }
 // Export an instance of this class

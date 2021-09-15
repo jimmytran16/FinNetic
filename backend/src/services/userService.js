@@ -13,4 +13,13 @@ module.exports = class UserService {
             return cb(err.toString(), null);
         }
     }
+
+    async updateUser(id, update, cb) {
+        try{
+            await User.findByIdAndUpdate(mongoose.Types.ObjectId(id), { $set: update });
+            return cb(null, 'Sucessfully updated user!');
+        }catch(err) {
+            return cb(err.toString(), null);
+        }
+    }
 }
