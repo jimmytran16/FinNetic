@@ -33,6 +33,30 @@ const chartOptions = {
   },
 }
 
+const balanceVsPaidChartOptions = {
+  plugins: {
+    title: {
+      display: true,
+      text: 'Balance Vs. Paid'
+    },
+    tooltip: {
+      callbacks: {
+        label: function (context, value) {
+          var label = context.dataset.label || '';
+
+          if (label) {
+            label += ': ';
+          }
+          if (context.parsed.x !== null) {
+            label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.parsed);
+          }
+          return label;
+        }
+      }
+    }
+  },
+}
+
 const averageChartOptions = {
   responsive: true,
   maintainAspectRatio: false,
@@ -104,7 +128,7 @@ function MetricsTabContent(props) {
                 </Col>
                 <Col className="metric__column" xs={12} md={12}>
                   <BoxContainer>
-                    <Doughnut data={data.default} options={chartOptions} />
+                    <Doughnut data={data.remainingPayments} options={balanceVsPaidChartOptions} />
                   </BoxContainer>
                 </Col>
               </Row>

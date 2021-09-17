@@ -6,9 +6,9 @@ import { PaymentUtil, FormatUtil } from '../../../../../utils/index'
 import AccountFormModal from './chlidren/account-form-modal'
 import PaymentFormModal from './chlidren/payment-form-modal'
 import AccountModifyModal from './chlidren/account-modify-modal'
-import DashboardAPI from '../../../../../api/dashboard.api'
 import SpinnerLoader from '../../../../../components/SpinnerLoader'
 import BoxContainer from '../../../../../components/BoxContainer'
+import DashboardAPI from '../../../../../api/dashboard.api'
 
 function AccountsTabContent(props) {
     const [isLoading, setIsLoading] = useState(false)

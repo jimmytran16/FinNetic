@@ -42,4 +42,44 @@ module.exports = class ReminderService {
             return cb(err,null);
         }
     }
+
+    updateQueuePhoneNumber(userId, phone) {
+        return new Promise(async (resolve, reject) => {
+            var data = {
+                userId: userId,
+                phone: phone
+            }
+            var url = 'http://localhost:4001/api/scheduler/updateQueuePhoneNumbers'
+            try {
+                let response = await axios.put(url, data);
+                if (response.data.sucess) 
+                    return resolve(respones.data.message);
+                else
+                    return reject(response.data.message);
+            }catch(err) {
+                return reject(err.toString())
+            }
+        })
+    }
+
+    deleteAccountFromQueue(accountId) {
+        return new Promise(async (resolve, reject) => {
+            var data = {
+                data: {
+                        accountId: accountId,
+                }
+            }
+            var url = 'http://localhost:4001/api/scheduler/deleteAccountInQueue'
+            try {
+                let response = await axios.delete(url, data);
+
+                if (response.data.success) 
+                    return resolve(response.data.message);
+                else 
+                    return reject(response.data.message);
+            }catch(err) {
+                return reject(err.toString());
+            }
+        })
+    }
 }

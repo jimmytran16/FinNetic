@@ -14,7 +14,6 @@ module.exports = class PaymentService {
                 .find({ userId: mongoose.Types.ObjectId(userId) })
                 .select('-userId')
                 .sort({ 'paymentDate': 'desc' });
-            result = this._aggregatePaymentsByMonth(result);
             cb(null, result)
         } catch (err) {
             cb(err.toString(), null)
@@ -99,6 +98,19 @@ module.exports = class PaymentService {
         } catch (err) {
             console.log('errrrrrrrrrr', err)
             return cb(err.toString(), null)
+        }
+    }
+
+    async getAllPaymentsAndAggregateByMonth(userId, cb) {
+        try {
+            let result = await Payment
+                .find({ userId: mongoose.Types.ObjectId(userId) })
+                .select('-userId')
+                .sort({ 'paymentDate': 'desc' });
+            result = this._aggregatePaymentsByMonth(result);
+            cb(null, result)
+        } catch (err) {
+            cb(err.toString(), null)
         }
     }
 

@@ -51,7 +51,7 @@ module.exports = class AccountService {
             userId: userId,
             scheduledToSend: accountDueDay,
             sendReminder: false,
-            phone: "7812671202"
+            phone: null
         }
         reminderService.saveAccountToQueue(payload, (err, result) => {
             return cb(err, result);
@@ -60,11 +60,14 @@ module.exports = class AccountService {
 
     async deleteAccount(id, cb) {
         try { // delete specific account, and all payments under that account
+            let reminderService = new ReminderService();
+            await reminderService.deleteAccountFromQueue(id);
             await Account.findByIdAndDelete(new mongoose.Types.ObjectId(id));
             await Payment.deleteMany({ accountId: mongoose.Types.ObjectId(id) });
-            cb(null, `Sucessfully deleted account ${id}`)
+            return cb(null, `Sucessfully deleted account ${id}`)
         } catch (err) {
-            cb(err, null)
+            console.log(err)
+            return cb(err, null)
         }
     }
 

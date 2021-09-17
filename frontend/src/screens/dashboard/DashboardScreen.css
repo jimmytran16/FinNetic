@@ -3,6 +3,14 @@
   padding:10px;
 }
 
+.nav-link.dashboard__tab.active {
+  background-color:#c8d8e4!important;
+}
+
+.tab__container__wrapper{
+  padding-top: 20px;
+}
+
 .dashboard__nav__wrapper {
   background-color: #f8f9fa!important
 }

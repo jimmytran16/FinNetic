@@ -28,7 +28,7 @@ function App() {
                 AuthService.isAuthenticated()
                   ? (<>
                     <Nav.Link className="nav__link" as={Link} to="/">Home</Nav.Link>
-                    <Nav.Link className="nav__link" as={Link} to="/dashboard">Dashboard</Nav.Link>
+                    <Nav.Link className="nav__link" as={Link} to="/dashboard/open-accounts">Dashboard</Nav.Link>
                     <Dropdown as={ButtonGroup}>
                       <Button href="/settings" style={{ backgroundColor: 'transparent', borderColor: 'transparent' }}>
                         <FiSettings color={'#52ab98'} />
@@ -51,15 +51,17 @@ function App() {
           </Container>
         </Navbar>
 
-        <Switch>
-          <Route exact path="/" component={HomeScreen}></Route>
-          <Route path="/login" component={LoginScreen}></Route>
-          <Route path="/register" component={RegisterScreen}></Route>
-          <Route path="/logout" render={() => { return AuthService.logout() }} />
-          <ProtectedRoute path="/dashboard" component={DashboardScreen}></ProtectedRoute>
-          <ProtectedRoute path="/settings" component={SettingsScreen}></ProtectedRoute>
-          <Route component={My404Component} />
-        </Switch>
+        <div className="screen__wrapper">
+          <Switch>
+            <Route exact path="/" component={HomeScreen}></Route>
+            <Route path="/login" component={LoginScreen}></Route>
+            <Route path="/register" component={RegisterScreen}></Route>
+            <Route path="/logout" render={() => { return AuthService.logout() }} />
+            <ProtectedRoute path="/dashboard/open-accounts" component={DashboardScreen}></ProtectedRoute>
+            <ProtectedRoute path="/settings" component={SettingsScreen}></ProtectedRoute>
+            <Route component={My404Component} />
+          </Switch>
+        </div>
       </Router>
     </>
   );

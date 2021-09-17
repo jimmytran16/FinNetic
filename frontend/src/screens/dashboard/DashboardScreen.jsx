@@ -8,50 +8,47 @@ import {
 } from "react-router-dom";
 import OpenAccountsPage from './dashboard-open-accounts/dashboard-open-accounts'
 import DashboardBudgetPage from './dashboard-budgeting/dashboard-bugeting'
-import { Container } from 'react-bootstrap';
+import { Container, Tab, Col, Row, Nav } from 'react-bootstrap';
 
 function Dashboard() {
     return (
         <>
-            <Router>
-                <div className="dashboard__nav__wrapper">
-                    <nav>
-                        <ul>
-                            <li>
-                                <Link to="/dashboard">Dash</Link>
-                            </li>
-                            <li>
-                                <Link to="/dashboard/open-accounts">Open Accounts</Link>
-                            </li>
-                            <li>
-                                <Link to="/dashboard/budgeting">Bugeting</Link>
-                            </li>
-                        </ul>
-                    </nav>
+            <Container className="dashboard__nav__wrapper">
+                <Router>
+                    <div className="tab__container__wrapper">
+                        <h4> Dashboard </h4>
+                        <Tab.Container id="left-tabs-example" defaultActiveKey="first">
+                            <Row>
+                                <Col sm={2}>
+                                    <Nav variant="pills" className="flex-column">
+                                        <Nav.Item>
+                                            <Nav.Link className="dashboard__tab" as={Link} to="/dashboard/open-accounts" eventKey="first">Accounts</Nav.Link>
+                                        </Nav.Item>
+                                        <Nav.Item>
+                                            <Nav.Link className="dashboard__tab" as={Link} to="/dashboard/budgeting" eventKey="second">Budgeting</Nav.Link>
+                                        </Nav.Item>
+                                    </Nav>
+                                </Col>
+                                <Col sm={10}>
 
-                    <Container>
-                        <Switch>
-                            <Route path="/dashboard/budgeting">
-                                <DashboardBudgetPage />
-                            </Route>
-                            <Route path="/dashboard/open-accounts">
-                                <OpenAccountsPage />
-                            </Route>
-                            <Route exact path="/dashboard">
-                                <DashContent />
-                            </Route>
-                        </Switch>
-                    </Container>
-                </div>
-            </Router>
+                                    <Tab.Content>
+                                        <Switch>
+                                            <Route path="/dashboard/budgeting">
+                                                <DashboardBudgetPage />
+                                            </Route>
+                                            <Route path="/dashboard/open-accounts">
+                                                <OpenAccountsPage />
+                                            </Route>
+                                        </Switch>
+                                    </Tab.Content>
+                                </Col>
+                            </Row>
+                        </Tab.Container>
+                    </div>
+                </Router>
+            </Container>
         </>
     );
-}
-
-const DashContent = () => {
-    return (
-        <h3>Hello from Dash - Not done</h3>
-    )
 }
 
 export default Dashboard;

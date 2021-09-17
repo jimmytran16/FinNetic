@@ -112,11 +112,46 @@ const parsePaymentDataIntoChartData = (data) => {
         const avg = (sum / numOfAccounts) || 0;
         template.datasets[0].data[i] = avg;
     }
-    
+
     return template;
+}
+
+const parsePaymentAndAccountDataIntoChartData = (paymentData, accountData) => {
+    const templateDataSet = {
+        labels: [
+            "Remaining Balance",
+            "Paid",
+        ],
+        datasets: [
+            {   
+                backgroundColor: [
+                    "#2b6777",
+                    "#52ab98",
+                ],
+                borderColor: [
+                    "#2b6777",
+                    "#52ab98",
+                ],
+                data: [
+                    0,
+                    0
+                ]
+            }
+        ]
+    }
+    console.log(paymentData,accountData)
+    const sumOfRemaining = accountData.reduce((n, { balance }) => n + balance, 0);
+    const sumOfPayments = paymentData.reduce((n, { amountPaid }) => n + amountPaid, 0);
+    console.log('sumOfPayments',sumOfPayments)
+
+    templateDataSet.datasets[0].data[0] = sumOfRemaining;
+    templateDataSet.datasets[0].data[1] = sumOfPayments;
+
+    return templateDataSet;
 }
 
 module.exports = {
     parseAccountDataIntoChartData,
     parsePaymentDataIntoChartData,
+    parsePaymentAndAccountDataIntoChartData
 }

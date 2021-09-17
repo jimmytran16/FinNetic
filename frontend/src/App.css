@@ -2,6 +2,11 @@
   text-align: center;
 }
 
+.screen__wrapper {
+  background-color:#f8f9fa;
+  min-height: 100vh;
+}
+
 .nav__link button {
   background-color:#52ab98;
   border-color:#52ab98;
@@ -26,14 +31,4 @@
   border-color: transparent!important;
   color:#52ab98!important;
   margin: 0px 10px;
-}
-
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }

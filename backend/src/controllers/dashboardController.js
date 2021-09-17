@@ -7,15 +7,23 @@ var paymentService = new PaymentService()
 
 // Metric controllers
 const getDashboardContentController = (req, res, next) => {
-  var averageData = []
+  var averageData = [];
+  var paymentData = [];
   paymentService.getLastSixMonthsOfAccountPayments(req.user.userId, (err, data) => {
     if (err) return res.json({ data: err, success: false })
     else averageData = data;
   })
+  paymentService.getAllPayments(req.user.userId, (err, data) => {
+    if (err) return res.json({ data: err, success: false })
+    else paymentData = data;
+  })
   accountService.getAllAccounts(req.user.userId, (err, data) => {
-    let parsedChart = DashboardUtil.parsePaymentDataIntoChartData(averageData)
     return res.json({
-      data: { averageChart: parsedChart, default: DashboardUtil.parseAccountDataIntoChartData(data) },
+      data: {
+        averageChart: DashboardUtil.parsePaymentDataIntoChartData(averageData),
+        default: DashboardUtil.parseAccountDataIntoChartData(data),
+        remainingPayments: DashboardUtil.parsePaymentAndAccountDataIntoChartData(paymentData,data)
+      },
       success: true
     })
   })
@@ -67,7 +75,7 @@ const deleteAccountController = (req, res, next) => {
 
 // Payment controllers
 const getUserPaymentsController = (req, res, next) => {
-  paymentService.getAllPayments(req.user.userId, (err, data) => {
+  paymentService.getAllPaymentsAndAggregateByMonth(req.user.userId, (err, data) => {
     return res.json({
       success: err ? false : true,
       data: err ? err : data
@@ -77,7 +85,7 @@ const getUserPaymentsController = (req, res, next) => {
 
 const createPaymentController = (req, res, next) => {
   const { name, accountId, accountName, amountPaid, paymentDate } = req.body;
-  if ( !name || !accountId || !accountName || !amountPaid || !paymentDate)
+  if (!name || !accountId || !accountName || !amountPaid || !paymentDate)
     return res.json({ success: false, data: 'userId, name, accoundId, accountName, amountPaid, paymentDate params required!' });
 
   paymentService.createPayment(req.user.userId, req.body.name, req.body.accountId, req.body.accountName, req.body.amountPaid, req.body.paymentDate, (err, data) => {

@@ -3,7 +3,7 @@ class AuthService {
 
     authenticateUser(user) {
         localStorage.setItem('user', JSON.stringify(user))
-        window.location.href = "/dashboard";
+        window.location.href = "/dashboard/open-accounts";
     }
 
     getTokenFromStore() {

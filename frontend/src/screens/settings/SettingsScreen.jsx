@@ -82,7 +82,7 @@ const ProfileTabContent = () => {
                 </Form.Group>
                 <Form.Group controlId="formGroupPassword">
                     <Form.Label>Phone number</Form.Label>
-                    <Form.Control type="phone" placeholder="Add phone number" defaultValue={data.phone ?? ''} onChange={(e) => setPhoneNumber(e.target.value)} />
+                    <Form.Control type="phone" placeholder="Add phone number" defaultValue={data.phone ?? ''} onChange={(e) => setPhoneNumber(e.target.value)} required/>
                 </Form.Group>
                 <div className="settings__button__container">
                     <Button onClick={handleUpdate}> {isLoading ? <SpinnerCircle size={'sm'} /> : 'Update'}</Button>

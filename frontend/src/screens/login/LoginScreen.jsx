@@ -27,7 +27,7 @@ const LoginScreen = (props) => {
                 .then(response => {
                     if (response.data.success) {
                         AuthService.authenticateUser(response.data.data);
-                        history.push('/dashboard')
+                        history.push('/dashboard/open-accounts')
                     }
                     else {
                         setShow(true)
