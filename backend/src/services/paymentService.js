@@ -1,28 +1,32 @@
 'use strict'
 const Payment = require('../models/payments')
+const Account = require('../models/accounts')
 const AccountService = require('./accountService')
+const { DashboardUtil } = require('../utils/index')
 const moment = require('moment')
 const mongoose = require('mongoose')
 
 module.exports = class PaymentService {
 
-    constructor() {}
+    constructor() { }
 
-    async getAllPayments(userId, cb) {
-        try {
-            let result = await Payment
-                .find({ userId: mongoose.Types.ObjectId(userId) })
-                .select('-userId')
-                .sort({ 'paymentDate': 'desc' });
-            cb(null, result)
-        } catch (err) {
-            cb(err.toString(), null)
-        }
+    async getAllPayments(userId) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                let result = await Payment
+                    .find({ userId: mongoose.Types.ObjectId(userId) })
+                    .select('-userId')
+                    .sort({ 'paymentDate': 'desc' });
+                return resolve(result)
+            } catch (err) {
+                return reject(err.toString())
+            }
+        })
     }
 
     async createPayment(userId, name, accountId, accountName, amountPaid, paymentDate, cb) {
         var accountService = new AccountService();
-        
+
         let payment = new Payment({
             userId: mongoose.Types.ObjectId(userId),
             accountId: mongoose.Types.ObjectId(accountId),
@@ -36,7 +40,7 @@ module.exports = class PaymentService {
             if (err) return cb(err, null)
             if (result.lastPayment < new Date(paymentDate) || result.lastPayment === null) {
                 // Update the last payment to the account
-                accountService.updateAccount({ _id: accountId }, { lastPayment: new Date(paymentDate) }, (err, data) => {
+                accountService.updateAccount({ _id: accountId }, { $set: { lastPayment: new Date(paymentDate) } }, (err, data) => {
                     if (err) return cb(err, null);
                 })
             }
@@ -44,16 +48,21 @@ module.exports = class PaymentService {
 
         try {
             let result = await payment.save()
-            cb(null, result)
+            // update new balance after payment is made
+            await Account.updateOne({ _id: mongoose.Types.ObjectId(accountId) }, { $inc: { balance: -amountPaid } })
+            return cb(null, result)
         } catch (err) {
-            cb(err, null)
+            return cb(err, null)
         }
     }
 
     async deletePaymentById(id, cb) {
+        // delete payment
+        // add payment amount back to balance 
         try {
-            let result = await Payment.findByIdAndDelete(new mongoose.Types.ObjectId(id))
-            cb(null, result)
+            let result = await Payment.findByIdAndDelete(new mongoose.Types.ObjectId(id));
+            await Account.updateOne({ _id: mongoose.Types.ObjectId(result.accountId) }, { $inc: { balance: result.amountPaid } });
+            return cb(null, 'Sucessfully deleted payment');
         } catch (err) {
             cb(err, null)
         }
@@ -68,37 +77,60 @@ module.exports = class PaymentService {
         }
     }
 
-    // function that will send back the last six months of payments made by user for all open accounts
-    async getLastSixMonthsOfAccountPayments(userId, cb) {
+    // IMPROVEMENTS --- NEED TO CREATE SEPERATE SERVICE FOR CHART AGGEGRATION 
+    async getChartDataByUser(userId, cb) {
         try {
-            const currentMonth = moment().utc().endOf('month').toISOString();
-            const sixMonthsBeforeCurrentMonth = moment().utc().subtract(5, 'months').startOf('month').toISOString();
+            let paymentData = await this.getAllPayments(userId);
+            let averageData = await this.getLastSixMonthsOfAccountPayments(userId);
+            let allAccounts = await Account.find({ userId: mongoose.Types.ObjectId(userId) }).select('-userId');
+            let accountData = DashboardUtil.getLatestDueDate(allAccounts);
+            
+            return cb(null, {
+                defaultChart : DashboardUtil.parseAccountDataIntoChartData(accountData),
+                averageChart : DashboardUtil.parsePaymentDataIntoChartData(averageData),
+                remainingChart: DashboardUtil.parsePaymentAndAccountDataIntoChartData(paymentData, accountData),
+                isDefaultData : accountData.length === 0 ? false : true,
+                isAverageData : paymentData.length === 0 ? false: true,
+                isRemainingData : paymentData.length === 0 ? false : true
+            })
+        } catch (err) {
+            return cb(err.toString(), null);
+        }
+    }
 
-            let result = await Payment
-                .aggregate([
-                    {
-                        // match
-                        $match: {
-                            "userId": mongoose.Types.ObjectId(userId), // filter by user id
-                            "paymentDate": {
-                                $gte: new Date(sixMonthsBeforeCurrentMonth), $lte: new Date(currentMonth) // date range
+    // function that will send back the last six months of payments made by user for all open accounts
+    async getLastSixMonthsOfAccountPayments(userId) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const currentMonth = moment().utc().endOf('month').toISOString();
+                const sixMonthsBeforeCurrentMonth = moment().utc().subtract(5, 'months').startOf('month').toISOString();
+
+                let result = await Payment
+                    .aggregate([
+                        {
+                            // match
+                            $match: {
+                                "userId": mongoose.Types.ObjectId(userId), // filter by user id
+                                "paymentDate": {
+                                    $gte: new Date(sixMonthsBeforeCurrentMonth), $lte: new Date(currentMonth) // date range
+                                }
+                            }
+                        },
+                        {
+                            // group by
+                            $group: {
+                                "_id": "$name",
+                                "userId": { "$first": "$userId" }, // populate user id
+                                "paymentDates": { "$push": "$$ROOT" } // populate arrays of payment date objects based on the _id = name
                             }
                         }
-                    },
-                    {
-                        // group by
-                        $group: {
-                            "_id": "$name",
-                            "userId": { "$first": "$userId" }, // populate user id
-                            "paymentDates": { "$push": "$$ROOT" } // populate arrays of payment date objects based on the _id = name
-                        }
-                    }
-                ]).exec()
-            return cb(null, result)
-        } catch (err) {
-            console.log('errrrrrrrrrr', err)
-            return cb(err.toString(), null)
-        }
+                    ]).exec()
+                return resolve(result)
+            } catch (err) {
+                console.log('errrrrrrrrrr', err)
+                return reject(err.toString())
+            }
+        })
     }
 
     async getAllPaymentsAndAggregateByMonth(userId, cb) {

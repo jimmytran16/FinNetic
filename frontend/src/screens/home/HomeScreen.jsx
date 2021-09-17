@@ -3,7 +3,7 @@ import './HomeScreen.css'
 import { Button, Card } from 'react-bootstrap'
 import AuthService from '../../services/authService'
 
-function HomeScreen({history}) {
+function HomeScreen({ history }) {
     return (
         <>
             <header>
@@ -18,7 +18,7 @@ function HomeScreen({history}) {
                                     Budget your money with Trkr
                                 </h6>
                             </div>
-                            <Button className="home__register__button" variant="primary" onClick={() => history.push(AuthService.isAuthenticated() ? '/dashboard' : '/register')}>Create an account</Button>
+                            <Button className="home__register__button" variant="primary" onClick={() => history.push(AuthService.isAuthenticated() ? '/dashboard/open-accounts' : '/register')}>Create an account</Button>
                         </div>
                     </Card.Body>
                 </Card>

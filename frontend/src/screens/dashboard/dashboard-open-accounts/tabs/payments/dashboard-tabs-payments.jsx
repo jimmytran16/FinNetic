@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './dashboard-tabs-payments.css'
 import { Accordion, Button, Card, Container, Table } from 'react-bootstrap'
+import { FaTrashAlt } from 'react-icons/fa';
 import { PaymentUtil, FormatUtil } from '../../../../../utils/index'
 import SpinnerLoader from '../../../../../components/SpinnerLoader';
 import DashboardAPI from '../../../../../api/dashboard.api'
@@ -8,6 +9,7 @@ import DashboardAPI from '../../../../../api/dashboard.api'
 function PaymentsTabContent(props) {
     const [data, setData] = useState([])
     const [isLoading, setIsLoading] = useState(false)
+    const [reload, setReload] = useState(false)
 
     useEffect(() => {
         setIsLoading(true);
@@ -17,13 +19,24 @@ function PaymentsTabContent(props) {
                 .catch(err => console.log(err))
             setIsLoading(false)
         }, 500)
-    }, [])
+    }, [reload])
+
+    const handlePaymentDeletion = (id) => {
+        console.log(id)
+        DashboardAPI.deleteAccountPayment(id)
+            .then(response => {
+                console.log(response.data)
+                if (response.data.success) setReload(!reload);
+            })
+            .catch(err => console.log(err))
+    }
 
     return (
         (isLoading)
             ? <SpinnerLoader />
             : <Container>
                 <h2 style={{ textAlign: 'center', padding: "20px 10px" }}> Payments </h2>
+                {(data.length == 0) && <h6 style={{ textAlign: 'center' }}>No Payments Yet</h6>}
                 <Accordion defaultActiveKey="1">
                     {
                         data.map((item, key) => {
@@ -43,6 +56,7 @@ function PaymentsTabContent(props) {
                                                     <th>Account Name</th>
                                                     <th>Amount Paid</th>
                                                     <th>Payment Date</th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -55,6 +69,11 @@ function PaymentsTabContent(props) {
                                                                 <td >{item.accountName}</td>
                                                                 <td >{FormatUtil.currencyFormat(item.amountPaid)}</td>
                                                                 <td >{PaymentUtil.parseOffsetDateToMonthDayYear(item.paymentDate)}</td>
+                                                                <td >
+                                                                    <Button className="delete__button" onClick={() => handlePaymentDeletion(item._id)}>
+                                                                        <FaTrashAlt />
+                                                                    </Button>
+                                                                </td>
                                                             </tr>
                                                         )
                                                     })

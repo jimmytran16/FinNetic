@@ -1,9 +1,10 @@
 'use strict'
 const Account = require('../models/accounts')
 const Payment = require('../models/payments')
+const User = require('../models/users')
 const mongoose = require('mongoose')
 const ReminderService = require('./reminderService')
-const moment = require('moment')
+const { DashboardUtil } = require('../utils/index')
 
 module.exports = class AccountService {
 
@@ -12,7 +13,7 @@ module.exports = class AccountService {
     async getAllAccounts(userId, cb) {
         try {
             let result = await Account.find({ userId: mongoose.Types.ObjectId(userId) }).select('-userId')
-            result = this._getLatestDueDate(result);
+            result = DashboardUtil.getLatestDueDate(result)
             cb(null, result)
         } catch (err) {
             cb(err, null)
@@ -29,6 +30,7 @@ module.exports = class AccountService {
     }
 
     async createAccount(name, balance, accountName, accountDueDay, userId, cb) {
+        let user = await User.findById(mongoose.Types.ObjectId(userId)).select('phone')
         let reminderService = new ReminderService();
         let account = new Account({
             userId: userId,
@@ -51,7 +53,7 @@ module.exports = class AccountService {
             userId: userId,
             scheduledToSend: accountDueDay,
             sendReminder: false,
-            phone: null
+            phone: user.phone
         }
         reminderService.saveAccountToQueue(payload, (err, result) => {
             return cb(err, result);
@@ -71,28 +73,28 @@ module.exports = class AccountService {
         }
     }
 
-    async updateAccount(filter, data, cb) {
+    async updateAccount(filter, update, cb) {
         try {
-            let result = await Account.findOneAndUpdate(filter, { $set: data })
+            let result = await Account.findOneAndUpdate(filter, update)
             cb(null, result)
         } catch (err) {
             cb(err, null)
         }
     }
 
-    _getLatestDueDate(data) {
-        let todaysDate = new Date()
-        let todaysDateDay = todaysDate.getUTCDate();
-        for (var i in data) {
-            let accountDueDay = data[i].accountDueDay
-            // if current date's day is past the accountDueDate's day, then change month to be one month ahead
-            if (todaysDateDay > accountDueDay) {
-                data[i]['accountDueDate'] = moment.utc(todaysDate).set("date", accountDueDay).add(1, "month")
-            }
-            else {
-                data[i]['accountDueDate'] = moment.utc(todaysDate).set("date", accountDueDay)
-            }
-        }
-        return data;
-    }
+    // _getLatestDueDate(data) {
+    //     let todaysDate = new Date()
+    //     let todaysDateDay = todaysDate.getUTCDate();
+    //     for (var i in data) {
+    //         let accountDueDay = data[i].accountDueDay
+    //         // if current date's day is past the accountDueDate's day, then change month to be one month ahead
+    //         if (todaysDateDay > accountDueDay) {
+    //             data[i]['accountDueDate'] = moment.utc(todaysDate).set("date", accountDueDay).add(1, "month")
+    //         }
+    //         else {
+    //             data[i]['accountDueDate'] = moment.utc(todaysDate).set("date", accountDueDay)
+    //         }
+    //     }
+    //     return data;
+    // }
 }

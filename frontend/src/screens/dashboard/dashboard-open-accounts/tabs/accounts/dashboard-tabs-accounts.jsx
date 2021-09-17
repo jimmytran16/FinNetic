@@ -32,13 +32,19 @@ function AccountsTabContent(props) {
                     ? <SpinnerLoader />
                     : <>
                         <h2 style={{ textAlign: 'center', padding: "20px 10px" }}> Accounts </h2>
-                        <AccountTable data={data} setReload={setReload} reload={reload} />
+                        {(data.length > 0)
+                            ? (<>
+                                <AccountTable data={data} setReload={setReload} reload={reload} />
+                                <div style={{ display: 'flex' }}>
+                                    <AccountFormModal setReload={setReload} reload={reload} />
+                                    <PaymentFormModal data={data} />
+                                </div>
+                            </>)
+
+                            : <h6 style={{ textAlign:'center' }}>No Accounts</h6>
+                        }
                     </>
             }
-            <div style={{ display: 'flex' }}>
-                <AccountFormModal setReload={setReload} reload={reload} />
-                <PaymentFormModal data={data} />
-            </div>
         </Container>
     );
 }
@@ -97,9 +103,9 @@ const AccountRow = ({ item, rowCount, reload, setReload }) => {
                 <td>{PaymentUtil.parseOffsetDateToMonthDayYear(item.accountDueDate)}</td>
                 <td className="action__icons__wrapper">
                     <div className="action__icons">
-                            <Button className="delete__button" onClick={handleAccountDeletion}>
-                                <FaTrashAlt />
-                            </Button>
+                        <Button className="delete__button" onClick={handleAccountDeletion}>
+                            <FaTrashAlt />
+                        </Button>
                         <AccountModifyModal item={item} reload={reload} setReload={setReload} />
                     </div>
                 </td>

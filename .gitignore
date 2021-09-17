@@ -3,3 +3,5 @@ resources
 *.mongodb
 *.rest
 .vscode
+# Local Netlify folder
+.netlify

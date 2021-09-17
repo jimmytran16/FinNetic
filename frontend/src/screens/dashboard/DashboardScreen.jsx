@@ -4,7 +4,7 @@ import {
     BrowserRouter as Router,
     Switch,
     Route,
-    Link
+    Link,
 } from "react-router-dom";
 import OpenAccountsPage from './dashboard-open-accounts/dashboard-open-accounts'
 import DashboardBudgetPage from './dashboard-budgeting/dashboard-bugeting'
@@ -33,7 +33,7 @@ function Dashboard() {
 
                                     <Tab.Content>
                                         <Switch>
-                                            <Route path="/dashboard/budgeting">
+                                            <Route  path="/dashboard/budgeting">
                                                 <DashboardBudgetPage />
                                             </Route>
                                             <Route path="/dashboard/open-accounts">

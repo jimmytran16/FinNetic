@@ -139,10 +139,8 @@ const parsePaymentAndAccountDataIntoChartData = (paymentData, accountData) => {
             }
         ]
     }
-    console.log(paymentData,accountData)
     const sumOfRemaining = accountData.reduce((n, { balance }) => n + balance, 0);
     const sumOfPayments = paymentData.reduce((n, { amountPaid }) => n + amountPaid, 0);
-    console.log('sumOfPayments',sumOfPayments)
 
     templateDataSet.datasets[0].data[0] = sumOfRemaining;
     templateDataSet.datasets[0].data[1] = sumOfPayments;
@@ -150,8 +148,25 @@ const parsePaymentAndAccountDataIntoChartData = (paymentData, accountData) => {
     return templateDataSet;
 }
 
+const getLatestDueDate = (data) => {
+    let todaysDate = new Date()
+    let todaysDateDay = todaysDate.getUTCDate();
+    for (var i in data) {
+        let accountDueDay = data[i].accountDueDay
+        // if current date's day is past the accountDueDate's day, then change month to be one month ahead
+        if (todaysDateDay > accountDueDay) {
+            data[i]['accountDueDate'] = moment.utc(todaysDate).set("date", accountDueDay).add(1, "month")
+        }
+        else {
+            data[i]['accountDueDate'] = moment.utc(todaysDate).set("date", accountDueDay)
+        }
+    }
+    return data;
+}
+
 module.exports = {
     parseAccountDataIntoChartData,
     parsePaymentDataIntoChartData,
-    parsePaymentAndAccountDataIntoChartData
+    parsePaymentAndAccountDataIntoChartData,
+    getLatestDueDate
 }

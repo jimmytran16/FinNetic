@@ -5,7 +5,6 @@ module.exports = class ReminderService {
     constructor() { }
 
     async saveAccountToQueue(payload, cb) {
-        console.log(payload)
         var url = 'http://localhost:4001/api/scheduler/addAccountToQueue'
         var data = {
             "payload": payload

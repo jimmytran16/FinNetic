@@ -7,24 +7,18 @@ var paymentService = new PaymentService()
 
 // Metric controllers
 const getDashboardContentController = (req, res, next) => {
-  var averageData = [];
-  var paymentData = [];
-  paymentService.getLastSixMonthsOfAccountPayments(req.user.userId, (err, data) => {
-    if (err) return res.json({ data: err, success: false })
-    else averageData = data;
-  })
-  paymentService.getAllPayments(req.user.userId, (err, data) => {
-    if (err) return res.json({ data: err, success: false })
-    else paymentData = data;
-  })
-  accountService.getAllAccounts(req.user.userId, (err, data) => {
+  paymentService.getChartDataByUser(req.user.userId, (err, result) => {
     return res.json({
-      data: {
-        averageChart: DashboardUtil.parsePaymentDataIntoChartData(averageData),
-        default: DashboardUtil.parseAccountDataIntoChartData(data),
-        remainingPayments: DashboardUtil.parsePaymentAndAccountDataIntoChartData(paymentData,data)
-      },
-      success: true
+      data: err ? err :
+        {
+          averageChart: result.averageChart,
+          default: result.defaultChart,
+          remainingPayments: result.remainingChart,
+          isDefaultData : result.isDefaultData,
+          isAverageData : result.isAverageData,
+          isRemainingData : result.isRemainingData
+        },
+      success: err ? false : true
     })
   })
 }
@@ -53,7 +47,7 @@ const updateAccountController = (req, res, next) => {
   if (!filter || !update)
     return res.json({ success: false, data: 'filter, update params required!' });
 
-  accountService.updateAccount(req.body.filter, req.body.update, (err, data) => {
+  accountService.updateAccount(req.body.filter, { $set: req.body.update }, (err, data) => {
     return res.json({
       success: data ? true : false,
       data: data

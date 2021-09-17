@@ -36,7 +36,7 @@ function App() {
                       <Dropdown.Toggle style={{ backgroundColor: 'transparent', borderColor: 'transparent', color: '#52ab98', padding: 0, margin: 0 }} split variant="success" id="dropdown-split-basic" />
 
                       <Dropdown.Menu alignRight={true}>
-                        <Dropdown.Item href="/logout">Logout</Dropdown.Item>
+                        <Dropdown.Item className="logout__button" href="/logout">Logout</Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
                   </>)
@@ -57,7 +57,7 @@ function App() {
             <Route path="/login" component={LoginScreen}></Route>
             <Route path="/register" component={RegisterScreen}></Route>
             <Route path="/logout" render={() => { return AuthService.logout() }} />
-            <ProtectedRoute path="/dashboard/open-accounts" component={DashboardScreen}></ProtectedRoute>
+            <ProtectedRoute path="/dashboard" component={DashboardScreen}></ProtectedRoute>
             <ProtectedRoute path="/settings" component={SettingsScreen}></ProtectedRoute>
             <Route component={My404Component} />
           </Switch>

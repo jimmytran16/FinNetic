@@ -17,6 +17,10 @@
     box-shadow: 0 0 11px rgba(33,33,33,.2)!important; 
 }
 
+.settings__form__label {
+    font-weight: bold;
+}
+
 .settings__tab__content {
     padding: 20px;
 }

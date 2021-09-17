@@ -2,6 +2,10 @@
   text-align: center;
 }
 
+* {
+  font-family: 'Times New Roman', Times, serif;
+}
+
 .screen__wrapper {
   background-color:#f8f9fa;
   min-height: 100vh;
@@ -18,6 +22,12 @@
   background-color: #52ab98;
   border-color:#52ab98;
   box-shadow: 0 0 11px rgba(33,33,33,.2); 
+}
+
+.logout__button:focus {
+  background-color: #52ab98!important;
+  border-color:#52ab98!important;
+  box-shadow: 0 0 11px rgba(33,33,33,.2)!important; 
 }
 
 .nav__link {

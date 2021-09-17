@@ -100,6 +100,21 @@ const createUserPayment = (accountId, accountName, payment, date) => {
     });
 }
 
+const deleteAccountPayment = (id) => {
+    return axios({
+        method: 'DELETE',
+        url: `${url}/dashboard/deletePayment`,
+        headers: {
+            "Authorization": `Bearer ${AuthService.default.getTokenFromStore()}`,
+            "Content-Type": "application/json"
+        },
+        data: {
+            "id": id,
+        }
+    });
+}
+
+
 module.exports = {
     getDashboardGridContent,
     createBillingDetails,
@@ -107,5 +122,6 @@ module.exports = {
     getUserPayments,
     deleteBillingAccount,
     createUserPayment,
-    updateAccount
+    updateAccount,
+    deleteAccountPayment
 };

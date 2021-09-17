@@ -2,7 +2,7 @@ import React from 'react'
 
 const DashboardBudgetingPage = () => {
     return (
-        <h6>Bugetting Component - Not Done</h6>
+        <h6>Bugetting Feature - Coming soon ....</h6>
     )
 }
 
