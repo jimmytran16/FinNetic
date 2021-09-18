@@ -1,29 +1,36 @@
 const axios = require('axios')
+if (process.env.NODE_ENV !== 'production') {
+    require('dotenv').config()
+}
 
 module.exports = class ReminderService {
 
-    constructor() { }
+    constructor() {
+        this.baseUrl = (process.env.NODE_ENV !== 'production')
+            ? process.env.REMINDER_DEV_URI
+            : process.env.REMINDER_URI
+    }
 
     async saveAccountToQueue(payload, cb) {
-        var url = 'http://localhost:4001/api/scheduler/addAccountToQueue'
+        var url = `${this.baseUrl}/api/scheduler/addAccountToQueue`
         var data = {
             "payload": payload
         }
         try {
-            let response = await axios.post(url,data);
-            return cb(null,response.data);
-        }catch(err) {
-            return cb(err,null);
+            let response = await axios.post(url, data);
+            return cb(null, response.data);
+        } catch (err) {
+            return cb(err, null);
         }
     }
 
     async getAllAccounts(userId, cb) {
-        var url = `http://localhost:4001/api/scheduler/getUserAccounts/${userId}`
+        var url = `${this.baseUrl}/api/scheduler/getUserAccounts/${userId}`
         try {
             let response = await axios.get(url);
-            return cb(null,response.data.message);
-        }catch(err) {
-            return cb(err,null);
+            return cb(null, response.data.message);
+        } catch (err) {
+            return cb(err, null);
         }
     }
 
@@ -33,12 +40,12 @@ module.exports = class ReminderService {
             accountId: accountId,
             sendReminder: sendReminder
         }
-        var url = 'http://localhost:4001/api/scheduler/updateSendReminderOption'
+        var url = `${this.baseUrl}/api/scheduler/updateSendReminderOption`
         try {
             let response = await axios.put(url, data);
-            return cb(null,response.data.message);
-        }catch(err) {
-            return cb(err,null);
+            return cb(null, response.data.message);
+        } catch (err) {
+            return cb(err, null);
         }
     }
 
@@ -48,14 +55,14 @@ module.exports = class ReminderService {
                 userId: userId,
                 phone: phone
             }
-            var url = 'http://localhost:4001/api/scheduler/updateQueuePhoneNumbers'
+            var url = `${this.baseUrl}/api/scheduler/updateQueuePhoneNumbers`
             try {
                 let response = await axios.put(url, data);
-                if (response.data.sucess) 
+                if (response.data.sucess)
                     return resolve(respones.data.message);
                 else
                     return reject(response.data.message);
-            }catch(err) {
+            } catch (err) {
                 return reject(err.toString())
             }
         })
@@ -65,18 +72,18 @@ module.exports = class ReminderService {
         return new Promise(async (resolve, reject) => {
             var data = {
                 data: {
-                        accountId: accountId,
+                    accountId: accountId,
                 }
             }
-            var url = 'http://localhost:4001/api/scheduler/deleteAccountInQueue'
+            var url = `${this.baseUrl}/api/scheduler/deleteAccountInQueue`
             try {
                 let response = await axios.delete(url, data);
 
-                if (response.data.success) 
+                if (response.data.success)
                     return resolve(response.data.message);
-                else 
+                else
                     return reject(response.data.message);
-            }catch(err) {
+            } catch (err) {
                 return reject(err.toString());
             }
         })

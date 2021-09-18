@@ -113,27 +113,25 @@ function MetricsTabContent(props) {
     }, 500)
   }, [])
   return (
-    (isLoading)
-      ? <SpinnerLoader />
-      : <div>
+       <div>
         <Container>
           <h2 style={{ textAlign: 'center', padding: "20px 10px" }}> Metrics </h2>
           <Row>
             <Col className="metric__column" xs={12} md={6}>
               <BoxContainer style={{ height: 400, maxHeight: 400 }}>
-                {(data.isAverageData) ? <AverageChart data={data.averageChart} options={averageChartOptions} /> : 'No Payments'}
+                {(isLoading) ? <SpinnerLoader /> : (data.isAverageData) ? <AverageChart data={data.averageChart} options={averageChartOptions} /> : 'No Payments'}
               </BoxContainer>
             </Col>
             <Col className="metric__column" xs={12} md={6}>
               <BoxContainer>
-                {(data.isDefaultData) ? <Pie data={data.default} options={chartOptions} /> : 'No Accounts'}
+                {(isLoading) ? <SpinnerLoader /> : (data.isDefaultData) ? <Pie data={data.default} options={chartOptions} /> : 'No Accounts'}
               </BoxContainer>
             </Col>
           </Row>
           <Row>
             <Col className="metric__column balancepaid___chart___col" xs={12} md={12}>
               <BoxContainer>
-                {(data.isRemainingData) ? <Doughnut style={{ maxHeight: 400 }} data={data.remainingPayments} options={balanceVsPaidChartOptions} /> : 'No Accounts'}
+                {(isLoading) ? <SpinnerLoader /> : (data.isRemainingData) ? <Doughnut style={{ maxHeight: 400 }} data={data.remainingPayments} options={balanceVsPaidChartOptions} /> : 'No Accounts'}
               </BoxContainer>
             </Col>
           </Row>
