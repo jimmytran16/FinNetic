@@ -3,6 +3,11 @@
     border-color:#52ab98!important;
     font-weight: 500!important;
 }
+
+.home___banner__2 {
+  width:100%;
+}
+
 .home__register__button:hover,
 .home__register__button:focus {
   background-color: #52ab98!important;
@@ -10,7 +15,57 @@
   box-shadow: 0 0 11px rgba(33,33,33,.2)!important; 
 }
 
+.header__card__1 {
+  height: 40vh!important;
+  border: 0!important;
+  border-radius: 0!important;
+  background: #ffffff!important;
+}
+
+.header__card__2 {
+  height: 40vh!important;
+  border: 0!important;
+  border-radius: 0!important;
+  background: #c8d8e4!important;
+}
+
 .slogan__wrapper {
   padding: 20px 0px;
   color: white;
+}
+
+.notification__icon {
+  font-size: 5em;
+}
+
+.money__icon {
+  font-size: 5em;
+}
+
+footer {
+  background-color: #8ce4d1;
+  padding: 10px 20px;
+  text-align: center;
+}
+
+@media screen and (max-width:768px) {
+  .home___banner__1 {
+    padding:20!important;
+  }
+
+  .notification__icon {
+    font-size: 3em;
+  }
+
+  .header__cardbody{
+    padding:20px!important;
+  }
+
+  .header__card__1 {
+    height: 100%!important;
+  }
+
+  .money__icon {
+    font-size: 3em;
+  }
 }
