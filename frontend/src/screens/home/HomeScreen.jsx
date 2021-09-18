@@ -35,7 +35,7 @@ function HomeScreen({ history }) {
                             </Col>
                             <Col style={{ display:'flex', alignItems:'center', justifyContent:'center' }} sm={12} md={6}>
                                 <div >
-                                    <h1>Have your account payments notified.</h1>
+                                    <h2>Have your account payments notified.</h2>
                                     <h6>
                                         Straight to your phone.
                                     </h6>
@@ -54,7 +54,7 @@ function HomeScreen({ history }) {
                         <Row className="home___banner__1" style={{ height:'100%', width:'100%' }}>
                         <Col style={{ display:'flex', alignItems:'center', justifyContent:'center' }} sm={12} md={6}>
                                 <div >
-                                    <h1>Keep track of your finances.</h1>
+                                    <h2>Keep track of your finances.</h2>
                                     <h6>
                                         At the tip of your fingers.
                                     </h6>

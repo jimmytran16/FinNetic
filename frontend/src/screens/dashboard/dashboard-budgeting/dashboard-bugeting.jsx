@@ -1,8 +1,14 @@
 import React from 'react'
+import BoxContainer from '../../../components/BoxContainer'
 
 const DashboardBudgetingPage = () => {
     return (
-        <h6>Bugetting Feature - Coming soon ....</h6>
+        <BoxContainer>
+            <h6>
+                <strong>Bugetting Feature</strong>
+                - Coming soon ....
+            </h6>
+        </BoxContainer>
     )
 }
 

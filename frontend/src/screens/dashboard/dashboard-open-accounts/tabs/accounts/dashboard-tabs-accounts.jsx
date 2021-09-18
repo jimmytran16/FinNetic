@@ -35,14 +35,14 @@ function AccountsTabContent(props) {
                         {(data.length > 0)
                             ? (<>
                                 <AccountTable data={data} setReload={setReload} reload={reload} />
-                                <div style={{ display: 'flex' }}>
-                                    <AccountFormModal setReload={setReload} reload={reload} />
-                                    <PaymentFormModal data={data} />
-                                </div>
                             </>)
 
                             : <h6 style={{ textAlign:'center' }}>No Accounts</h6>
                         }
+                             <div style={{ display: 'flex' }}>
+                                    <AccountFormModal setReload={setReload} reload={reload} />
+                                    <PaymentFormModal data={data} />
+                                </div>
                     </>
             }
         </Container>
