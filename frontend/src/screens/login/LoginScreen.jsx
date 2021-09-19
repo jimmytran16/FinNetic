@@ -39,9 +39,9 @@ const LoginScreen = (props) => {
                             message: "Please check your credentials"
                         })
                     }
+                    setIsLoading(false);
                 })
                 .catch(err => console.log(err));
-            setIsLoading(false);
         }, 1000)
     }
 

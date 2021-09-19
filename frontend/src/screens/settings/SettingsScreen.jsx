@@ -6,6 +6,7 @@ import SettingAPI from '../../api/setting.api'
 import SpinnerCircle from '../../components/SpinnerCircle';
 import AlertMessage from '../../components/AlertMessage';
 import BoxContainer from '../../components/BoxContainer';
+import FormatUtil from '../../utils/format.utils'
 
 
 const SettingsScreen = (props) => {
@@ -60,11 +61,18 @@ const ProfileTabContent = () => {
     }, [refresh])
 
     const handleUpdate = () => {
+        if (!FormatUtil.isValidPhone(phoneNumber)) return alert('Please enter valid phone number!');
         setIsLoading(true)
         setTimeout(() => {
             SettingAPI.updateUser(phoneNumber)
                 .then(response => {
-                    if (response.data.success) setRefresh(!refresh);
+                    //  NEED TO FIX BE for correct response
+                    // if (response.data.success) {
+                    //     alert('Sucessfully updated phone!')
+                    //     setRefresh(!refresh)
+                    // }else {
+                    //     alert('Failed to upload phone number!')
+                    // }
                     setIsLoading(false)
                 })
                 .catch(err => console.log(err));

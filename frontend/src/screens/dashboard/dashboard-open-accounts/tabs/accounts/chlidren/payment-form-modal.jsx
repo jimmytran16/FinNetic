@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Form, Button, Modal, Toast, ToastContainer } from 'react-bootstrap'
 import SpinnerCircle from '../../../../../../components/SpinnerCircle'
 import DashboardAPI from '../../../../../../api/dashboard.api';
+import FormatUtil from '../../../../../../utils/format.utils'
 
 function PaymentFormModal({ data }) {
 
@@ -23,6 +24,9 @@ function PaymentFormModal({ data }) {
     }
 
     const handlePaymentSubmission = () => {
+        console.log(paymentDate)
+        if (!FormatUtil.isValidDate(paymentDate)) return alert('Please enter correct formatted date!');
+
         setIsLoading(true)
         setTimeout(() => {
             DashboardAPI.createUserPayment(accountId, accountName, paymentAmount, paymentDate)
