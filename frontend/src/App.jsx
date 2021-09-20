@@ -22,7 +22,7 @@ function App() {
       <Router>
         <Navbar bg="light" variant="light">
           <Container>
-            <Navbar.Brand href="/">trkr</Navbar.Brand>
+            <Navbar.Brand href="/">FinNetic</Navbar.Brand>
             <Nav className="me-auto">
               {
                 AuthService.isAuthenticated()

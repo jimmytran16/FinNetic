@@ -69,7 +69,7 @@ function HomeScreen({ history }) {
                     </Card.Body>
                 </Card>
             </header>
-            <footer> &copy; Trkr 2021 - Jimmy Tran </footer>
+            <footer> &copy; FinNetic 2021 - Jimmy Tran </footer>
         </>
     );
 }

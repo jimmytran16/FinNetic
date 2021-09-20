@@ -27,9 +27,9 @@ const RegisterScreen = (props) => {
                     } else {
                         setShow(true)
                     }
+                    setIsLoading(false)
                 })
                 .catch(err => console.log(err))
-            setIsLoading(false)
         }, 500)
     }
 
