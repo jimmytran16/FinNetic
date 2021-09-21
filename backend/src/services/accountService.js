@@ -28,6 +28,7 @@ module.exports = class AccountService {
             cb(err, null)
         }
     }
+    
 
     async createAccount(name, balance, accountName, accountDueDay, userId, cb) {
         let user = await User.findById(mongoose.Types.ObjectId(userId)).select('phone')
@@ -81,20 +82,4 @@ module.exports = class AccountService {
             cb(err, null)
         }
     }
-
-    // _getLatestDueDate(data) {
-    //     let todaysDate = new Date()
-    //     let todaysDateDay = todaysDate.getUTCDate();
-    //     for (var i in data) {
-    //         let accountDueDay = data[i].accountDueDay
-    //         // if current date's day is past the accountDueDate's day, then change month to be one month ahead
-    //         if (todaysDateDay > accountDueDay) {
-    //             data[i]['accountDueDate'] = moment.utc(todaysDate).set("date", accountDueDay).add(1, "month")
-    //         }
-    //         else {
-    //             data[i]['accountDueDate'] = moment.utc(todaysDate).set("date", accountDueDay)
-    //         }
-    //     }
-    //     return data;
-    // }
 }

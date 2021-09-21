@@ -8,7 +8,6 @@ import AlertMessage from '../../components/AlertMessage';
 import BoxContainer from '../../components/BoxContainer';
 import FormatUtil from '../../utils/format.utils'
 
-
 const SettingsScreen = (props) => {
 
     return (

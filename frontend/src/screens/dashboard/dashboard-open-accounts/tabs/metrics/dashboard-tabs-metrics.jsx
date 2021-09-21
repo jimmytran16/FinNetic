@@ -105,11 +105,13 @@ function MetricsTabContent(props) {
     setIsLoading(true);
     setTimeout(() => {
       DashboardAPI.getDashboardGridContent()
-        .then(response => setData(response.data.data))
+        .then(response => {
+          setData(response.data.data)
+          setIsLoading(false);
+        })
         .catch(err => {
           AuthService.logout()
         })
-      setIsLoading(false);
     }, 500)
   }, [])
   return (

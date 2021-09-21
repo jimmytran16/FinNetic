@@ -20,4 +20,4 @@ app.use('/auth', routers.authRouter);
 app.use('/dashboard', routers.dashboardRouter);
 app.use('/settings', routers.settingsRouter);
 
-app.listen(4000, () => console.log(`Connection to PORT ${ 4000 }`));
+module.exports = app;

@@ -27,7 +27,7 @@ function HomeScreen({ history }) {
             <header>
                 <Card className="header__card__1">
                     <Card.Body className="header__cardbody" style={{ padding: 0 }}>
-                        <Row className="home___banner__1" style={{ height:'100%', width:'100%' }}>
+                        <Row className="home___banner__1">
                             <Col style={{ display:'flex', alignItems:'center', justifyContent:'center' }} sm={12} md={6}>
                                 <div >
                                     <FaRegBell className="notification__icon"/>
@@ -51,7 +51,7 @@ function HomeScreen({ history }) {
             <header>
                 <Card className="header__card__2">
                     <Card.Body className="header__cardbody" style={{ padding: 0 }}>
-                        <Row className="home___banner__1" style={{ height:'100%', width:'100%' }}>
+                        <Row className="home___banner__1">
                         <Col style={{ display:'flex', alignItems:'center', justifyContent:'center' }} sm={12} md={6}>
                                 <div >
                                     <h2>Keep track of your finances.</h2>

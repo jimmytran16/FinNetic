@@ -19,9 +19,11 @@ function AccountsTabContent(props) {
         setIsLoading(true);
         setTimeout(() => {
             DashboardAPI.getUserAccounts()
-                .then(response => setData(response.data.data))
+                .then(response => {
+                    setData(response.data.data)
+                    setIsLoading(false);
+                })
                 .catch(err => console.log(err))
-            setIsLoading(false);
         }, 500)
     }, [reload])
 

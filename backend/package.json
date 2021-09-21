@@ -4,9 +4,9 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "jest --detectOpenHandles",
-    "start": "node server",
-    "dev": "nodemon server"
+    "test": "mocha 'src/test/**/*.js' --recursive --timeout 60000 --exit",
+    "start": "node index",
+    "dev": "nodemon index"
   },
   "keywords": [
     "nodejs",
@@ -17,16 +17,17 @@
   "dependencies": {
     "axios": "^0.21.1",
     "bcrypt": "^5.0.1",
+    "chai": "^4.3.4",
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
+    "mocha": "^9.1.1",
     "moment": "^2.29.1",
     "mongoose": "^5.13.3",
     "morgan": "^1.10.0"
   },
   "devDependencies": {
-    "jest": "^27.0.6",
     "nodemon": "^2.0.4"
   }
 }

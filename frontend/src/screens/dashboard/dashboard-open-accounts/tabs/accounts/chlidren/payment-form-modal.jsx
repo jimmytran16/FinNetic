@@ -25,7 +25,7 @@ function PaymentFormModal({ data }) {
 
     const handlePaymentSubmission = () => {
         console.log(paymentDate)
-        if (!FormatUtil.isValidDate(paymentDate)) return alert('Please enter correct formatted date!');
+        if (!FormatUtil.isValidDate(paymentDate)) return alert('Please enter valid date!');
 
         setIsLoading(true)
         setTimeout(() => {
@@ -33,9 +33,9 @@ function PaymentFormModal({ data }) {
                 .then(response => {
                     setPaymentAmount('')
                     setPaymentDate('')
+                    setIsLoading(false)
                 })
                 .catch(err => console.log(err))
-            setIsLoading(false)
         }, 500)
     }
 
