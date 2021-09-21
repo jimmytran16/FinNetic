@@ -1,5 +1,5 @@
 'use strict'
-if (process.env.NODE_ENV !== 'production') require('dotenv').config();
+const config = require('../config/config')
 const { verify } = require("jsonwebtoken")
 
 function authenticateUser(req, res, next) {
@@ -11,7 +11,7 @@ function authenticateUser(req, res, next) {
     // if the token does not exists within the header of the request
     if (token == null) return res.sendStatus(401)
     // try to verify the token
-    verify(token, process.env.JWTSIGNATURE, (err, user) => {
+    verify(token, config.JWTSIGNATURE, (err, user) => {
         if (err) return res.status(403).json({ error:err })
 
         // if the token is successfully verified then assign the user to the req.user

@@ -2,18 +2,19 @@ require('dotenv').config()
 const AccountService = require('../../services/accountService')
 const Account = require('../../models/accounts')
 const mongoose = require('mongoose')
+const config = require('../../config/config')
 
 let chai = require('chai');
 let expect = chai.expect;
 
-describe('Add and retrieve user', () => {
-    const dbUriTest = process.env.DB_TEST
+describe('TEST ACCOUNT SERVICE', () => {
+    const dbUriTest = config.DB_TEST
     const mockUserId = '507f191e810c19729de860ea';
     const accountService = new AccountService()
 
 
     before(async () => {
-        await mongoose.connect(dbUriTest)
+        await mongoose.connect(dbUriTest, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false })
         await addAccounts();
     })
 
@@ -22,22 +23,20 @@ describe('Add and retrieve user', () => {
         await mongoose.disconnect()
     })
 
-    describe('Test create, retrieve and update', () => {
-        it('Retrieve the account from the database', async () => {
-            let result = await getAllAccounts(mockUserId);
-            expect(result.length).equals(5);
-            expect(result[0].accountName).equals('Test Account 1')
-        })
+    it('Retrieve the account from the database', async () => {
+        let result = await getAllAccounts(mockUserId);
+        expect(result.length).equals(5);
+        expect(result[0].accountName).equals('Test Account 1')
+    })
 
-        it('Update and fetch updated account from the database', async () => {
-            const modifiedName = 'Modified Account 1';
-            let update = { accountName: modifiedName };
-            let filter = { accountName: 'Test Account 1' };
-            await updateAccount(filter,update);
-            let fetched = await getAllAccounts(mockUserId);
-            expect(fetched[0].accountName).equals(modifiedName);
-        })
-
+    it('Update and fetch updated account from the database', async () => {
+        const modifiedName = 'Modified Account 1';
+        let update = { accountName: modifiedName };
+        let filter = { accountName: 'Test Account 1' };
+        await updateAccount(filter,update);
+        // fetch account after it has been updated
+        let fetched = await getAllAccounts(mockUserId);
+        expect(fetched[0].accountName).equals(modifiedName);
     })
 
     // Will add a mock account to the database

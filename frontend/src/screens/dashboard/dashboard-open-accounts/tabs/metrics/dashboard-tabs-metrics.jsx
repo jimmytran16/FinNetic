@@ -121,19 +121,19 @@ function MetricsTabContent(props) {
           <Row>
             <Col className="metric__column" xs={12} md={6}>
               <BoxContainer style={{ height: 400, maxHeight: 400 }}>
-                {(isLoading) ? <SpinnerLoader /> : (data.isAverageData) ? <AverageChart data={data.averageChart} options={averageChartOptions} /> : 'No Payments'}
+                {(isLoading) ? <SpinnerLoader /> : (data.isAverageData) ? <AverageChart data={data.averageChart} options={averageChartOptions} /> : 'No payments yet.'}
               </BoxContainer>
             </Col>
             <Col className="metric__column" xs={12} md={6}>
               <BoxContainer>
-                {(isLoading) ? <SpinnerLoader /> : (data.isDefaultData) ? <Pie data={data.default} options={chartOptions} /> : 'No Accounts'}
+                {(isLoading) ? <SpinnerLoader /> : (data.isDefaultData) ? <Pie data={data.default} options={chartOptions} /> : 'No accounts yet.'}
               </BoxContainer>
             </Col>
           </Row>
           <Row>
             <Col className="metric__column balancepaid___chart___col" xs={12} md={12}>
               <BoxContainer>
-                {(isLoading) ? <SpinnerLoader /> : (data.isRemainingData) ? <Doughnut style={{ maxHeight: 400 }} data={data.remainingPayments} options={balanceVsPaidChartOptions} /> : 'No Accounts'}
+                {(isLoading) ? <SpinnerLoader /> : (data.isRemainingData) ? <Doughnut style={{ maxHeight: 400 }} data={data.remainingPayments} options={balanceVsPaidChartOptions} /> : 'No payments yet.'}
               </BoxContainer>
             </Col>
           </Row>

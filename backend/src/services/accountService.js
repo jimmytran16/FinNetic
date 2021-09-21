@@ -28,7 +28,7 @@ module.exports = class AccountService {
             cb(err, null)
         }
     }
-    
+
 
     async createAccount(name, balance, accountName, accountDueDay, userId, cb) {
         let user = await User.findById(mongoose.Types.ObjectId(userId)).select('phone')
@@ -42,23 +42,23 @@ module.exports = class AccountService {
             lastPayment: null
         })
         let result = []
+
         try {
             result = await account.save()
+            // set the payload to be send to the Reminder API to be saved
+            const payload = {
+                accountName: name,
+                accountId: result._id,
+                userId: userId,
+                scheduledToSend: accountDueDay,
+                sendReminder: false,
+                phone: user.phone
+            }
+            await reminderService.saveAccountToQueue(payload);
+            return cb(null, result);
         } catch (err) {
-            cb(err, null)
+            return cb(err, null);
         }
-        // set the payload to be send to the Reminder API to be saved
-        const payload = {
-            accountName: name,
-            accountId: result._id,
-            userId: userId,
-            scheduledToSend: accountDueDay,
-            sendReminder: false,
-            phone: user.phone
-        }
-        reminderService.saveAccountToQueue(payload, (err, result) => {
-            return cb(err, result);
-        })
     }
 
     async deleteAccount(id, cb) {

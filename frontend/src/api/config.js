@@ -4,4 +4,4 @@ const Configs = {
      url:'https://trkr-api.herokuapp.com'
 }
 
-module.exports =  Configs;
+module.exports =  Configs; 

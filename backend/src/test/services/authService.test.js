@@ -2,19 +2,20 @@ require('dotenv').config()
 const AuthService = require('../../services/authService')
 const User = require('../../models/users')
 const mongoose = require('mongoose')
+const config = require('../../config/config')
 
 let chai = require('chai');
 let expect = chai.expect;
 
-describe('Test auth service methods', () => {
-    const dbUriTest = process.env.DB_TEST
+describe('TEST AUTH SERVICE', () => {
+    const dbUriTest = config.DB_TEST
     const authService = new AuthService()
     const name = "Jimmy Tran"
     const username = "jimmy@gmail.com"
     const password = "thisisthepassword"
 
     before(async () => {
-        await mongoose.connect(dbUriTest);
+        await mongoose.connect(dbUriTest, { useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false });
     })
 
     after(async () => {

@@ -1,11 +1,12 @@
 const User = require('../models/users')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const config = require('../config/config')
 require('dotenv').config()
 
 class JWTService {
     constructor() {
-        this.expirationTime = process.env.TOKEN_EXPIRATION
+        this.expirationTime = config.TOKEN_EXPIRATION
     }
 
     verifyAccessToken(token) {
@@ -13,7 +14,7 @@ class JWTService {
     }
 
     generateAccessToken(payload) {
-        return jwt.sign(payload, process.env.JWTSIGNATURE, { expiresIn : this.expirationTime })
+        return jwt.sign(payload, config.JWTSIGNATURE, { expiresIn : this.expirationTime })
     }
 }
 

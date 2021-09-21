@@ -1,27 +1,27 @@
 const axios = require('axios')
-if (process.env.NODE_ENV !== 'production') {
-    require('dotenv').config()
-}
+const config = require('../config/config')
 
 module.exports = class ReminderService {
 
     constructor() {
-        this.baseUrl = (process.env.NODE_ENV !== 'production')
-            ? process.env.REMINDER_DEV_URI
-            : process.env.REMINDER_URI
+        this.baseUrl = (config.NODE_ENV !== 'production')
+            ? config.REMINDER_DEV_URI
+            : config.REMINDER_URI
     }
 
-    async saveAccountToQueue(payload, cb) {
-        var url = `${this.baseUrl}/api/scheduler/addAccountToQueue`
-        var data = {
-            "payload": payload
-        }
-        try {
-            let response = await axios.post(url, data);
-            return cb(null, response.data);
-        } catch (err) {
-            return cb(err, null);
-        }
+    async saveAccountToQueue(payload) {
+        return new Promise(async (resolve, reject) => {
+            var url = `${this.baseUrl}/api/scheduler/addAccountToQueue`
+            var data = {
+                "payload": payload
+            }
+            try {
+                let response = await axios.post(url, data);
+                return resolve(response.data)
+            } catch (err) {
+                return reject(err)
+            }
+        })
     }
 
     async getAllAccounts(userId, cb) {
