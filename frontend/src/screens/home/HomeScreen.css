@@ -1,7 +1,20 @@
 .home__register__button {
-    background-color:#52ab98!important;
-    border-color:#52ab98!important;
-    font-weight: 500!important;
+  background-color:#52ab98!important;
+  border-color:#52ab98!important;
+  font-weight: 500!important;
+}
+
+.header__banner {
+  height: 30vh;
+  padding: 20px;
+}
+
+.header__banner.second {
+  background-color: #c8d8e4;
+}
+
+.header__banner.first {
+  background-color: #ffffff;
 }
 
 .home___banner__1 {
@@ -19,20 +32,6 @@
   background-color: #52ab98!important;
   border-color:#52ab98!important;
   box-shadow: 0 0 11px rgba(33,33,33,.2)!important; 
-}
-
-.header__card__1 {
-  height: 40vh!important;
-  border: 0!important;
-  border-radius: 0!important;
-  background: #ffffff!important;
-}
-
-.header__card__2 {
-  height: 40vh!important;
-  border: 0!important;
-  border-radius: 0!important;
-  background: #c8d8e4!important;
 }
 
 .slogan__wrapper {
@@ -61,14 +60,6 @@ footer {
 
   .notification__icon {
     font-size: 3em;
-  }
-
-  .header__cardbody{
-    padding:20px!important;
-  }
-
-  .header__card__1 {
-    height: 100%!important;
   }
 
   .money__icon {

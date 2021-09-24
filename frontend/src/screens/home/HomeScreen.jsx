@@ -24,50 +24,42 @@ function HomeScreen({ history }) {
                     </Card.Body>
                 </Card>
             </header>
-            <header>
-                <Card className="header__card__1">
-                    <Card.Body className="header__cardbody" style={{ padding: 0 }}>
-                        <Row className="home___banner__1">
-                            <Col style={{ display:'flex', alignItems:'center', justifyContent:'center' }} sm={12} md={6}>
-                                <div >
-                                    <FaRegBell className="notification__icon"/>
-                                </div>
-                            </Col>
-                            <Col style={{ display:'flex', alignItems:'center', justifyContent:'center' }} sm={12} md={6}>
-                                <div >
-                                    <h2>Have your account payments notified.</h2>
-                                    <h6>
-                                        Straight to your phone.
-                                    </h6>
-                                </div>
-                            </Col>
-                        </Row>
-                    </Card.Body>
-                </Card>
+            <header className="header__banner first">
+                <Row className="home___banner__1">
+                    <Col style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} sm={12} md={6}>
+                        <div >
+                            <FaRegBell className="notification__icon" />
+                        </div>
+                    </Col>
+                    <Col style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} sm={12} md={6}>
+                        <div >
+                            <h2>Have your account payments notified.</h2>
+                            <h6>
+                                Straight to your phone.
+                            </h6>
+                        </div>
+                    </Col>
+                </Row>
             </header>
             <header>
                 <Image className="home___banner__2" src="/banner-final.jpg" fluid />
             </header>
-            <header>
-                <Card className="header__card__2">
-                    <Card.Body className="header__cardbody" style={{ padding: 0 }}>
-                        <Row className="home___banner__1">
-                        <Col style={{ display:'flex', alignItems:'center', justifyContent:'center' }} sm={12} md={6}>
-                                <div >
-                                    <h2>Keep track of your finances.</h2>
-                                    <h6>
-                                        At the tip of your fingers.
-                                    </h6>
-                                </div>
-                            </Col>
-                            <Col style={{ display:'flex', alignItems:'center', justifyContent:'center' }} sm={12} md={6}>
-                                <div >
-                                    <FaMoneyBill className="money__icon"/>
-                                </div>
-                            </Col>
-                        </Row>
-                    </Card.Body>
-                </Card>
+            <header className="header__banner second">
+                <Row className="home___banner__1">
+                    <Col style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} sm={12} md={6}>
+                        <div >
+                            <h2>Keep track of your finances.</h2>
+                            <h6>
+                                At the tip of your fingers.
+                            </h6>
+                        </div>
+                    </Col>
+                    <Col style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }} sm={12} md={6}>
+                        <div >
+                            <FaMoneyBill className="money__icon" />
+                        </div>
+                    </Col>
+                </Row>
             </header>
             <footer> &copy; FinNetic 2021 - Jimmy Tran </footer>
         </>
