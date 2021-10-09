@@ -7,6 +7,13 @@
     border-color:#52ab98!important;
     font-weight: 500!important;
 }
+
+.demo__button {
+    background-color:rgb(43, 103, 119)!important;
+    border-color:rgb(43, 103, 119)!important;
+    font-weight: 500!important;
+    margin-left: 5px;
+}
   
 .login__button:hover,
 .login__button:focus {

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import './LoginScreen.css'
-import { Container, Form, Button } from 'react-bootstrap'
+import { Container, Form, Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import SpinnerCircle from '../../components/SpinnerCircle'
 import AlertMessage from '../../components/AlertMessage'
 import AuthAPI from '../../api/auth.api'
@@ -45,6 +45,17 @@ const LoginScreen = (props) => {
         }, 1000)
     }
 
+    const handleDemoLogin = () => {
+        setUsername('testing@gmail.com');
+        setPassword('testing');
+    }
+
+    const renderTooltip = (props) => (
+        <Tooltip id="button-tooltip" {...props}>
+            Log into a demo account with pre-existing data
+        </Tooltip>
+    );
+
     return (
         <>
             <Container className="login__screen__wrapper">
@@ -53,16 +64,23 @@ const LoginScreen = (props) => {
                     <Form>
                         <Form.Group className="mb-3" controlId="formBasicEmail">
                             <Form.Label>Email</Form.Label>
-                            <Form.Control type="email" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Enter email" required/>
+                            <Form.Control type="email" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Enter email" required />
                         </Form.Group>
 
                         <Form.Group className="mb-3" controlId="formBasicPassword">
                             <Form.Label>Password</Form.Label>
-                            <Form.Control type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required/>
+                            <Form.Control type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Password" required />
                         </Form.Group>
                         <Button className="login__button" type="submit" onClick={handleLogin}>
                             {(isLoading) ? <SpinnerCircle size={'sm'} /> : 'Log in'}
                         </Button>
+                        <OverlayTrigger
+                            placement="top"
+                            delay={{ show: 250, hide: 400 }}
+                            overlay={renderTooltip}
+                        >
+                            <Button onClick={handleDemoLogin} className="demo__button">Demo Account</Button>
+                        </OverlayTrigger>
                     </Form>
                 </BoxContainer>
             </Container>
