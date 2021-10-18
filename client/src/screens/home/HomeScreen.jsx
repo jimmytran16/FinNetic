@@ -16,7 +16,7 @@ function HomeScreen({ history }) {
                                     Your financial future strategized today.
                                 </h1>
                                 <h6>
-                                    Budget your money with Trkr
+                                    Budget your money with FinNetic
                                 </h6>
                             </div>
                             <Button className="home__register__button" variant="primary" onClick={() => history.push(AuthService.isAuthenticated() ? '/dashboard/open-accounts' : '/register')}>Create an account</Button>
