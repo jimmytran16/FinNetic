@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './dashboard-tabs-metrics.css'
 import { Container, Row, Col } from 'react-bootstrap'
-import { Pie, Doughnut } from 'react-chartjs-2'
+import { Pie, Doughnut, Bar } from 'react-chartjs-2'
 import AuthService from '../../../../../services/authService'
 import SpinnerLoader from '../../../../../components/SpinnerLoader'
 import BoxContainer from '../../../../../components/BoxContainer'
@@ -115,30 +115,30 @@ function MetricsTabContent(props) {
     }, 500)
   }, [])
   return (
-       <div>
-        <Container>
-          <h2 style={{ textAlign: 'center', padding: "20px 10px" }}> Metrics </h2>
-          <Row>
-            <Col className="metric__column" xs={12} md={6}>
-              <BoxContainer style={{ height: 400, maxHeight: 400 }}>
-                {(isLoading) ? <SpinnerLoader /> : (data.isAverageData) ? <AverageChart data={data.averageChart} options={averageChartOptions} /> : 'No payments yet.'}
-              </BoxContainer>
-            </Col>
-            <Col className="metric__column" xs={12} md={6}>
-              <BoxContainer>
-                {(isLoading) ? <SpinnerLoader /> : (data.isDefaultData) ? <Pie data={data.default} options={chartOptions} /> : 'No accounts yet.'}
-              </BoxContainer>
-            </Col>
-          </Row>
-          <Row>
-            <Col className="metric__column balancepaid___chart___col" xs={12} md={12}>
-              <BoxContainer>
-                {(isLoading) ? <SpinnerLoader /> : (data.isRemainingData) ? <Doughnut style={{ maxHeight: 400 }} data={data.remainingPayments} options={balanceVsPaidChartOptions} /> : 'No payments yet.'}
-              </BoxContainer>
-            </Col>
-          </Row>
-        </ Container>
-      </div>
+    <div>
+      <Container>
+        <h2 style={{ textAlign: 'center', padding: "20px 10px" }}> Metrics </h2>
+        <Row>
+          <Col className="metric__column" xs={12} md={6}>
+            <BoxContainer style={{ height: 400, maxHeight: 400 }}>
+              {(isLoading) ? <SpinnerLoader /> : (data.isAverageData) ? <AverageChart data={data.averageChart} options={averageChartOptions} /> : 'No payments yet.'}
+            </BoxContainer>
+          </Col>
+          <Col className="metric__column" xs={12} md={6}>
+            <BoxContainer>
+              {(isLoading) ? <SpinnerLoader /> : (data.isDefaultData) ? <Pie data={data.default} options={chartOptions} /> : 'No accounts yet.'}
+            </BoxContainer>
+          </Col>
+        </Row>
+        <Row>
+          <Col className="metric__column balancepaid___chart___col" xs={12} md={12}>
+            <BoxContainer>
+              {(isLoading) ? <SpinnerLoader /> : (data.isRemainingData) ? <Doughnut style={{ maxHeight: 400 }} data={data.remainingPayments} options={balanceVsPaidChartOptions} /> : 'No payments yet.'}
+            </BoxContainer>
+          </Col>
+        </Row>
+      </ Container>
+    </div>
   );
 }
 

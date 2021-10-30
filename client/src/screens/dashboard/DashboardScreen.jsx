@@ -30,10 +30,9 @@ function Dashboard() {
                                     </Nav>
                                 </Col>
                                 <Col sm={10}>
-
                                     <Tab.Content>
                                         <Switch>
-                                            <Route  path="/dashboard/budgeting">
+                                            <Route path="/dashboard/budgeting">
                                                 <DashboardBudgetPage />
                                             </Route>
                                             <Route path="/dashboard/open-accounts">

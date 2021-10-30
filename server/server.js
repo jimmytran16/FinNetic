@@ -20,6 +20,7 @@ db.connect();
 app.get('/', (req, res) => { return res.json({ message: 'Hello from Tracker API' }) })
 app.use('/auth', routers.authRouter);
 app.use('/dashboard', routers.dashboardRouter);
+app.use('/budget', routers.budgetRouter);
 app.use('/settings', routers.settingsRouter);
 
 module.exports = app;

@@ -28,7 +28,7 @@ function App() {
                 AuthService.isAuthenticated()
                   ? (<>
                     <Nav.Link className="nav__link" as={Link} to="/">Home</Nav.Link>
-                    <Nav.Link className="nav__link" as={Link} to="/dashboard/open-accounts">Dashboard</Nav.Link>
+                    <Nav.Link className="nav__link" as={Link} to="/dashboard/budgeting">Dashboard</Nav.Link>
                     <Dropdown as={ButtonGroup}>
                       <Button href="/settings" style={{ backgroundColor: 'transparent', borderColor: 'transparent' }}>
                         <FiSettings color={'#52ab98'} />
