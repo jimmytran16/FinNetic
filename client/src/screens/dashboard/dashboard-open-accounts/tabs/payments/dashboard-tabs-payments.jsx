@@ -38,7 +38,7 @@ function PaymentsTabContent(props) {
             ? <SpinnerLoader />
             : <Container>
                 <h2 style={{ textAlign: 'center', padding: "20px 10px" }}> Payments </h2>
-                {(data.length == 0) && <h6 style={{ textAlign: 'center' }}>No Payments Yet</h6>}
+                {(data.length === 0) && <h6 style={{ textAlign: 'center' }}>No Payments Yet</h6>}
                 <Accordion defaultActiveKey="1">
                     {
                         data.map((item, key) => {
