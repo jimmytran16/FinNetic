@@ -15,7 +15,7 @@ const getBudgetBreakdown = (req, res, next) => {
     const arbitraryStackKey = "stack1";
     // mock data
     const data = {
-        labels: ['Week of 01/01', 'Week of 01/08', 'Week of 01/13', 'Week of 01/20', 'Week of 01/27'],
+        labels: ['October', 'September', 'August', 'July', 'June'],
         datasets: [
             // These two will be in the same stack.
             {
