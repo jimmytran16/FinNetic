@@ -2,14 +2,18 @@
 const User = require('../models/users')
 const mongoose = require('mongoose')
 const ReminderService = require('./reminderService')
+const DatabaseService = require('./databaseService')
 
 module.exports = class UserService {
-    constructor() {}
+    constructor() {
+        this.databaseService = new DatabaseService();
+    }
 
     async getUser(id, cb) {
         try{
-            let result = await User.findById(mongoose.Types.ObjectId(id)).select('-_id -password -salt');
-            return cb(null,result);
+            // let result = await User.findById(mongoose.Types.ObjectId(id)).select('-_id -password -salt');
+            let result = await this.databaseService.query("SELECT id, username, phone FROM Users WHERE id = ?", [id]);
+            return cb(null,result[0]);
         }catch(err) {
             return cb(err.toString(), null);
         }
@@ -18,7 +22,8 @@ module.exports = class UserService {
     // CONTRAINTED TO ONLY UPDATE PHONE -- need to change logic to recognize if phone is being updated in order to call the reminder API
     async updateUser(id, update, cb) {
         try{
-            await User.findByIdAndUpdate(mongoose.Types.ObjectId(id), { $set: update });
+            // await User.findByIdAndUpdate(mongoose.Types.ObjectId(id), { $set: update });
+            let result = await this.databaseService.query("UPDATE Users SET phone = ? WHERE id = ?", [update.phone, id]);
             if ('phone' in update) {
                 const reminderService = new ReminderService()
                 await reminderService.updateQueuePhoneNumber(id, update.phone)

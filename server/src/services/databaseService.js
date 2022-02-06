@@ -13,4 +13,8 @@ module.exports = class DatabaseService {
       
         return results;
     }
+
+    parseDateToSqlFormat(date) {    
+        return date.toISOString().slice(0, 19).replace('T', ' ');
+    }
 }
