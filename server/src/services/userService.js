@@ -23,7 +23,7 @@ module.exports = class UserService {
     async updateUser(id, update, cb) {
         try{
             // await User.findByIdAndUpdate(mongoose.Types.ObjectId(id), { $set: update });
-            let result = await this.databaseService.query("UPDATE Users SET phone = ? WHERE id = ?", [update.phone, id]);
+            await this.databaseService.query("UPDATE Users SET phone = ? WHERE id = ?", [update.phone, id]);
             if ('phone' in update) {
                 const reminderService = new ReminderService()
                 await reminderService.updateQueuePhoneNumber(id, update.phone)

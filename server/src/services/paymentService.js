@@ -5,12 +5,12 @@ const AccountService = require('./accountService')
 const DatabaseService = require('./databaseService')
 const { DashboardUtil } = require('../utils/index')
 const moment = require('moment')
-const mongoose = require('mongoose')
 
 module.exports = class PaymentService {
 
     constructor() { 
         this.db = new DatabaseService();
+        this.accountService = new AccountService();
     }
 
     async getAllPayments(userId) {
@@ -33,7 +33,6 @@ module.exports = class PaymentService {
         // 1. Need to find way to run 2 queries in parallel
         // 2. STEPS
             // - Save payment and update account balance (2 calls)
-        var accountService = new AccountService();
 
         // let payment = new Payment({
         //     userId: mongoose.Types.ObjectId(userId),
@@ -107,14 +106,15 @@ module.exports = class PaymentService {
         try {
             let paymentData = await this.getAllPayments(userId);
             let averageData = await this.getLastSixMonthsOfAccountPayments(userId);
-            let allAccounts = await Account.find({ userId: mongoose.Types.ObjectId(userId) }).select('-userId');
-            let accountData = DashboardUtil.getLatestDueDate(allAccounts);
+            // let allAccounts = await Account.find({ userId: mongoose.Types.ObjectId(userId) }).select('-userId');
+            let allAccounts = await this.accountService.getAllAccounts(userId);
+            let formatedAccountData = DashboardUtil.getLatestDueDate(allAccounts);
             
             return cb(null, {
                 defaultChart : DashboardUtil.parseAccountDataIntoChartData(accountData),
                 averageChart : DashboardUtil.parsePaymentDataIntoChartData(averageData),
                 remainingChart: DashboardUtil.parsePaymentAndAccountDataIntoChartData(paymentData, accountData),
-                isDefaultData : accountData.length === 0 ? false : true,
+                isDefaultData : formatedAccountData.length === 0 ? false : true,
                 isAverageData : paymentData.length === 0 ? false: true,
                 isRemainingData : paymentData.length === 0 ? false : true
             })

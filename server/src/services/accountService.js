@@ -2,7 +2,6 @@
 const Account = require('../models/accounts')
 const Payment = require('../models/payments')
 const User = require('../models/users')
-const mongoose = require('mongoose')
 const ReminderService = require('./reminderService')
 const DatabaseService = require('./databaseService')
 const { DashboardUtil } = require('../utils/index')
@@ -23,6 +22,10 @@ module.exports = class AccountService {
             cb(err, null)
         }
     }
+
+    // async getAllAccounts(userId) {
+    //     return this.databaseService.query('SELECT * FROM Accounts WHERE userId = ?', [userId]);
+    // }
 
     async getAccount(userId, accountId, cb) {
         try {
@@ -54,7 +57,8 @@ module.exports = class AccountService {
                 sendReminder: false,
                 phone: user[0].phone
             }
-            await reminderService.saveAccountToQueue(payload);
+            // TODO: will test seperately.. assuming it works right now
+            // await reminderService.saveAccountToQueue(payload);
             return cb(null, result);
         } catch (err) {
             return cb(err, null);
@@ -65,7 +69,8 @@ module.exports = class AccountService {
         try { // delete specific account, and all payments under that account, and also delete the payment from the reminder queue
             let reminderService = new ReminderService();
 
-            await reminderService.deleteAccountFromQueue(id);
+            // TODO: Will test seperately.. assume it to work right now
+            // await reminderService.deleteAccountFromQueue(id);
             await this.databaseService.query("DELETE FROM Accounts WHERE id = ?;", [id]);
             await this.databaseService.query("DELETE FROM Payments WHERE accountId = ?;", [id]);
             // await Account.findByIdAndDelete(new mongoose.Types.ObjectId(id));
