@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import './dashboard-tabs-accounts.css';
 import { FaTrashAlt } from 'react-icons/fa'
-import { Button, Container, Table } from 'react-bootstrap'
+import { Button, Container, Table, Modal } from 'react-bootstrap'
 import { PaymentUtil, FormatUtil } from '../../../../../utils/index'
 import AccountFormModal from './chlidren/account-form-modal'
 import PaymentFormModal from './chlidren/payment-form-modal'
@@ -86,14 +86,6 @@ const AccountRow = ({ item, rowCount, reload, setReload }) => {
     // Stores the id related to the account
     const id = item._id;
 
-    const handleAccountDeletion = () => {
-        DashboardAPI.deleteBillingAccount(id)
-            .then(response => {
-                setReload(!reload)
-            })
-            .catch(err => console.log(err))
-    }
-
     return (
         <>
             <tr>
@@ -105,8 +97,8 @@ const AccountRow = ({ item, rowCount, reload, setReload }) => {
                 <td>{PaymentUtil.parseOffsetDateToMonthDayYear(item.accountDueDate)}</td>
                 <td className="action__icons__wrapper">
                     <div className="action__icons">
-                        <Button className="delete__button" onClick={handleAccountDeletion}>
-                            <FaTrashAlt />
+                        <Button className="delete__button">
+                            <DeletePromptModal id={id} accountName={item.name} reload={reload} setReload={setReload} />
                         </Button>
                         <AccountModifyModal item={item} reload={reload} setReload={setReload} />
                     </div>
@@ -116,5 +108,49 @@ const AccountRow = ({ item, rowCount, reload, setReload }) => {
     );
 }
 
+const DeletePromptModal = ({ id, accountName, reload, setReload }) => {
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    const handleAccountDeletion = () => {
+        DashboardAPI.deleteBillingAccount(id)
+            .then(response => {
+                if (response.data.success)
+                    setReload(!reload)
+                else 
+                    alert('Failed to delete account. Please try again later!');
+                
+                handleClose();
+            })
+            .catch(err => {
+                console.log(err);
+                alert('Failed to delete account. Please try again later!');
+            })
+    }
+
+    return (
+        <>
+        <div onClick={handleShow}>
+            <FaTrashAlt />
+        </div>
+      <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Delete account</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>Are you sure you want to delete the account: <b>{accountName}</b> ?</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Cancel
+          </Button>
+          <Button variant="primary" onClick={handleAccountDeletion}>
+            Yes
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </>
+    )
+}
 
 export default AccountsTabContent;
