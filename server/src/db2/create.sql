@@ -1,12 +1,3 @@
-CREATE TABLE Users( 
-  id int NOT NULL PRIMARY KEY AUTO_INCREMENT, 
-  username varchar(50) NOT NULL, 
-  password varchar(60) NOT NULL, 
-  salt varchar(30) NOT NULL, 
-  phone varchar(11), 
-  createdOn datetime DEFAULT CURRENT_TIMESTAMP
-); 
-
 CREATE TABLE Accounts( 
   id int NOT NULL PRIMARY KEY AUTO_INCREMENT, 
   userId int NOT NULL,
@@ -29,6 +20,15 @@ CREATE TABLE Payments(
   FOREIGN KEY (userId) REFERENCES Users(id),
   FOREIGN KEY (accountId) REFERENCES Accounts(id)
 );
+
+CREATE TABLE Users( 
+  id int NOT NULL PRIMARY KEY AUTO_INCREMENT, 
+  username varchar(50) NOT NULL UNIQUE, 
+  password varchar(60) NOT NULL, 
+  salt varchar(30) NOT NULL, 
+  phone varchar(11), 
+  createdOn datetime DEFAULT CURRENT_TIMESTAMP
+); 
 
 CREATE TABLE Budgets(
   id int NOT NULL PRIMARY KEY AUTO_INCREMENT,
